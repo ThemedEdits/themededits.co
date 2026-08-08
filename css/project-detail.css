@@ -1,0 +1,149 @@
+/* =========================================================
+   Project detail — pinned left panel, continuous scrolling
+   right-side image column
+   ========================================================= */
+.pd{
+  display: flex;
+  min-height: 100vh;
+}
+
+.pd__left{
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 38%;
+  flex-shrink: 0;
+  padding: calc(var(--header-h) + 32px) clamp(24px, 4vw, 56px) clamp(20px, 3vw, 32px);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.pd__back{
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  width: fit-content;
+}
+
+.pd__rule{
+  height: 1px;
+  background: rgba(245,243,238,.12);
+  margin: 20px 0 24px;
+}
+
+.pd__title{
+  font-family: var(--body);
+  font-weight: 800;
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+
+.pd__desc{
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.2vw, 18px);
+  color: var(--ink-dim);
+  max-width: 40ch;
+  margin-bottom: clamp(20px, 3vw, 32px);
+}
+
+.pd__top-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+.pd__live-cta{
+  border: 1px solid var(--ink-dim);
+  border-radius: 40px;
+  padding: 2px 6px;
+  font-size: clamp(12px, 1vw + 0.3rem, 16px);
+}
+
+.pd__live-cta-icon{
+  display: inline-flex;
+  transition: transform .3s var(--ease);
+}
+
+.pd__live-cta:hover .pd__live-cta-icon{
+  transform: translate(3px, -3px);
+}
+
+.pd__services{
+  list-style: none;
+  margin: 0 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pd__service{
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.pd__nav{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid rgba(245,243,238,.12);
+  margin-top: auto;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.pd__nav-link{
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.pd__right{
+  width: 62%;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  padding-top: 10rem;
+  padding-right: clamp(24px, 4vw, 56px);
+}
+
+.pd__image{
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 7px;
+}
+
+/* =========================================================
+   Responsive — stack on smaller screens, left panel un-pins
+   ========================================================= */
+@media (max-width: 900px){
+  .pd{
+    flex-direction: column;
+  }
+  .pd__left{
+    position: relative;
+    top: auto;
+    height: auto;
+    overflow-y: visible;
+    width: 100%;
+    padding: calc(var(--header-h) + 24px) 20px 32px;
+  }
+  .pd__nav{
+    margin-top: 24px;
+  }
+  .pd__right{
+    width: 100%;
+    padding: 0 1rem;
+  }
+}

@@ -1,0 +1,333 @@
+/* =========================================================
+   Hire / Contact — floating-label form
+   ========================================================= */
+
+.projects-trail-hire {
+  padding: calc(var(--header-h) + 60px) clamp(20px, 6vw, 90px) clamp(100px, 14vw, 10px) !important;
+} 
+
+.hp2 {
+  padding: 0 clamp(20px, 6vw, 90px) clamp(80px, 10vw, 140px);
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: start;
+}
+
+.hp2__form-wrap {
+  min-width: 0;
+}
+
+/* ---- right-side contact panel ---- */
+.hp2__info {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 3vw, 40px);
+  padding-top: 7.4rem;
+}
+
+.hp2__info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hp2__info-title {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hp2__info-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(245, 243, 238, .12);
+}
+
+
+.hp2__info-note {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+@media (max-width: 900px) {
+  .hp2 {
+    grid-template-columns: 1fr;
+  }
+
+  .hp2__info {
+    position: static;
+    padding-top: 0;
+  }
+}
+
+.hp2__form-head {
+  margin-bottom: clamp(36px, 5vw, 56px);
+}
+
+.hp2__form-eyebrow {
+  font-family: var(--body);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--amber);
+  margin-bottom: 12px;
+}
+
+.hp2__form-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.2vw, 40px);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+
+/* ---- form shell ---- */
+.cform {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 40px);
+}
+
+.cform__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.cform__row:has(.cform__field--select),
+.cform__row:has(.cform__field--area) {
+  grid-template-columns: 1fr;
+}
+
+/* ---- field shell ---- */
+.cform__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.cform__input,
+.cform__select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.5vw, 18px);
+  padding: 10px 2px 12px;
+  outline: none;
+  width: 100%;
+  text-align: left;
+}
+
+.cform__textarea {
+  resize: none;
+  min-height: 30px;
+  line-height: 1.5;
+  font-family: var(--font-body);
+}
+
+/* ---- floating label ---- */
+.cform__label {
+  position: absolute;
+  left: 2px;
+  top: 10px;
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.5vw, 18px);
+  color: var(--muted);
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 1.3s var(--ease-out), color .3s var(--ease);
+}
+
+.cform__optional {
+  color: var(--muted);
+  font-size: .8em;
+}
+
+.cform__field:focus-within .cform__label,
+.cform__field.has-value .cform__label {
+  transform: translateY(-22px) scale(.72);
+  color: var(--amber);
+}
+
+/* ---- bottom border that fills from center outward ---- */
+.cform__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(245, 243, 238, .2);
+}
+
+.cform__line::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--amber);
+  transform: translateX(-50%);
+  transition: width .4s var(--ease-out);
+}
+
+.cform__field:focus-within .cform__line::after {
+  width: 100%;
+}
+
+/* keep filled fields' line lightly lit even after blur */
+.cform__field.has-value:not(:focus-within) .cform__line::after {
+  width: 100%;
+  background: rgba(251, 174, 23, .35);
+}
+
+/* ---- custom select ---- */
+.cform__field--select {
+  cursor: pointer;
+}
+
+.cform__select {
+  cursor: pointer;
+  padding-right: 28px;
+}
+
+.cform__select-value {
+  display: block;
+  min-height: 1.4em;
+}
+
+.cform__chevron {
+  position: absolute;
+  right: 4px;
+  top: 14px;
+  width: 16px;
+  height: 16px;
+  color: var(--ink-dim);
+  transition: transform .3s var(--ease);
+  pointer-events: none;
+}
+
+.cform__field--select.is-open .cform__chevron {
+  transform: rotate(180deg);
+}
+
+.cform__field--select .cform__label {
+  top: 10px;
+}
+
+.cform__field--select.is-open .cform__label,
+.cform__field--select.has-value .cform__label {
+  transform: translateY(-22px) scale(.72);
+  color: var(--amber);
+}
+
+.cform__field--select.is-open .cform__line::after {
+  width: 100%;
+}
+
+.cform__options {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border: 1px solid rgba(245, 243, 238, .12);
+  border-radius: 10px;
+  padding: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity .25s var(--ease), transform .25s var(--ease-out), visibility 0s linear .25s;
+  z-index: 5;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, .35);
+}
+
+.cform__field--select.is-open .cform__options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity .25s var(--ease), transform .25s var(--ease-out), visibility 0s linear 0s;
+}
+
+.cform__options li {
+  padding: 11px 14px;
+  border-radius: 6px;
+  font-size: 15px;
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+
+.cform__options li:hover,
+.cform__options li.is-active {
+  background: rgba(251, 174, 23, .12);
+  color: var(--ink);
+}
+
+.cform__input:-webkit-autofill,
+.cform__input:-webkit-autofill:hover,
+.cform__input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ink);
+  -webkit-box-shadow: 0 0 0 1000px var(--bg) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.cform__field:has(.cform__input:-webkit-autofill) .cform__label {
+  transform: translateY(-22px) scale(.72);
+  color: var(--amber);
+}
+
+.cform__field:has(.cform__input:-webkit-autofill) .cform__line::after {
+  width: 100%;
+  background: rgba(251, 174, 23, .35);
+}
+
+/* ---- submit ---- */
+.cform__submit {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 15px 30px;
+  border-radius: 100px;
+  background: var(--amber);
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ---- bottom strip (reused) ---- */
+.hp2__strip {
+  /* grid-column: 1 / -1; */
+  margin-top: clamp(48px, 6vw, 72px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-dim);
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 640px) {
+  .cform__row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}

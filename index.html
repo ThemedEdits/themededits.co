@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Themed Edits — Web &amp; Graphic Design Studio</title>
+  <meta name="description"
+    content="Themed Edits is a one-person studio building clean websites and sharp visual identities.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/page-transition.css">
+</head>
+
+<body>
+
+  <div class="grain"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <a href="/" class="logo" data-split-hover aria-label="Themed Edits — home">
+      <img src="assets/logo.png" alt="Themed Edits logo" class="logo__mark">
+      <span class="logo__text">
+        <span class="logo__line">Themed</span>
+        <span class="logo__line">Edits</span>
+      </span>
+    </a>
+
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="siteNav" aria-label="Open menu">
+      <span class="menu-btn__label" data-split-hover>Menu</span>
+      <span class="menu-btn__icon">
+        <span class="bar bar--1"></span>
+        <span class="bar bar--2"></span>
+      </span>
+    </button>
+  </header>
+
+  <!-- ============ NAV OVERLAY ============ -->
+  <nav class="site-nav" id="siteNav" aria-hidden="true">
+    <div class="site-nav__drip" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="site-nav__inner">
+      <ol class="site-nav__list">
+        <li class="site-nav__item"><a href="/" class="site-nav__link" data-split-hover>Home</a></li>
+        <li class="site-nav__item"><a href="/projects/" class="site-nav__link" data-split-hover>Web portfolio</a></li>
+        <li class="site-nav__item"><a href="/projects/" class="site-nav__link" data-split-hover>Graphics portfolio</a>
+        </li>
+        <li class="site-nav__item"><a href="#about" class="site-nav__link" data-split-hover>About</a></li>
+        <li class="site-nav__item"><a href="/hire/" class="site-nav__link " data-split-hover>Hire
+            me!</a></li>
+      </ol>
+
+      <div class="site-nav__foot">
+        <p class="site-nav__eyebrow">Get in touch</p>
+        <a href="mailto:themed.edits.co@gmail.com" class="site-nav__mail" data-split-hover>themed.edits.co@gmail.com</a>
+        <div class="site-nav__socials">
+          <a href="https://www.instagram.com/themed.edits.te" target="_blank" rel="noopener"
+            data-split-hover>Instagram</a>
+          <a href="https://www.linkedin.com/in/themededits" target="_blank" rel="noopener" data-split-hover>LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ MAIN ============ -->
+  <main id="top">
+
+    <section class="hero" id="heroSlider">
+      <div class="hero__bg">
+        <!-- slides injected by js/hero-slider.js -->
+      </div>
+
+      <div class="hero__overlay"></div>
+
+      <div class="hero__content">
+        <div class="hero__dots" id="heroDots" role="tablist" aria-label="Featured projects"></div>
+        <div class="hero__text-track" id="heroTextTrack"></div>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <div class="services__head">
+        <span class="services__badge">Services</span>
+        <h2 class="services__title">Clean sites,<br>sharp identities.</h2>
+        <p class="services__intro">Two disciplines, one designer — websites and visual identities built to work together
+          or stand alone.</p>
+      </div>
+
+      <div class="services__grid">
+        <div class="services__card">
+          <span class="services__card-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+              <path d="M4 9h16" stroke="currentColor" stroke-width="1.6" />
+            </svg>
+          </span>
+          <div class="services__card-art">
+            <img src="/assets/graphic-design-services.webp" alt="" class="services__card-img">
+          </div>
+          <p class="services__card-label">Web<br>Design</p>
+        </div>
+
+        <div class="services__center">
+          <h3 class="services__center-title">Brand &amp; Site<br>Systems</h3>
+          <a href="/hire/" class="services__cta btn--solid" data-split-hover>Get Started <span
+              aria-hidden="true">↗</span></a>
+          <p class="services__center-text">Full identity and website builds, designed together so nothing feels bolted
+            on.</p>
+        </div>
+
+        <div class="services__card">
+          <span class="services__card-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 20V10l8-6 8 6v10" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+              <path d="M9 20v-6h6v6" stroke="currentColor" stroke-width="1.6" />
+            </svg>
+          </span>
+          <div class="services__card-art">
+            <img src="/assets/graphic-design-services.webp" alt="" class="services__card-img">
+          </div>
+          <p class="services__card-label">Graphic<br>Design</p>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer class="site-footer">
+
+    <div class="footer__top">
+      <nav class="footer__nav footer__nav--left">
+        <div>
+          <p class="footer__col-title">Explore</p>
+          <div class="footer__col-links">
+            <a href="/" data-split-hover>Home</a>
+            <a href="projects/" data-split-hover>Web portfolio</a>
+            <a href="projects/" data-split-hover>Graphics portfolio</a>
+            <a href="index.html#about" data-split-hover>About</a>
+          </div>
+        </div>
+      </nav>
+
+      <nav class="footer__nav footer__nav--right">
+        <div>
+          <p class="footer__col-title">Contact</p>
+          <div class="footer__col-links">
+            <a href="mailto:themed.edits.co@gmail.com" data-split-hover>Email</a>
+            <a href="https://www.instagram.com/themed.edits.te" target="_blank" rel="noopener"
+              data-split-hover>Instagram</a>
+            <a href="https://www.linkedin.com/in/themededits" target="_blank" rel="noopener"
+              data-split-hover>LinkedIn</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="footer__brand">
+      <img src="assets/footer-logo-text.svg" alt="Themed" class="footer__brand-svg">
+      <div class="footer__brand-word">
+        <span>E</span><span>D</span><span>I</span><span>T</span><span>S</span>
+      </div>
+    </div>
+  </footer>
+  <script>document.body.dataset.assetsRoot = '';</script>
+  <script src="js/page-transition.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/portfolio-items.js"></script>
+  <script src="js/hero-slider.js"></script>
+</body>
+</body>
+
+</html>

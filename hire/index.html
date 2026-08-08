@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hire Me — Themed Edits</title>
+  <meta name="description" content="Get in touch with Themed Edits — email, WhatsApp, Instagram, or LinkedIn.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/hire.css">
+  <link rel="stylesheet" href="../css/projects.css">
+  <link rel="stylesheet" href="../css/page-transition.css">
+</head>
+
+<body>
+
+  <div class="grain"></div>
+
+  <header class="site-header">
+    <a href="/" class="logo" data-split-hover aria-label="Themed Edits — home">
+      <img src="../assets/logo.png" alt="Themed Edits logo" class="logo__mark">
+      <span class="logo__text">
+        <span class="logo__line">Themed</span>
+        <span class="logo__line">Edits</span>
+      </span>
+    </a>
+
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="siteNav" aria-label="Open menu">
+      <span class="menu-btn__label" data-split-hover>Menu</span>
+      <span class="menu-btn__icon">
+        <span class="bar bar--1"></span>
+        <span class="bar bar--2"></span>
+      </span>
+    </button>
+  </header>
+
+  <nav class="site-nav" id="siteNav" aria-hidden="true">
+    <div class="site-nav__drip" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="site-nav__inner">
+      <ol class="site-nav__list">
+        <li class="site-nav__item"><a href="/" class="site-nav__link" data-split-hover>Home</a></li>
+        <li class="site-nav__item"><a href="/projects/" class="site-nav__link" data-split-hover>Web portfolio</a></li>
+        <li class="site-nav__item"><a href="/projects/" class="site-nav__link" data-split-hover>Graphics portfolio</a>
+        </li>
+        <li class="site-nav__item"><a href="/index.html#about" class="site-nav__link" data-split-hover>About</a></li>
+        <li class="site-nav__item"><a href="/hire/" class="site-nav__link" data-split-hover>Hire me!</a></li>
+      </ol>
+      <div class="site-nav__foot">
+        <p class="site-nav__eyebrow">Get in touch</p>
+        <a href="mailto:themed.edits.co@gmail.com" class="site-nav__mail" data-split-hover>themed.edits.co@gmail.com</a>
+        <div class="site-nav__socials">
+          <a href="https://www.instagram.com/themed.edits.te" target="_blank" rel="noopener"
+            data-split-hover>Instagram</a>
+          <a href="https://www.linkedin.com/in/themededits" target="_blank" rel="noopener" data-split-hover>LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="projects-trail projects-trail-hire" id="hireHero">
+      <div class="projects-trail__hero">
+        <p class="projects-hero__eyebrow">Available for work</p>
+        <h1 class="projects-hero__title">Let's build something <span class="swap-word" id="swapWord"><span
+              class="swap-word__inner">bold</span></span></h1>
+        <p class="projects-hero__sub">Whether it's a full website or a brand from scratch, pick a channel below and
+          let's talk.</p>
+      </div>
+    </section>
+
+    <section class="hp2">
+      <div class="hp2__form-wrap">
+        <div class="hp2__form-head">
+          <p class="hp2__form-eyebrow">Start a project</p>
+          <h2 class="hp2__form-title">Tell me what you're building.</h2>
+        </div>
+
+
+        <form class="cform" id="hireForm" novalidate>
+          <div class="cform__row">
+            <div class="cform__field">
+              <input type="text" id="cf-first" name="firstName" class="cform__input" required autocomplete="given-name">
+              <label for="cf-first" class="cform__label">First name</label>
+              <span class="cform__line"></span>
+            </div>
+            <div class="cform__field">
+              <input type="text" id="cf-last" name="lastName" class="cform__input" required autocomplete="family-name">
+              <label for="cf-last" class="cform__label">Last name</label>
+              <span class="cform__line"></span>
+            </div>
+          </div>
+
+          <div class="cform__row">
+            <div class="cform__field">
+              <input type="email" id="cf-email" name="email" class="cform__input" required autocomplete="email">
+              <label for="cf-email" class="cform__label">Email</label>
+              <span class="cform__line"></span>
+            </div>
+            <div class="cform__field">
+              <input type="text" id="cf-company" name="company" class="cform__input" autocomplete="organization">
+              <label for="cf-company" class="cform__label">Company <span
+                  class="cform__optional">(optional)</span></label>
+              <span class="cform__line"></span>
+            </div>
+          </div>
+
+          <div class="cform__row">
+            <div class="cform__field cform__field--select" id="cf-typeWrap">
+              <button type="button" class="cform__select" id="cf-typeBtn" aria-haspopup="listbox" aria-expanded="false">
+                <span class="cform__select-value" id="cf-typeValue">&nbsp;</span>
+              </button>
+              <label for="cf-typeBtn" class="cform__label" id="cf-typeLabel">Project type</label>
+              <span class="cform__line"></span>
+              <svg class="cform__chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <ul class="cform__options" id="cf-typeOptions" role="listbox" tabindex="-1">
+                <li role="option" data-value="Website">Website</li>
+                <li role="option" data-value="Brand identity">Brand identity</li>
+                <li role="option" data-value="Web + brand">Web + brand</li>
+                <li role="option" data-value="Social kit">Social kit</li>
+                <li role="option" data-value="Something else">Something else</li>
+              </ul>
+              <input type="hidden" name="projectType" id="cf-typeInput">
+            </div>
+          </div>
+
+          <div class="cform__row">
+            <div class="cform__field cform__field--area">
+              <textarea id="cf-detail" name="detail" class="cform__input cform__textarea" rows="1"></textarea>
+              <label for="cf-detail" class="cform__label">Project detail <span
+                  class="cform__optional">(optional)</span></label>
+              <span class="cform__line"></span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn--solid cform__submit" data-split-hover>
+            <span>Send message</span>
+          </button>
+        </form>
+      </div>
+      <aside class="hp2__info">
+        <div class="hp2__info-block">
+          <p class="hp2__info-title">Email</p>
+          <a href="mailto:themed.edits.co@gmail.com" class="hp2__info-link" data-split-hover>
+            <span>themed.edits.co@gmail.com</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div class="hp2__info-block">
+          <p class="hp2__info-title">WhatsApp</p>
+          <a href="https://wa.me/923323954620" target="_blank" rel="noopener" class="hp2__info-link" data-split-hover>
+            <span>+92 332 3954620</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div class="hp2__info-block">
+          <p class="hp2__info-title">Social</p>
+          <a href="https://www.instagram.com/themed.edits.te" target="_blank" rel="noopener" class="hp2__info-link"
+            data-split-hover>
+            <span>Instagram</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <a href="https://www.linkedin.com/in/themededits" target="_blank" rel="noopener" class="hp2__info-link"
+            data-split-hover>
+            <span>LinkedIn</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </aside>
+
+
+      <div class="hp2__strip">
+        <p>Remote studio. Working with clients worldwide, across time zones.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer__top">
+      <nav class="footer__nav footer__nav--left">
+        <div>
+          <p class="footer__col-title">Explore</p>
+          <div class="footer__col-links">
+            <a href="/" data-split-hover>Home</a>
+            <a href="/projects/" data-split-hover>Web portfolio</a>
+            <a href="/projects/" data-split-hover>Graphics portfolio</a>
+            <a href="/index.html#about" data-split-hover>About</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="footer__nav footer__nav--right">
+        <div>
+          <p class="footer__col-title">Contact</p>
+          <div class="footer__col-links">
+            <a href="mailto:themed.edits.co@gmail.com" data-split-hover>Email</a>
+            <a href="https://www.instagram.com/themed.edits.te" target="_blank" rel="noopener"
+              data-split-hover>Instagram</a>
+            <a href="https://www.linkedin.com/in/themededits" target="_blank" rel="noopener"
+              data-split-hover>LinkedIn</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__brand">
+      <img src="../assets/footer-logo-text.svg" alt="Themed" class="footer__brand-svg">
+      <div class="footer__brand-word">
+        <span>E</span><span>D</span><span>I</span><span>T</span><span>S</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>document.body.dataset.assetsRoot = '../';</script>
+  <script src="../js/page-transition.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="../js/script.js"></script>
+  <script>window.SWAP_WORDS = ['bold', 'clean', 'sharp', 'lasting', 'yours'];</script>
+  <script src="../js/hero-word-swap.js"></script>
+  <script src="../js/hire-form.js"></script>
+</body>
+
+</html>

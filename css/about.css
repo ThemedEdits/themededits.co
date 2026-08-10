@@ -57,14 +57,14 @@
 .about-intro__meta-num {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(26px, 2.8vw, 34px);
+  font-size: clamp(30px, 3.6vw, 44px);
   color: var(--ink);
   line-height: 1;
 }
 
 
 .about-intro__meta-suffix {
-  font-size: .8em;
+  /* font-size: .8em; */
   color: var(--amber);
 }
 

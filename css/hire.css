@@ -8,7 +8,7 @@
 
 .hp2 {
   padding: 0 clamp(20px, 6vw, 90px) clamp(80px, 10vw, 140px);
-  max-width: 1200px;
+  /* max-width: 1200px; */
   display: grid;
   grid-template-columns: 1fr 340px;
   gap: clamp(40px, 6vw, 100px);

@@ -50,7 +50,7 @@
         <li class="site-nav__item"><a href="./" class="site-nav__link" data-split-hover>Web portfolio</a></li>
         <li class="site-nav__item"><a href="./" class="site-nav__link" data-split-hover>Graphics portfolio</a>
         </li>
-        <li class="site-nav__item"><a href="/hire/" class="site-nav__link" data-split-hover>About</a></li>
+        <li class="site-nav__item"><a href="/about/" class="site-nav__link" data-split-hover>About</a></li>
         <li class="site-nav__item"><a href="/hire/" class="site-nav__link " data-split-hover>Hire me!</a>
         </li>
       </ol>
@@ -69,10 +69,13 @@
   <main>
     <section class="projects-trail" id="projectsTrail">
       <div class="projects-trail__hero">
-  <p class="projects-hero__eyebrow">Selected work</p>
-  <h1 class="projects-hero__title">Every project starts with a great <span class="swap-word" id="swapWord"><span class="swap-word__inner">website</span></span></h1>
-  <p class="projects-hero__sub">A running record of sites shipped and identities built. Scroll to follow the trail.</p>
-</div>
+        <p class="projects-hero__eyebrow" data-reveal="left">Selected work</p>
+        <h1 class="projects-hero__title" data-reveal="left" style="--reveal-delay: 0.1s">Every project starts with a great <span class="swap-word"
+            id="swapWord"><span class="swap-word__inner">website</span></span></h1>
+        <p class="projects-hero__sub" data-reveal="left" style="--reveal-delay: 0.2s">A running record of sites shipped and identities built. Scroll
+          to follow the
+          trail.</p>
+      </div>
 
       <canvas class="projects-trail__canvas" id="trailCanvas"></canvas>
       <div class="projects-trail__items" id="projectsTrailItems">
@@ -118,13 +121,15 @@
     </div>
   </footer>
   <script>document.body.dataset.assetsRoot = '../';</script>
-<script src="../js/page-transition.js"></script>
+  <script src="../js/page-transition.js"></script>
+  <script src="../js/reveal.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="../js/script.js"></script>
   <script src="../js/portfolio-items.js"></script>
   <script src="../js/portfolio-card.js"></script>
-  <script src="../js/projects-page.js"></script><script>window.SWAP_WORDS = ['website', 'brand', 'identity', 'campaign', 'story'];</script>
-<script src="../js/hero-word-swap.js"></script>
+  <script src="../js/projects-page.js"></script>
+  <script>window.SWAP_WORDS = ['website', 'brand', 'identity', 'campaign', 'story'];</script>
+  <script src="../js/hero-word-swap.js"></script>
 </body>
 
 </html>

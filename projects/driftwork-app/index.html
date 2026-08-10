@@ -68,7 +68,7 @@
   <main>
     <section class="pd">
       <div class="pd__left">
-        <div class="pd__top-row">
+        <div class="pd__top-row" data-reveal="fade">
           <a href="/projects/" class="pd__back" data-split-hover>Back to work</a>
           <a href="#" class="pd__live-cta" id="pdLiveCta" data-split-hover style="display:none;">
             <span>Visit live site</span>
@@ -83,18 +83,18 @@
         </div>
         <div class="pd__rule"></div>
 
-        <h1 class="pd__title" id="pdTitle"></h1>
-        <p class="pd__desc" id="pdDesc"></p>
+        <h1 class="pd__title" id="pdTitle" data-reveal="fade" style="--reveal-delay: 0.15s"></h1>
+        <p class="pd__desc" id="pdDesc" data-reveal="fade" style="--reveal-delay: 0.3s"></p>
 
-        <ul class="pd__services" id="pdServices"></ul>
+        <ul class="pd__services" id="pdServices" data-reveal="fade" style="--reveal-delay: 0.45s"></ul>
 
-        <div class="pd__nav">
+        <div class="pd__nav" >
           <a href="#" class="pd__nav-link" id="pdPrev" data-split-hover>Previous</a>
           <a href="#" class="pd__nav-link" id="pdNext" data-split-hover>Next</a>
         </div>
       </div>
 
-      <div class="pd__right" id="pdRight">
+      <div class="pd__right" id="pdRight" >
         <!-- gallery images injected by js/project-detail.js -->
       </div>
     </section>
@@ -134,8 +134,9 @@
     </div>
   </footer>
 
-  <script>document.body.dataset.assetsRoot = '../../';</script>
+  <script>document.body.dataset.assetsRoot = '../';</script>
   <script src="../../js/page-transition.js"></script>
+  <script src="../../js/reveal.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="../../js/script.js"></script>
   <script src="../../js/portfolio-items.js"></script>

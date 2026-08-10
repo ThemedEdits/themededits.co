@@ -142,3 +142,92 @@ requestAnimationFrame(raf);
 
 
 
+(() => {
+  'use strict';
+
+  const STEPS = [
+    { label: 'Step 01', cat: 'Discovery Call', title: 'Understanding Your Brand', mid: "We start with a conversation about your goals, audience, and what success looks like for your brand." },
+    { label: 'Step 02', cat: 'Design Direction', title: 'Moodboards & Wireframes', mid: "Visual direction and structure get mapped out before a single pixel is finalized." },
+    { label: 'Step 03', cat: 'Build & Refine', title: 'Development & Revisions', mid: "The site or identity gets built, tested, and refined with you until it's exactly right." }
+  ];
+
+  const panels = document.querySelectorAll('.hiw__panel');
+  const prevBtn = document.getElementById('hiwPrev');
+  const nextBtn = document.getElementById('hiwNext');
+  const nextBtnBig = document.getElementById('hiwNextBtn');
+  const midText = document.getElementById('hiwMidText');
+  const nextLabel = document.getElementById('hiwNextLabel');
+  const nextTitle = document.getElementById('hiwNextTitle');
+  const stepLabel = document.querySelector('.hiw__pagination .hiw__step-label');
+
+  if (!panels.length) return;
+
+  let current = 0;
+
+  function render() {
+    panels.forEach((p, i) => {
+      p.classList.toggle('is-active', i === current);
+    });
+
+    const nextIndex = (current + 1) % STEPS.length;
+
+    midText.textContent = STEPS[current].mid;
+    nextLabel.textContent = STEPS[nextIndex].label;
+    nextTitle.textContent = STEPS[nextIndex].title;
+
+    stepLabel.textContent = STEPS[current].label; // ✅ THIS FIX
+
+    prevBtn.disabled = current === 0;
+  }
+
+  function goTo(i) {
+    current = Math.max(0, Math.min(STEPS.length - 1, i));
+    render();
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo((current + 1) % STEPS.length));
+  nextBtnBig.addEventListener('click', () => goTo((current + 1) % STEPS.length));
+
+  render();
+})();
+
+
+
+
+
+document.querySelectorAll('.finale__rating').forEach(ratingEl => {
+  const rating = parseFloat(ratingEl.dataset.rating) || 0;
+  const starsContainer = ratingEl.querySelector('.finale__stars');
+
+  const starSVG = `
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 17.27L18.18 21 16.54 13.97 
+               22 9.24l-7.19-.61L12 2 9.19 8.63 
+               2 9.24l5.46 4.73L5.82 21z"/>
+    </svg>
+  `;
+
+  starsContainer.innerHTML = '';
+
+  for (let i = 0; i < 5; i++) {
+    const star = document.createElement('div');
+    star.className = 'finale__star';
+
+    const base = document.createElement('div');
+    base.className = 'finale__star--base';
+    base.innerHTML = starSVG;
+
+    const fill = document.createElement('div');
+    fill.className = 'finale__star--fill';
+    fill.innerHTML = starSVG;
+
+    // ⭐ FIX: cleaner fill calculation
+    let fillAmount = Math.max(0, Math.min(1, rating - i));
+    fill.style.width = (fillAmount * 100) + '%';
+
+    star.appendChild(base);
+    star.appendChild(fill);
+    starsContainer.appendChild(star);
+  }
+});

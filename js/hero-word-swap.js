@@ -26,6 +26,34 @@
     splitToChars(word).forEach(el => inner.appendChild(el));
   }
 
+  // measure every word off-screen (using the live element's computed font)
+  // and lock the swap-word box to the widest one, so swapping words never
+  // causes a reflow/layout shift on desktop or mobile.
+  function lockSwapWidth(words) {
+    const measurer = document.createElement('span');
+    measurer.style.cssText = `
+      position: absolute;
+      visibility: hidden;
+      white-space: nowrap;
+      pointer-events: none;
+      top: -9999px;
+      left: -9999px;
+    `;
+    const cs = getComputedStyle(inner);
+    measurer.style.font = cs.font;
+    measurer.style.letterSpacing = cs.letterSpacing;
+    document.body.appendChild(measurer);
+
+    let maxWidth = 0;
+    words.forEach(word => {
+      measurer.textContent = word;
+      maxWidth = Math.max(maxWidth, measurer.getBoundingClientRect().width);
+    });
+
+    document.body.removeChild(measurer);
+    wrap.style.setProperty('--swap-w', Math.ceil(maxWidth) + 'px');
+  }
+
   // returns an array of indices (0..len-1) in the order they should animate
   function getOrder(len, mode) {
     const indices = Array.from({ length: len }, (_, idx) => idx);
@@ -85,6 +113,13 @@
     }, outTotalMs);
   }
 
+  lockSwapWidth(WORDS);
   renderWord(WORDS[0]);
   setInterval(swap, SWAP_MS);
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => lockSwapWidth(WORDS), 150);
+  });
 })();

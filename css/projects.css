@@ -40,11 +40,13 @@
   position: relative;
   display: inline-block;
   color: var(--amber);
+  vertical-align: bottom;
+  min-width: var(--swap-w, auto);
 }
 
 .swap-word__inner{
   display: inline-block;
-  white-space: nowrap;
+  white-space: pre;
 }
 
 .swap-word__char{
@@ -232,6 +234,9 @@
 }
 
 @media (max-width: 780px){
+  .projects-trail__canvas{
+    display:none;
+  }
   .p-card{ width: 100%; }
   .p-card--trail[data-side="left"],
   .p-card--trail[data-side="right"],

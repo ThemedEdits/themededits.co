@@ -6,7 +6,7 @@
   overlay.innerHTML = `
     <div class="page-transition__panel"></div>
     <div class="page-transition__mark">
-      <img src="${document.body.dataset.assetsRoot || ''}assets/logo.png" alt="">
+      <img src="${document.body.dataset.assetsRoot || ''}assets/logo.png" alt="transition-img-logo">
     </div>
   `;
   document.documentElement.appendChild(overlay);

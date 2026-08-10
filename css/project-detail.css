@@ -113,7 +113,7 @@
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
-  padding-top: 10rem;
+  padding-top: 8rem;
   padding-right: clamp(24px, 4vw, 56px);
 }
 

@@ -69,24 +69,24 @@
   <main>
     <section class="projects-trail projects-trail-hire" id="hireHero">
       <div class="projects-trail__hero">
-        <p class="projects-hero__eyebrow">Available for work</p>
-        <h1 class="projects-hero__title">Let's build something <span class="swap-word" id="swapWord"><span
+        <p class="projects-hero__eyebrow" data-reveal="left">Available for work</p>
+        <h1 class="projects-hero__title" data-reveal="left" style="--reveal-delay: 0.1s">Let's build something <span class="swap-word" id="swapWord"><span
               class="swap-word__inner">bold</span></span></h1>
-        <p class="projects-hero__sub">Whether it's a full website or a brand from scratch, pick a channel below and
+        <p class="projects-hero__sub" data-reveal="left" style="--reveal-delay: 0.2s">Whether it's a full website or a brand from scratch, pick a channel below and
           let's talk.</p>
       </div>
     </section>
 
     <section class="hp2">
       <div class="hp2__form-wrap">
-        <div class="hp2__form-head">
+        <div class="hp2__form-head" data-reveal="left">
           <p class="hp2__form-eyebrow">Start a project</p>
           <h2 class="hp2__form-title">Tell me what you're building.</h2>
         </div>
 
 
         <form class="cform" id="hireForm" novalidate>
-          <div class="cform__row">
+          <div class="cform__row" data-reveal="fade">
             <div class="cform__field">
               <input type="text" id="cf-first" name="firstName" class="cform__input" required autocomplete="given-name">
               <label for="cf-first" class="cform__label">First name</label>
@@ -99,7 +99,7 @@
             </div>
           </div>
 
-          <div class="cform__row">
+          <div class="cform__row" data-reveal="fade" style="--reveal-delay: 0.1s">
             <div class="cform__field">
               <input type="email" id="cf-email" name="email" class="cform__input" required autocomplete="email">
               <label for="cf-email" class="cform__label">Email</label>
@@ -113,7 +113,7 @@
             </div>
           </div>
 
-          <div class="cform__row">
+          <div class="cform__row" data-reveal="fade" style="--reveal-delay: 0.2s">
             <div class="cform__field cform__field--select" id="cf-typeWrap">
               <button type="button" class="cform__select" id="cf-typeBtn" aria-haspopup="listbox" aria-expanded="false">
                 <span class="cform__select-value" id="cf-typeValue">&nbsp;</span>
@@ -135,7 +135,7 @@
             </div>
           </div>
 
-          <div class="cform__row">
+          <div class="cform__row" data-reveal="fade" style="--reveal-delay: 0.3s">
             <div class="cform__field cform__field--area">
               <textarea id="cf-detail" name="detail" class="cform__input cform__textarea" rows="1"></textarea>
               <label for="cf-detail" class="cform__label">Project detail <span
@@ -144,13 +144,13 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn--solid cform__submit" data-split-hover>
+          <button type="submit" class="btn btn--solid cform__submit" data-split-hover >
             <span>Send message</span>
           </button>
         </form>
       </div>
       <aside class="hp2__info">
-        <div class="hp2__info-block">
+        <div class="hp2__info-block" data-reveal="fade">
           <p class="hp2__info-title">Email</p>
           <a href="mailto:themed.edits.co@gmail.com" class="hp2__info-link" data-split-hover>
             <span>themed.edits.co@gmail.com</span>
@@ -158,7 +158,7 @@
           </a>
         </div>
 
-        <div class="hp2__info-block">
+        <div class="hp2__info-block" data-reveal="fade" style="--reveal-delay: 0.1s">
           <p class="hp2__info-title">WhatsApp</p>
           <a href="https://wa.me/923323954620" target="_blank" rel="noopener" class="hp2__info-link" data-split-hover>
             <span>+92 332 3954620</span>
@@ -166,7 +166,7 @@
           </a>
         </div>
 
-        <div class="hp2__info-block">
+        <div class="hp2__info-block" data-reveal="fade" style="--reveal-delay: 0.2s">
           <p class="hp2__info-title">Social</p>
           <a href="https://www.instagram.com/themed.edits.te" target="_blank" rel="noopener" class="hp2__info-link"
             data-split-hover>
@@ -182,7 +182,7 @@
       </aside>
 
 
-      <div class="hp2__strip">
+      <div class="hp2__strip" data-reveal="fade" style="--reveal-delay: 0.4s">
         <p>Remote studio. Working with clients worldwide, across time zones.</p>
       </div>
     </section>
@@ -224,6 +224,7 @@
 
   <script>document.body.dataset.assetsRoot = '../';</script>
   <script src="../js/page-transition.js"></script>
+  <script src="../js/reveal.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="../js/script.js"></script>
   <script>window.SWAP_WORDS = ['bold', 'clean', 'sharp', 'lasting', 'yours'];</script>

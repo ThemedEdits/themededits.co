@@ -18,7 +18,7 @@
       fillCircle.style.strokeDashoffset = offset;
     });
 
-    const duration = 1400;
+    const duration = 3400;
     const start = performance.now();
 
     function tick(now){

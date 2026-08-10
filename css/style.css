@@ -138,11 +138,15 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  max-width: 100%;
 }
 
 html.nav-locked {
   overflow: hidden;
   height: 100%;
+}
+html, body{
+  overflow-x: hidden;
 }
 
 body {
@@ -215,7 +219,7 @@ p {
    of whatever transitions that element already has for hover
    states etc, because reveal state lives on a wrapper.
    ========================================================= */
-[data-reveal]{
+[data-reveal] {
   opacity: 0;
   transform: translateY(32px) scale(.94);
   filter: blur(14px);
@@ -224,27 +228,52 @@ p {
   will-change: opacity, transform, filter;
 }
 
-[data-reveal].is-revealed{
+[data-reveal].is-revealed {
   opacity: 1;
   transform: translateY(0) scale(1);
   filter: blur(0px);
 }
 
 /* variants — set data-reveal="fade", "scale", "left", "right" */
-[data-reveal="fade"]{ transform: none; }
-[data-reveal="fade"].is-revealed{ transform: none; }
+[data-reveal="fade"] {
+  transform: none;
+}
 
-[data-reveal="scale"]{ transform: scale(.85); }
-[data-reveal="scale"].is-revealed{ transform: scale(1); }
+[data-reveal="fade"].is-revealed {
+  transform: none;
+}
 
-[data-reveal="left"]{ transform: translateX(-40px) scale(.94); }
-[data-reveal="left"].is-revealed{ transform: translateX(0) scale(1); }
+[data-reveal="scale"] {
+  transform: scale(.85);
+}
 
-[data-reveal="right"]{ transform: translateX(40px) scale(.94); }
-[data-reveal="right"].is-revealed{ transform: translateX(0) scale(1); }
+[data-reveal="scale"].is-revealed {
+  transform: scale(1);
+}
 
-@media (prefers-reduced-motion: reduce){
-  [data-reveal]{ transition: none; opacity: 1; transform: none; filter: none; }
+[data-reveal="left"] {
+  transform: translateX(-40px) scale(.94);
+}
+
+[data-reveal="left"].is-revealed {
+  transform: translateX(0) scale(1);
+}
+
+[data-reveal="right"] {
+  transform: translateX(40px) scale(.94);
+}
+
+[data-reveal="right"].is-revealed {
+  transform: translateX(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transition: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
 
 /* =========================================================

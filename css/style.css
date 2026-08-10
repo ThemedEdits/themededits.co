@@ -145,7 +145,9 @@ html.nav-locked {
   overflow: hidden;
   height: 100%;
 }
-html, body{
+
+html,
+body {
   overflow-x: hidden;
 }
 
@@ -158,6 +160,32 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   position: relative;
+}
+
+/* =========================================================
+   Custom scrollbar — thin, minimal, on-brand
+   ========================================================= */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(251, 174, 23, .4);
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--amber);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(251, 174, 23, .4) transparent;
 }
 
 img {

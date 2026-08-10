@@ -1,8 +1,3 @@
-/* =========================================================
-   Reusable portfolio data source — every project card /
-   hero slide anywhere on the site reads from this array.
-   Edit here, it reflects everywhere.
-   ========================================================= */
 const PORTFOLIO_ITEMS = [
   {
     id: "numeriq-global",
@@ -10,8 +5,9 @@ const PORTFOLIO_ITEMS = [
     subtitle: "Portfolio Website + SEO",
     services: ["UI/UX Design", "Web Design", "Web Development", "SEO"],
     description: "A performance-first portfolio site built for a global consulting brand, paired with on-page SEO to get them found.",
-    category: "web", // "web" | "graphics"
-     liveUrl: "https://numeriqglobal.org",
+    category: "web",
+    type: "project",
+    liveUrl: "https://numeriqglobal.org",
     thumbnail: "/assets/numeriq-global-hero.png",
     heroImage: "/assets/numeriq-global-hero.webp",
     gallery: [
@@ -32,6 +28,7 @@ const PORTFOLIO_ITEMS = [
     services: ["UI/UX Design", "Web Design", "Web Development", "SEO"],
     description: "A full visual identity system, from logo mark to packaging, for a boutique skincare label.",
     category: "graphics",
+    type: "project",
     thumbnail: "/assets/aurelia-hero.png",
     heroImage: "/assets/aurelia-hero.png",
     gallery: [
@@ -47,6 +44,7 @@ const PORTFOLIO_ITEMS = [
     services: ["UI/UX Design", "Web Design", "Web Development", "SEO"],
     description: "Marketing site and UI kit for a remote-work SaaS product, built for fast onboarding conversion.",
     category: "web",
+    type: "project",
     thumbnail: "/assets/driftwork-hero.png",
     heroImage: "/assets/driftwork-hero.png",
     gallery: [
@@ -56,3 +54,39 @@ const PORTFOLIO_ITEMS = [
     link: "#"
   }
 ];
+
+/* =========================================================
+   Social media posters — single-image pieces. Clicking the
+   card opens a fullscreen lightbox instead of a detail page.
+   ========================================================= */
+const SOCIAL_POSTERS = [
+  {
+    id: "poster-01",
+    title: "Launch Day Promo",
+    subtitle: "Instagram Post",
+    category: "graphics",
+    type: "poster",
+    thumbnail: "/assets/logo.png",
+    fullImage: "/assets/logo.png"
+  },
+  {
+    id: "poster-02",
+    title: "Weekend Sale",
+    subtitle: "Instagram Story",
+    category: "graphics",
+    type: "poster",
+    thumbnail: "/assets/posters/poster-02.jpg",
+    fullImage: "/assets/posters/poster-02.jpg"
+  },
+  {
+    id: "poster-03",
+    title: "New Collection",
+    subtitle: "Facebook Post",
+    category: "graphics",
+    type: "poster",
+    thumbnail: "/assets/posters/poster-03.jpg",
+    fullImage: "/assets/posters/poster-03.jpg"
+  }
+];
+
+const ALL_PORTFOLIO_ITEMS = [...PORTFOLIO_ITEMS, ...SOCIAL_POSTERS];

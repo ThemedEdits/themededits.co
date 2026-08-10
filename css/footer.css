@@ -8,7 +8,7 @@ html, body{
   bottom: 0;
   width: 100%;
   height: 100vh;
-  z-index: -1;
+  z-index: 0; /* was: -1 */
   transform: translateZ(0);
   isolation: isolate;
   display: flex;

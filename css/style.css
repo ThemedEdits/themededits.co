@@ -928,8 +928,8 @@ p {
 
 .services__card-icon {
   position: absolute;
-  top: clamp(8px, 1.8vw, 22px);
-  left: clamp(8px, 1.8vw, 22px);
+  top: clamp(8px, 1.8vw, 16px);
+  left: clamp(8px, 1.8vw, 16px);
   width: 54px;
   height: 54px;
   display: flex;
@@ -940,9 +940,11 @@ p {
 }
 
 .services__card-icon svg {
-  width: 26px;
-  height: 26px;
+  width: 42px;
+  height: 42px;
+  fill: var(--ink);
 }
+
 
 
 /* the chopped-corner image frame: two opposite corners squared off

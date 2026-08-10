@@ -28,7 +28,7 @@
     itemsWrap.innerHTML = '';
     const mobile = isMobile();
 
-    PORTFOLIO_ITEMS.forEach((item, i) => {
+    ALL_PORTFOLIO_ITEMS.forEach((item, i) => {
       const node = createPortfolioCard(item);
       node.classList.add('p-card--trail');
       node.dataset.revealed = 'false';
@@ -56,12 +56,13 @@
     const rect = itemsWrap.getBoundingClientRect();
     trailDocTop = docTop(trail);
 
-    // origin = exact center of the viewport, in document coordinates,
-    // captured once on load (before any scroll) so it's a fixed anchor
-    const viewportCenterDocY = window.scrollY + window.innerHeight / 2;
-    const viewportCenterX = window.innerWidth / 2;
-
-    canvasTopY = Math.max(viewportCenterDocY - trailDocTop, 0);
+    // Origin anchored to the trail section's own top edge in document
+    // coordinates — NOT viewport-center-at-load-time. This is stable
+    // regardless of scroll position when init()/measure() runs, so a
+    // mid-page refresh still produces a correct origin and the trail
+    // always starts from the same place on reload from anywhere.
+    const originDocY = trailDocTop;
+    canvasTopY = 0;
 
     rectW = rect.width;
     const trailHeight = trail.getBoundingClientRect().height;
@@ -74,36 +75,33 @@
     canvas.style.height = rectH + 'px';
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-    const originDocY = trailDocTop + canvasTopY;
-
-    // convert viewport-center X (a fixed-viewport coordinate) into the
-    // canvas's local coordinate space, which is anchored to itemsWrap's
-    // left edge, not the viewport's left edge
-    const originX = viewportCenterX - rect.left;
-
+    const originX = rectW / 2;
     const originPoint = { x: originX, y: 0, centerY: 0, h: 0 };
 
     const cardPoints = cards.map(card => {
+      const prevTransform = card.style.transform;
+      const prevTransition = card.style.transition;
+      card.style.transition = 'none';
+      card.style.transform = 'none'; // measure the card's LAID-OUT position, ignoring the pre-reveal translateY/scale/rotate offset
+
       const cardRect = card.getBoundingClientRect();
-      const dot = card.querySelector('.p-card__origin-dot');
-      const dotRect = dot.getBoundingClientRect();
-      const dotDocY = docTop(dot);
+      const cardDocTop = docTop(card);
+      const dotRect = card.querySelector('.p-card__origin-dot').getBoundingClientRect();
+
+      card.style.transform = prevTransform;
+      card.style.transition = prevTransition;
+
       return {
         x: dotRect.left - rect.left + dotRect.width / 2,
-        y: (dotDocY - trailDocTop) - canvasTopY,
-        centerY: (dotDocY - trailDocTop) - canvasTopY,
+        y: (cardDocTop - trailDocTop) - canvasTopY,
+        centerY: (cardDocTop - trailDocTop) - canvasTopY,
         h: cardRect.height,
-        docY: dotDocY
+        docY: cardDocTop
       };
     });
 
     points = [originPoint, ...cardPoints];
     cardDocY = [originDocY, ...cardPoints.map(p => p.docY)];
-  }
-
-  function docXCenter(el) {
-    const r = el.getBoundingClientRect();
-    return r.left + r.width / 2;
   }
 
   function curvePoint(t) {
@@ -197,6 +195,26 @@
     return sp;
   }
 
+  function drawOriginDots() {
+    points.forEach((p, i) => {
+      if (i === 0) return; // skip the origin/start point, only mark card tops
+      const card = cards[i - 1];
+      if (!card || card.dataset.revealed === 'true') return; // was: continue
+
+      const pulse = 0.5 + 0.5 * Math.sin(performance.now() / 450);
+      const radius = 4.5 + pulse * 2;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(251,174,23,0.85)';
+      ctx.shadowColor = '#fbae17';
+      ctx.shadowBlur = 12;
+      ctx.fill();
+      ctx.restore();
+    });
+  }
+
   function draw() {
     ctx.clearRect(0, 0, rectW, rectH);
     if (points.length < 2) return;
@@ -232,6 +250,7 @@
     ctx.stroke();
 
     drawSparks();
+    drawOriginDots();
   }
 
   function revealCard(card) {
@@ -281,7 +300,7 @@
       syncCardReveals();
 
       const diff = targetProgress - progress;
-      const lerpSpeed = 10; // higher = snappier catch-up, lower = floatier
+      const lerpSpeed = 10;
       progress += diff * (1 - Math.exp(-lerpSpeed * dt));
 
       if (Math.abs(targetProgress - progress) < 0.0005) {
@@ -301,9 +320,13 @@
       requestAnimationFrame(() => {
         measure();
         recomputeCardTs();
-        progress = 0;
-        targetProgress = 0;
         onScroll();
+        // start progress at the CURRENT scroll position (so a mid-page
+        // refresh correctly shows however much trail should already be
+        // drawn), not hardcoded to 0 — but since canvasTopY/points are
+        // now scroll-independent, this correctly reconstructs the full
+        // trail up to wherever the user actually is on reload
+        progress = targetProgress;
       });
     });
   }

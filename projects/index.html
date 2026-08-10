@@ -4,18 +4,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects — Themed Edits</title>
-  <meta name="description" content="Web and graphic design projects by Themed Edits.">
+
+  <title>Portfolio | Web &amp; Graphic Design Projects by Themed Edits</title>
+  <meta name="description"
+    content="Browse website and branding projects by Themed Edits, a Karachi based studio delivering full stack web builds and visual identities for clients worldwide.">
+  <meta name="keywords"
+    content="web design portfolio, graphic design portfolio Karachi, branding projects Pakistan, website development portfolio, Themed Edits work">
+  <meta name="author" content="Hammad Ahmed">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://themededits.vercel.app/projects/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Themed Edits">
+  <meta property="og:title" content="Portfolio | Web &amp; Graphic Design Projects by Themed Edits">
+  <meta property="og:description"
+    content="A running record of websites shipped and identities built by Themed Edits, for clients in Karachi and around the world.">
+  <meta property="og:url" content="https://themededits.vercel.app/projects/">
+  <meta property="og:image" content="https://themededits.vercel.app/assets/preview.webp">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Portfolio | Web &amp; Graphic Design Projects by Themed Edits">
+  <meta name="twitter:description"
+    content="A running record of websites shipped and identities built by Themed Edits, for clients in Karachi and around the world.">
+  <meta name="twitter:image" content="https://themededits.vercel.app/assets/preview.webp">
+
+  <meta name="theme-color" content="#0d0d0d">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
     rel="stylesheet">
 
+  <link rel="icon" type="image/png" href="../assets/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="../assets/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Themed Edits" />
+  <link rel="manifest" href="../assets/favicon/site.webmanifest" />
+
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/projects.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/page-transition.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Themed Edits Portfolio",
+    "url": "https://themededits.vercel.app/projects/",
+    "isPartOf": {
+      "@type": "Organization",
+      "name": "Themed Edits",
+      "url": "https://themededits.vercel.app/"
+    },
+    "description": "Website and graphic design projects delivered by Themed Edits for clients in Karachi and worldwide."
+  }
+  </script>
 </head>
 
 <body>
@@ -23,7 +71,7 @@
   <div class="grain"></div>
 
   <header class="site-header">
-    <a href="../index.html" class="logo" data-split-hover aria-label="Themed Edits — home">
+    <a href="../" class="logo" data-split-hover aria-label="Themed Edits home">
       <img src="../assets/logo.png" alt="Themed Edits logo" class="logo__mark">
       <span class="logo__text">
         <span class="logo__line">Themed</span>
@@ -91,10 +139,11 @@
         <div>
           <p class="footer__col-title">Explore</p>
           <div class="footer__col-links">
-            <a href="../index.html#top" data-split-hover>Home</a>
-            <a href="./index.html" data-split-hover>Web portfolio</a>
-            <a href="./index.html" data-split-hover>Graphics portfolio</a>
-            <a href="../index.html#about" data-split-hover>About</a>
+            <a href="../#top" data-split-hover>Home</a>
+            <a href="./" data-split-hover>Web portfolio</a>
+            <a href="./" data-split-hover>Graphics portfolio</a>
+            <a href="/about/" data-split-hover>About</a>
+            <a href="/hire/" data-split-hover>Hire me</a>
           </div>
         </div>
       </nav>
@@ -125,6 +174,7 @@
   <script src="../js/reveal.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="../js/script.js"></script>
+  <script src="../js/lightbox.js"></script>
   <script src="../js/portfolio-items.js"></script>
   <script src="../js/portfolio-card.js"></script>
   <script src="../js/projects-page.js"></script>

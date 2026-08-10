@@ -1,11 +1,15 @@
-/* =========================================================
-   Reusable portfolio card — builds a DOM node from a
-   PORTFOLIO_ITEMS entry. Used on the /projects/ trail and
-   anywhere else a project card is needed.
-   ========================================================= */
 function createPortfolioCard(item){
-  const el = document.createElement('a');
-  el.href = `/projects/${item.id}`;
+  const isPoster = item.type === 'poster';
+  const el = document.createElement(isPoster ? 'button' : 'a');
+
+  if (isPoster){
+    el.type = 'button';
+    el.dataset.lightboxSrc = item.fullImage;
+    el.dataset.lightboxTitle = item.title;
+  } else {
+    el.href = `/projects/${item.id}`;
+  }
+
   el.className = 'p-card';
   el.setAttribute('data-category', item.category);
   el.setAttribute('aria-label', `${item.title} — ${item.subtitle}`);
@@ -17,11 +21,17 @@ function createPortfolioCard(item){
         <span class="p-card__glass-inner">
           <span class="p-card__cat">${item.category === 'web' ? 'Web' : 'Graphics'}</span>
           <span class="p-card__title">${item.title}</span>
-          <span class="p-card__link" data-split-hover>View project <span aria-hidden="true">→</span></span>
+          <span class="p-card__link" data-split-hover>${isPoster ? 'View poster' : 'View project'} <span aria-hidden="true">→</span></span>
         </span>
       </span>
     </span>
   `;
+
+  if (isPoster){
+    el.addEventListener('click', () => {
+      window.__openLightbox && window.__openLightbox(item.fullImage, item.title);
+    });
+  }
 
   if (window.__splitHoverInit){
     el.querySelectorAll('[data-split-hover]').forEach(window.__splitHoverInit);

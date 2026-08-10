@@ -9,7 +9,7 @@ const slug = window.location.pathname.split('/').filter(Boolean).filter(s => s !
   const prevItem = PORTFOLIO_ITEMS[(index - 1 + PORTFOLIO_ITEMS.length) % PORTFOLIO_ITEMS.length];
   const nextItem = PORTFOLIO_ITEMS[(index + 1) % PORTFOLIO_ITEMS.length];
 
-  document.title = `${item.title} — Themed Edits`;
+  document.title = `${item.title} | ${item.subtitle} | Themed Edits`;
   document.getElementById('pageTitle').textContent = `${item.title} — Themed Edits`;
   document.getElementById('pageDesc').setAttribute('content', item.description);
 

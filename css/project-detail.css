@@ -4,19 +4,20 @@
    ========================================================= */
 .pd{
   display: flex;
+  align-items: flex-start; /* add this line */
   min-height: 100vh;
 }
 
 .pd__left{
   position: sticky;
   top: 0;
-  height: 100vh;
+  /* remove: height: 100vh; */
+  /* remove: overflow-y: auto; */
   width: 38%;
   flex-shrink: 0;
   padding: calc(var(--header-h) + 32px) clamp(24px, 4vw, 56px) clamp(20px, 3vw, 32px);
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
 }
 
 .pd__back{

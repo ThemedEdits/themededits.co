@@ -2,13 +2,14 @@
    Project detail — pinned left panel, continuous scrolling
    right-side image column
    ========================================================= */
-.pd{
+.pd {
   display: flex;
-  align-items: flex-start; /* add this line */
+  align-items: flex-start;
+  /* add this line */
   min-height: 100vh;
 }
 
-.pd__left{
+.pd__left {
   position: sticky;
   top: 0;
   /* remove: height: 100vh; */
@@ -20,7 +21,7 @@
   flex-direction: column;
 }
 
-.pd__back{
+.pd__back {
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
@@ -30,13 +31,13 @@
   width: fit-content;
 }
 
-.pd__rule{
+.pd__rule {
   height: 1px;
-  background: rgba(245,243,238,.12);
+  background: rgba(245, 243, 238, .12);
   margin: 20px 0 24px;
 }
 
-.pd__title{
+.pd__title {
   font-family: var(--body);
   font-weight: 800;
   font-size: clamp(28px, 3.2vw, 44px);
@@ -44,7 +45,7 @@
   margin-bottom: 16px;
 }
 
-.pd__desc{
+.pd__desc {
   font-family: var(--font-body);
   font-size: clamp(15px, 1.2vw, 18px);
   color: var(--ink-dim);
@@ -52,7 +53,7 @@
   margin-bottom: clamp(20px, 3vw, 32px);
 }
 
-.pd__top-row{
+.pd__top-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -60,23 +61,23 @@
   margin-bottom: 0;
 }
 
-.pd__live-cta{
+.pd__live-cta {
   border: 1px solid var(--ink-dim);
   border-radius: 40px;
   padding: 2px 6px;
   font-size: clamp(12px, 1vw + 0.3rem, 16px);
 }
 
-.pd__live-cta-icon{
+.pd__live-cta-icon {
   display: inline-flex;
   transition: transform .3s var(--ease);
 }
 
-.pd__live-cta:hover .pd__live-cta-icon{
+.pd__live-cta:hover .pd__live-cta-icon {
   transform: translate(3px, -3px);
 }
 
-.pd__services{
+.pd__services {
   list-style: none;
   margin: 0 0 auto;
   padding: 0;
@@ -85,22 +86,30 @@
   gap: 6px;
 }
 
-.pd__service{
+.pd__service {
   font-family: var(--font-body);
   font-size: 15px;
   color: var(--ink);
 }
 
-.pd__nav{
+.pd__nav {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 16px;
   padding-top: 20px;
-  border-top: 1px solid rgba(245,243,238,.12);
-  margin-top: auto;
+  border-top: 1px solid rgba(245, 243, 238, .12);
+  margin-top: 1rem;
   padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
-.pd__nav-link{
+.pd__hire-cta {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  font-size: 12px;
+}
+
+.pd__nav-link {
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
@@ -108,8 +117,11 @@
   text-transform: uppercase;
   color: var(--ink-dim);
 }
+.pd__nav[data-reveal] {
+  transition-delay: 0.6s;
+}
 
-.pd__right{
+.pd__right {
   width: 62%;
   display: flex;
   gap: 0.5rem;
@@ -118,7 +130,7 @@
   padding-right: clamp(24px, 4vw, 56px);
 }
 
-.pd__image{
+.pd__image {
   width: 100%;
   display: block;
   object-fit: cover;
@@ -128,11 +140,12 @@
 /* =========================================================
    Responsive — stack on smaller screens, left panel un-pins
    ========================================================= */
-@media (max-width: 900px){
-  .pd{
+@media (max-width: 900px) {
+  .pd {
     flex-direction: column;
   }
-  .pd__left{
+
+  .pd__left {
     position: relative;
     top: auto;
     height: auto;
@@ -140,11 +153,26 @@
     width: 100%;
     padding: calc(var(--header-h) + 24px) 20px 32px;
   }
-  .pd__nav{
+
+  .pd__nav {
     margin-top: 24px;
   }
-  .pd__right{
+
+  .pd__right {
     width: 100%;
     padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pd__nav {
+    flex-wrap: wrap;
+  }
+
+  #pdHireCta {
+    flex-basis: 100%;
+    width: 100%;
+    order: 3;
+    justify-content: center;
   }
 }

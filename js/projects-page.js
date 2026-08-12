@@ -300,7 +300,7 @@
       syncCardReveals();
 
       const diff = targetProgress - progress;
-      const lerpSpeed = 10;
+      const lerpSpeed = 3.2;
       progress += diff * (1 - Math.exp(-lerpSpeed * dt));
 
       if (Math.abs(targetProgress - progress) < 0.0005) {
@@ -331,10 +331,17 @@
     });
   }
 
+  if (window.lenis) {
+  window.lenis.on('scroll', () => {
+    if (navIsOpen) return;
+    onScroll();
+  });
+} else {
   window.addEventListener('scroll', () => {
     if (navIsOpen) return;
     onScroll();
   }, { passive: true });
+}
 
   window.addEventListener('resize', () => {
     if (navIsOpen) return;

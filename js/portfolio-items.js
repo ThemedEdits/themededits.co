@@ -9,7 +9,7 @@ const PORTFOLIO_ITEMS = [
     type: "project",
     liveUrl: "https://numeriqglobal.org",
     thumbnail: "/assets/numeriq-global-hero.png",
-    heroImage: "/assets/numeriq-global-hero.webp",
+    heroImage: "/assets/numeriq/numeriq-global-hero-img.webp",
     gallery: [
       "/assets/numeriq-global-hero.png",
       "/assets/aurelia-hero.png",
@@ -30,7 +30,23 @@ const PORTFOLIO_ITEMS = [
     category: "graphics",
     type: "project",
     thumbnail: "/assets/aurelia-hero.png",
-    heroImage: "/assets/aurelia-hero.png",
+    heroImage: "/assets/frost/frost-and-gold-hero-img.webp",
+    gallery: [
+      "assets/portfolio/aurelia-1.jpg",
+      "assets/portfolio/aurelia-2.jpg"
+    ],
+    link: "#"
+  },
+  {
+    id: "sive-wears",
+    title: "Sive Wears",
+    subtitle: "Brand Identity + Packaging",
+    services: ["UI/UX Design", "Web Design", "Web Development", "SEO"],
+    description: "A full visual identity system, from logo mark to packaging, for a boutique skincare label.",
+    category: "graphics",
+    type: "project",
+    thumbnail: "/assets/aurelia-hero.png",
+    heroImage: "/assets/sive/sive-wears-hero-img.webp",
     gallery: [
       "assets/portfolio/aurelia-1.jpg",
       "assets/portfolio/aurelia-2.jpg"
@@ -46,7 +62,7 @@ const PORTFOLIO_ITEMS = [
     category: "web",
     type: "project",
     thumbnail: "/assets/driftwork-hero.png",
-    heroImage: "/assets/driftwork-hero.png",
+    heroImage: "/assets/btc/btc-hero-img.webp",
     gallery: [
       "assets/portfolio/driftwork-1.jpg",
       "assets/portfolio/driftwork-2.jpg"

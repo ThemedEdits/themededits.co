@@ -1,12 +1,16 @@
 (() => {
   'use strict';
 
+  const scriptEl = document.currentScript || document.querySelector('script[src$="page-transition.js"]');
+  const scriptUrl = scriptEl ? new URL(scriptEl.src, window.location.href) : window.location;
+  const logoUrl = new URL('../assets/logo.png', scriptUrl).href;
+
   const overlay = document.createElement('div');
   overlay.className = 'page-transition';
   overlay.innerHTML = `
     <div class="page-transition__panel"></div>
     <div class="page-transition__mark">
-      <img src="${document.body.dataset.assetsRoot || ''}assets/logo.png" alt="transition-img-logo">
+      <img src="${logoUrl}" alt="transition-img-logo">
     </div>
   `;
   document.documentElement.appendChild(overlay);

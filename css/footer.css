@@ -17,11 +17,13 @@ html, body{
   background: var(--ink);
   color: var(--ink);
   border-top: none;
+   overflow-x: clip;
 }
 
 main{
   position: relative;
   z-index: 1;
+  overflow-x: clip;
   background: var(--bg);
   margin-bottom: 100vh;
   transform: translateZ(0);

@@ -5,6 +5,7 @@ const lenis = new Lenis({
   smoothTouch: true,
 });
 
+
 function raf(time) {
   lenis.raf(time);
   requestAnimationFrame(raf);
@@ -95,12 +96,17 @@ requestAnimationFrame(raf);
   function lockScroll() {
     scrollY = window.scrollY || window.pageYOffset;
     html.classList.add('nav-locked');
-    document.body.style.setProperty('--scroll-lock-y', `-${scrollY}px`);
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
     lenis.stop();
   }
 
   function unlockScroll() {
     html.classList.remove('nav-locked');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
     window.scrollTo(0, scrollY);
     lenis.start();
   }
@@ -231,3 +237,30 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
     starsContainer.appendChild(star);
   }
 });
+
+
+
+
+// =========== GRID CELLS BACKGROUND FOR PROJECTS HERO ===========
+(() => {
+  const grid = document.getElementById('heroGrid');
+  if (!grid) return;
+
+  const cellSize = 60;
+  const cols = Math.ceil(grid.parentElement.offsetWidth / cellSize);
+  const rows = Math.ceil(grid.parentElement.offsetHeight / cellSize);
+
+  grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}px)`;
+  grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
+
+  const total = cols * rows;
+  for (let i = 0; i < total; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'hero-grid__cell';
+    if (Math.random() < 0.35) {
+      cell.classList.add('is-filled');
+      cell.style.setProperty('--fill-opacity', (Math.random() * 0.01 + 0.04).toFixed(2));
+    }
+    grid.appendChild(cell);
+  }
+})();

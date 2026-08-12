@@ -2,7 +2,7 @@
   'use strict';
 
   const SLIDE_DURATION = 5000;
-  const slides = PORTFOLIO_ITEMS.slice(0, 3); // hero shows first 3 items
+  const slides = PORTFOLIO_ITEMS.slice(0, 4); // hero shows first 3 items
 
   const bgTrack = document.querySelector('.hero__bg');
   const textTrack = document.getElementById('heroTextTrack');

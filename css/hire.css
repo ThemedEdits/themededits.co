@@ -4,7 +4,7 @@
 
 .projects-trail-hire {
   padding: calc(var(--header-h) + 60px) clamp(20px, 6vw, 90px) clamp(100px, 14vw, 10px) !important;
-} 
+}
 
 .hp2 {
   padding: 0 clamp(20px, 6vw, 90px) clamp(80px, 10vw, 140px);
@@ -196,6 +196,7 @@
 /* ---- custom select ---- */
 .cform__field--select {
   cursor: pointer;
+
 }
 
 .cform__select {
@@ -242,23 +243,41 @@
   top: calc(100% + 14px);
   left: 0;
   right: 0;
+
   background: var(--bg);
+  opacity: 1;
   border: 1px solid rgba(245, 243, 238, .12);
   border-radius: 10px;
   padding: 6px;
-  opacity: 0;
+
   visibility: hidden;
   transform: translateY(-8px);
-  transition: opacity .25s var(--ease), transform .25s var(--ease-out), visibility 0s linear .25s;
-  z-index: 5;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, .35);
+
+  transition:
+    opacity .25s var(--ease),
+    transform .25s var(--ease-out),
+    visibility 0s linear .25s;
+
+  z-index: 100;
+  isolation: isolate;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, .55);
 }
 
 .cform__field--select.is-open .cform__options {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-  transition: opacity .25s var(--ease), transform .25s var(--ease-out), visibility 0s linear 0s;
+
+  transition:
+    opacity .25s var(--ease),
+    transform .25s var(--ease-out),
+    visibility 0s linear 0s;
+}
+
+.cform__row:has(.cform__field--select.is-open) {
+  position: relative;
+  z-index: 100;
 }
 
 .cform__options li {

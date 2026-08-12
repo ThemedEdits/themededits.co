@@ -56,7 +56,7 @@ uniqueItems.forEach(item => {
 
   const fixed = template
     .replace(/(\bhref|\bsrc)="\.\.\//g, '$1="../../')
-    .replace(/data\.assetsRoot\s*=\s*'\.\.\/'/, `data.assetsRoot = '../../'`)
+    .replace(/\bdata\.assetsRoot\s*=\s*(['"])\.\.\/\1/g, 'data.assetsRoot = \'../../\'')
     .replace(/\{\{PROJECT_TITLE\}\}/g, escapeHtml(item.title))
     .replace(/\{\{PROJECT_SUBTITLE\}\}/g, escapeHtml(item.subtitle))
     .replace(/\{\{PROJECT_DESCRIPTION\}\}/g, escapeHtml(item.description))

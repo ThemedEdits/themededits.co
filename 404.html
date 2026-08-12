@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Page Not Found | Themed Edits</title>
-  <meta name="description" content="The page you're looking for doesn't exist. Head back to Themed Edits to explore graphic design and web development work.">
+  <meta name="description"
+    content="The page you're looking for doesn't exist. Head back to Themed Edits to explore graphic design and web development work.">
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="https://themededits.vercel.app/404.html">
 
@@ -25,6 +26,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/page-transition.css">
+  <link rel="stylesheet" href="css/projects.css">
 
   <style>
     .notfound {
@@ -38,15 +40,49 @@
     }
 
     .notfound__code {
+      display: none;
+    }
+
+    .logo-draw-wrap {
+      width: clamp(140px, 22vw, 220px);
+      height: clamp(140px, 22vw, 220px);
+    }
+
+    .logo-draw {
+      width: 100%;
+      height: 100%;
+    }
+
+    .logo-draw__shape-1 {
+      stroke: var(--amber) !important;
+      fill: transparent;
+    }
+
+    .logo-draw__shape {
+      fill: transparent;
+      stroke: var(--ink);
+      stroke-width: 4;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .logo-draw__brick {
+      will-change: transform, opacity;
+    }
+
+    .notfound__code-label {
+      position: absolute;
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: clamp(70px, 14vw, 160px);
-      line-height: 1;
+      font-size: 25rem;
+      opacity: 0.03;
       color: var(--amber);
+      z-index: -1;
+      margin-top: clamp(16px, 2vw, 24px);
     }
 
     .notfound__title {
-      font-family: var(--font-display);
+      font-family: var(--font-body);
       font-weight: 700;
       font-size: clamp(24px, 4vw, 40px);
       margin-top: clamp(10px, 2vw, 18px);
@@ -66,6 +102,12 @@
       justify-content: center;
       gap: clamp(14px, 2vw, 20px);
       margin-top: clamp(28px, 4vw, 40px);
+    }
+
+    @media (max-width: 780px) {
+      .notfound__code-label {
+        font-size: 9rem;
+      }
     }
   </style>
 </head>
@@ -119,7 +161,22 @@
 
   <main>
     <section class="notfound">
-      <p class="notfound__code">404</p>
+      <div class="hero-grid" id="heroGrid" aria-hidden="true"></div>
+      <div class="logo-draw-wrap">
+        <svg class="logo-draw" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+          <defs id="logoDrawClips"></defs>
+
+          <rect class="logo-draw__shape" id="shape1" data-fill="#ffffff" x="163.96" y="288.52" width="75.69"
+            height="212.01" transform="translate(-219.86 258.25) rotate(-45)" />
+          <rect class="logo-draw__shape" id="shape2" data-fill="#ffffff" x="356.74" y="95.87" width="75.69"
+            height="212.01" transform="translate(-27.17 338.14) rotate(-45)" />
+          <polygon class="logo-draw__shape logo-draw__shape-1" id="shape3" data-fill="#f0a320"
+            points="399.91 346.33 346.39 399.85 153.61 207.2 57.22 303.58 3.7 250.06 250 3.76 303.52 57.28 207.13 153.67 399.91 346.33" />
+
+          <g id="bricksLayer"></g>
+        </svg>
+      </div>
+      <p class="notfound__code-label">404</p>
       <h1 class="notfound__title">This page doesn't exist.</h1>
       <p class="notfound__text">The link might be broken, or the page may have moved. Head back home or check out
         the portfolio instead.</p>
@@ -164,6 +221,170 @@
       </div>
     </div>
   </footer>
+  <script>
+    (() => {
+      'use strict';
+
+      const svg = document.querySelector('.logo-draw');
+      const shapes = document.querySelectorAll('.logo-draw__shape');
+      const clipsDefs = document.getElementById('logoDrawClips');
+      const bricksLayer = document.getElementById('bricksLayer');
+      if (!svg || !shapes.length) return;
+
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+      const DRAW_MS = 1400;
+      const STAGGER_MS = 250;
+      const BRICK_SIZE = 64;
+      const BRICK_FLY_MS = 700;
+      const BRICK_STAGGER_MAX = 500;
+      const HOLD_MS = 900;
+      const FADE_OUT_MS = 450;
+
+      shapes.forEach(shape => {
+        const length = shape.getTotalLength ? shape.getTotalLength() : 0;
+        shape.style.strokeDasharray = length;
+        shape.style.strokeDashoffset = length;
+      });
+
+      // ---- build a clip-path + grid of "brick" rects for each shape ----
+      const brickGroups = [];
+
+      shapes.forEach((shape, shapeIndex) => {
+        const clipId = `logoClip${shapeIndex}`;
+        const clipPath = document.createElementNS(SVG_NS, 'clipPath');
+        clipPath.setAttribute('id', clipId);
+
+        const clipShape = shape.cloneNode(true);
+        clipShape.removeAttribute('transform'); // the wrapping group supplies this instead — avoid double-rotation
+        clipPath.appendChild(clipShape);
+        clipsDefs.appendChild(clipPath);
+
+        const bbox = shape.getBBox();
+        const shapeTransform = shape.getAttribute('transform') || '';
+
+        const group = document.createElementNS(SVG_NS, 'g');
+        group.setAttribute('clip-path', `url(#${clipId})`);
+        if (shapeTransform) {
+          group.setAttribute('transform', shapeTransform);
+        }
+
+        const color = shape.dataset.fill;
+        const cols = Math.ceil(bbox.width / BRICK_SIZE) + 1;
+        const rows = Math.ceil(bbox.height / BRICK_SIZE) + 1;
+        const bricks = [];
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const brick = document.createElementNS(SVG_NS, 'rect');
+            const bx = bbox.x + c * BRICK_SIZE;
+            const by = bbox.y + r * BRICK_SIZE;
+            brick.setAttribute('x', bx - 0.5);
+            brick.setAttribute('y', by - 0.5);
+            brick.setAttribute('width', BRICK_SIZE + 1.5);
+            brick.setAttribute('height', BRICK_SIZE + 1.5);
+            brick.setAttribute('fill', color);
+            brick.classList.add('logo-draw__brick');
+
+            // random origin off-screen-ish, relative to the SVG's 500x500 space
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 180 + Math.random() * 220;
+            const dx = Math.cos(angle) * dist;
+            const dy = Math.sin(angle) * dist;
+            const rot = (Math.random() - 0.5) * 260;
+
+            brick.style.setProperty('--dx', `${dx}px`);
+            brick.style.setProperty('--dy', `${dy}px`);
+            brick.style.setProperty('--rot', `${rot}deg`);
+            brick.style.transform = `translate(var(--dx), var(--dy)) rotate(var(--rot))`;
+            brick.style.transformOrigin = `${bx + BRICK_SIZE / 2}px ${by + BRICK_SIZE / 2}px`;
+            brick.style.opacity = '0';
+
+            group.appendChild(brick);
+            bricks.push(brick);
+          }
+        }
+
+        bricksLayer.appendChild(group);
+        brickGroups.push(bricks);
+      });
+
+      function drawOutline(shape, index) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            shape.style.transition = `stroke-dashoffset ${DRAW_MS}ms ease-in-out`;
+            shape.style.strokeDashoffset = '0';
+            setTimeout(resolve, DRAW_MS);
+          }, index * STAGGER_MS);
+        });
+      }
+
+      function flyInBricks(bricks) {
+        return new Promise(resolve => {
+          // shuffle order so it doesn't fill row by row predictably
+          const order = [...bricks.keys()].sort(() => Math.random() - 0.5);
+          let maxDelay = 0;
+
+          order.forEach((brickIdx, i) => {
+            const brick = bricks[brickIdx];
+            const delay = (i / order.length) * BRICK_STAGGER_MAX;
+            maxDelay = Math.max(maxDelay, delay);
+
+            setTimeout(() => {
+              brick.style.transition = `transform ${BRICK_FLY_MS}ms cubic-bezier(.2,.8,.2,1), opacity ${BRICK_FLY_MS * 0.6}ms ease-out`;
+              brick.style.transform = 'translate(0px, 0px) rotate(0deg)';
+              brick.style.opacity = '1';
+            }, delay);
+          });
+
+          setTimeout(resolve, maxDelay + BRICK_FLY_MS);
+        });
+      }
+
+      function resetAll(shape, bricks) {
+        return new Promise(resolve => {
+          bricks.forEach(brick => {
+            brick.style.transition = `opacity ${FADE_OUT_MS}ms ease-in`;
+            brick.style.opacity = '0';
+          });
+
+          setTimeout(() => {
+            bricks.forEach(brick => {
+              brick.style.transition = 'none';
+              brick.style.transform = `translate(var(--dx), var(--dy)) rotate(var(--rot))`;
+            });
+
+            shape.style.transition = 'none';
+            const length = shape.getTotalLength ? shape.getTotalLength() : 0;
+            shape.style.strokeDashoffset = length;
+            resolve();
+          }, FADE_OUT_MS);
+        });
+      }
+
+      async function loop() {
+        // 1. draw outlines, staggered
+        await Promise.all([...shapes].map((s, i) => drawOutline(s, i)));
+
+        // 2. bricks fly in and assemble inside each shape, staggered per shape
+        await Promise.all(brickGroups.map((bricks, i) =>
+          new Promise(resolve => setTimeout(() => flyInBricks(bricks).then(resolve), i * 150))
+        ));
+
+        // 3. hold fully assembled
+        await new Promise(r => setTimeout(r, HOLD_MS));
+
+        // 4. fade bricks out + reset outlines, staggered per shape
+        await Promise.all([...shapes].map((s, i) => resetAll(s, brickGroups[i])));
+
+        // 5. brief pause, then loop
+        await new Promise(r => setTimeout(r, 300));
+
+        loop();
+      }
+
+      loop();
+    })();
+  </script>
 
   <script>document.body.dataset.assetsRoot = '';</script>
   <script src="js/page-transition.js"></script>

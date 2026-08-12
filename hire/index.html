@@ -80,7 +80,24 @@
 </head>
 
 <body>
-
+<div class="page-transition is-covering" id="pageTransitionOverlay">
+  <div class="page-transition__panel"></div>
+  <div class="page-transition__mark">
+    <svg class="page-transition__logo" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <defs id="logoDrawClips"></defs>
+      <rect class="logo-draw__shape" data-fill="#ffffff" x="163.96" y="288.52" width="75.69" height="212.01" transform="translate(-219.86 258.25) rotate(-45)"/>
+      <rect class="logo-draw__shape" data-fill="#ffffff" x="356.74" y="95.87" width="75.69" height="212.01" transform="translate(-27.17 338.14) rotate(-45)"/>
+      <polygon class="logo-draw__shape" data-fill="#f0a320" points="399.91 346.33 346.39 399.85 153.61 207.2 57.22 303.58 3.7 250.06 250 3.76 303.52 57.28 207.13 153.67 399.91 346.33"/>
+      <g id="bricksLayer"></g>
+    </svg>
+  </div>
+  <div class="page-transition__meter" aria-hidden="true">
+    <span class="page-transition__digit">0</span>
+    <span class="page-transition__digit">0</span>
+    <span class="page-transition__digit">0</span>
+    <span class="page-transition__percent-sign">%</span>
+  </div>
+</div>
   <div class="grain"></div>
 
   <header class="site-header">
@@ -328,6 +345,7 @@
   </a>
 
   <script>document.body.dataset.assetsRoot = '../';</script>
+  <script src="../js/logo-draw-anim.js"></script>
   <script src="../js/page-transition.js"></script>
   <script src="../js/reveal.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>

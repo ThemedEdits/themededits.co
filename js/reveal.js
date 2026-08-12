@@ -4,11 +4,26 @@
   const els = document.querySelectorAll('[data-reveal]');
   if (!els.length) return;
 
+  let pending = [];
+
+  function commitReveal(el){
+    el.classList.add('is-revealed');
+  }
+
+  function flushPending(){
+    pending.forEach(commitReveal);
+    pending = [];
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-revealed');
-        observer.unobserve(entry.target); // reveal once, never re-hide
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+
+      if (window.__pageTransitionReady) {
+        commitReveal(entry.target);
+      } else {
+        pending.push(entry.target);
       }
     });
   }, {
@@ -22,4 +37,15 @@
     }
     observer.observe(el);
   });
+
+  window.addEventListener('page-transition:done', flushPending);
+
+  // safety: if page-transition.js isn't present/failed for some reason,
+  // don't leave reveals stuck forever
+  setTimeout(() => {
+    if (!window.__pageTransitionReady) {
+      window.__pageTransitionReady = true;
+      flushPending();
+    }
+  }, 4000);
 })();

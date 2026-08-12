@@ -85,5 +85,13 @@
     timer = setInterval(next, SLIDE_DURATION);
   }
 
-  restart();
+  // Don't start the auto-advance timer until the page-transition overlay
+  // has actually finished revealing — otherwise the countdown silently
+  // runs while the overlay is still covering the screen, so the first
+  // slide change appears to happen almost immediately once it clears.
+  if (window.__pageTransitionReady) {
+    restart();
+  } else {
+    window.addEventListener('page-transition:done', restart, { once: true });
+  }
 })();

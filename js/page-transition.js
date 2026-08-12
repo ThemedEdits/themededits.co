@@ -1,79 +1,174 @@
-(() => {
-  'use strict';
+if (window.__pageTransitionInitialized) {
+  // already running — do nothing
+} else {
+  window.__pageTransitionInitialized = true;
+  window.__pageTransitionReady = false;
 
-  const scriptEl = document.currentScript || document.querySelector('script[src$="page-transition.js"]');
-  const scriptUrl = scriptEl ? new URL(scriptEl.src, window.location.href) : window.location;
-  const logoUrl = new URL('../assets/logo.png', scriptUrl).href;
+  (() => {
+    'use strict';
 
-  const overlay = document.createElement('div');
-  overlay.className = 'page-transition';
-  overlay.innerHTML = `
-    <div class="page-transition__panel"></div>
-    <div class="page-transition__mark">
-      <img src="${logoUrl}" alt="transition-img-logo">
-    </div>
-  `;
-  document.documentElement.appendChild(overlay);
+    const overlay = document.getElementById('pageTransitionOverlay');
+    if (!overlay) return;
 
-  const PANEL_MS = 550;
-  const REVEAL_DELAY_MS = 100; // matches the .1s delay on .is-revealing panel transition
-  const HOLD_MS = 220;
+    const svgEl = overlay.querySelector('.page-transition__logo');
+    const anim = window.buildLogoDrawAnimation
+      ? window.buildLogoDrawAnimation(svgEl)
+      : { run: () => Promise.resolve(), reset: () => {} };
 
-  function playIn() {
-    document.documentElement.classList.add('page-transitioning');
-    requestAnimationFrame(() => {
-      overlay.classList.add('is-covering');
+    const SETTLE_MS = 80;
+    const PANEL_REVEAL_MS = 550;
+    const ANIMATED_COVER_MS = 600;
+
+    let isNavigating = false;
+
+    function coverPanel(animated = false) {
+      document.documentElement.classList.add('page-transitioning');
+      overlay.classList.remove('is-revealing', 'is-revealed', 'is-covering', 'is-covering-animated');
+      overlay.classList.add(animated ? 'is-covering-animated' : 'is-covering');
+    }
+
+    function revealPanel() {
+      return new Promise(resolve => {
+        overlay.classList.add('is-revealing');
+        overlay.classList.remove('is-covering', 'is-covering-animated');
+        setTimeout(() => {
+          overlay.classList.remove('is-revealing');
+          overlay.classList.add('is-revealed');
+          document.documentElement.classList.remove('page-transitioning');
+          window.__pageTransitionReady = true;
+          window.dispatchEvent(new Event('page-transition:done'));
+          resolve();
+        }, PANEL_REVEAL_MS + 60);
+      });
+    }
+
+    /* ---------------------------------------------------------
+       Smooth counter — ONLY used during the inbound (arriving /
+       loading) phase. Outbound navigation just shows the panel
+       rising with no meter, since nothing is "loading" yet at
+       that point — this is what stops the double-count feeling.
+       --------------------------------------------------------- */
+    const meterDigits = [...overlay.querySelectorAll('.page-transition__digit')];
+    let meterCancelled = false;
+    let meterRafId = null;
+
+    function setMeterValue(num) {
+      const clamped = Math.max(0, Math.min(100, Math.round(num)));
+      const str = String(clamped).padStart(3, '0');
+      meterDigits.forEach((el, i) => { el.textContent = str[i]; });
+    }
+
+    function getCurrentMeterValue() {
+      return parseInt(meterDigits.map(el => el.textContent).join(''), 10) || 0;
+    }
+
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function smoothCountTo(from, to, duration) {
+      return new Promise(resolve => {
+        if (meterRafId) cancelAnimationFrame(meterRafId);
+        const start = performance.now();
+        function tick(now) {
+          if (meterCancelled) { resolve(); return; }
+          const t = Math.min((now - start) / duration, 1);
+          setMeterValue(from + (to - from) * easeOutCubic(t));
+          if (t < 1) {
+            meterRafId = requestAnimationFrame(tick);
+          } else {
+            meterRafId = null;
+            resolve();
+          }
+        }
+        meterRafId = requestAnimationFrame(tick);
+      });
+    }
+
+    // asymptotically approaches `cap` — never fully stalls, never
+    // overshoots, works regardless of how long anim.run() actually takes
+    function smoothCountToward(cap, estimatedDuration) {
+      if (meterRafId) cancelAnimationFrame(meterRafId);
+      const start = performance.now();
+      function tick(now) {
+        if (meterCancelled) return;
+        const elapsed = now - start;
+        const t = 1 - Math.exp(-elapsed / estimatedDuration);
+        setMeterValue(cap * t);
+        meterRafId = requestAnimationFrame(tick);
+      }
+      meterRafId = requestAnimationFrame(tick);
+      return { stop: () => { if (meterRafId) cancelAnimationFrame(meterRafId); } };
+    }
+
+    /* ---------------------------------------------------------
+       ON LOAD / REFRESH — the only place both the logo-draw
+       animation AND the meter play. Overlay is already covering
+       instantly (static HTML), so there's no flash before this
+       even starts.
+       --------------------------------------------------------- */
+    async function playInboundSequence() {
+      meterCancelled = false;
+      coverPanel(false);
+      setMeterValue(0);
+
+      const handle = smoothCountToward(92, 1100);
+
+      await new Promise(r => setTimeout(r, SETTLE_MS));
+      await anim.run();
+
+      handle.stop();
+      await smoothCountTo(getCurrentMeterValue(), 100, 220);
+
+      await revealPanel();
+    }
+
+    window.addEventListener('pageshow', () => {
+      isNavigating = false;
+      playInboundSequence();
     });
-  }
 
-  function playOut() {
-    requestAnimationFrame(() => {
-      overlay.classList.add('is-revealing');
-      // wait for the FULL reveal transition (delay + duration) to finish
-      // before stripping classes — previously this fired 50ms too early,
-      // cutting the panel off mid-animation instead of letting it finish.
+    /* ---------------------------------------------------------
+       ON NAVIGATION AWAY — panel animates up smoothly, NO meter
+       shown here (nothing is loading yet — the meter's job is
+       purely for the arriving page's inbound sequence).
+       --------------------------------------------------------- */
+    function isSameOriginInternalLink(a) {
+      if (!a || !a.getAttribute) return false;
+      const href = a.getAttribute('href');
+      if (!href) return false;
+      if (a.target && a.target !== '' && a.target !== '_self') return false;
+      if (a.hasAttribute('download')) return false;
+      if (href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+      if (href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//')) return false;
+      if (href.startsWith('#')) return false;
+
+      const [pathPart, hashPart] = href.split('#');
+      if (hashPart && (pathPart === '' || pathPart === window.location.pathname)) return false;
+
+      return true;
+    }
+
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if (!isSameOriginInternalLink(a)) return;
+
+      e.preventDefault();
+      if (isNavigating) return;
+      isNavigating = true;
+
+      const href = a.href;
+
+      meterCancelled = true; // meter stays hidden/frozen during outbound
+      coverPanel(true);
+
       setTimeout(() => {
-        overlay.classList.remove('is-covering', 'is-revealing');
-        document.documentElement.classList.remove('page-transitioning');
-      }, PANEL_MS + REVEAL_DELAY_MS + 50);
+        window.location.href = href;
+      }, ANIMATED_COVER_MS);
+    }, true);
+
+    window.addEventListener('pagehide', () => {
+      meterCancelled = true;
+      if (meterRafId) cancelAnimationFrame(meterRafId);
+      overlay.classList.remove('is-revealing', 'is-covering', 'is-covering-animated', 'is-revealed');
     });
-  }
-
-  window.addEventListener('pageshow', () => {
-    document.documentElement.classList.add('page-transitioning');
-    overlay.classList.add('is-covering');
-    setTimeout(playOut, HOLD_MS);
-  });
-
-  function isSameOriginInternalLink(a) {
-    if (!a || !a.getAttribute) return false;
-    const href = a.getAttribute('href');
-    if (!href) return false;
-    if (a.target && a.target !== '' && a.target !== '_self') return false;
-    if (a.hasAttribute('download')) return false;
-    if (href.startsWith('mailto:') || href.startsWith('tel:')) return false;
-    if (href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//')) return false; // external
-    if (href.startsWith('#')) return false; // pure in-page anchor
-
-    // strip a same-page hash target (e.g. href="/index.html#about" from a
-    // different page is fine; href="#about" on the SAME page is not)
-    const [pathPart, hashPart] = href.split('#');
-    if (hashPart && (pathPart === '' || pathPart === window.location.pathname)) return false;
-
-    return true;
-  }
-
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a');
-    if (!isSameOriginInternalLink(a)) return;
-
-    e.preventDefault();
-    const href = a.href;
-    playIn();
-    setTimeout(() => { window.location.href = href; }, PANEL_MS);
-  });
-
-  window.addEventListener('pagehide', () => {
-    overlay.classList.remove('is-revealing');
-  });
-})();
+  })();
+}

@@ -271,7 +271,6 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
 
 
 
-
 (() => {
   'use strict';
 
@@ -289,25 +288,36 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
   const isDesktop = () => window.innerWidth > 900;
 
   // ---- Accordion logic ----
- function toggleRow(row) {
-  const isOpen = row.classList.contains('is-open');
-  
-  // Close all other rows
-  rows.forEach(r => {
-    if (r !== row) {
-      r.classList.remove('is-open');
-      r.querySelector('.services__row-header').setAttribute('aria-expanded', 'false');
-    }
-  });
+  function toggleRow(row) {
+    const isOpen = row.classList.contains('is-open');
+    
+    // Close all other rows
+    rows.forEach(r => {
+      if (r !== row) {
+        r.classList.remove('is-open');
+        const header = r.querySelector('.services__row-header');
+        if (header) header.setAttribute('aria-expanded', 'false');
+      }
+    });
 
-  if (isOpen) {
-    row.classList.remove('is-open');
-    row.querySelector('.services__row-header').setAttribute('aria-expanded', 'false');
-  } else {
-    row.classList.add('is-open');
-    row.querySelector('.services__row-header').setAttribute('aria-expanded', 'true');
+    if (isOpen) {
+      row.classList.remove('is-open');
+      const header = row.querySelector('.services__row-header');
+      if (header) header.setAttribute('aria-expanded', 'false');
+    } else {
+      row.classList.add('is-open');
+      const header = row.querySelector('.services__row-header');
+      if (header) header.setAttribute('aria-expanded', 'true');
+    }
   }
-}
+
+  function closeAllAccordions() {
+    rows.forEach(row => {
+      row.classList.remove('is-open');
+      const header = row.querySelector('.services__row-header');
+      if (header) header.setAttribute('aria-expanded', 'false');
+    });
+  }
 
   // ---- Preview image logic ----
   function showPreviewFor(row) {
@@ -327,66 +337,72 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
   }
 
   // ---- Event listeners ----
-rows.forEach(row => {
-  const header = row.querySelector('.services__row-header');
-  const toggleBtn = row.querySelector('.services__row-toggle');
-  const titleLink = row.querySelector('.services__row-title');
+  rows.forEach(row => {
+    const header = row.querySelector('.services__row-header');
+    const toggleBtn = row.querySelector('.services__row-toggle');
+    const titleLink = row.querySelector('.services__row-title');
 
-  // Click on header or toggle toggles accordion
-  const handleToggle = (e) => {
-    if (e.target.closest('.services__row-title')) return;
-    e.preventDefault();
-    toggleRow(row);
-  };
-
-  header.addEventListener('click', handleToggle);
-  toggleBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleRow(row);
-  });
-
-  // Keyboard support
-  header.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    // Click on header toggles accordion
+    const handleToggle = (e) => {
+      // Don't toggle if clicking on the title link (navigation)
+      if (e.target.closest('.services__row-title')) return;
       e.preventDefault();
       toggleRow(row);
+    };
+
+    header.addEventListener('click', handleToggle);
+    
+    // Toggle button click
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleRow(row);
+    });
+
+    // Keyboard support for header
+    header.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleRow(row);
+      }
+    });
+
+    // Desktop: hover expands accordion AND shows preview
+    if (isDesktop()) {
+      row.addEventListener('mouseenter', () => {
+        // Expand accordion on hover
+        if (!row.classList.contains('is-open')) {
+          rows.forEach(r => {
+            r.classList.remove('is-open');
+            const h = r.querySelector('.services__row-header');
+            if (h) h.setAttribute('aria-expanded', 'false');
+          });
+          row.classList.add('is-open');
+          const h = row.querySelector('.services__row-header');
+          if (h) h.setAttribute('aria-expanded', 'true');
+        }
+        // Show preview
+        showPreviewFor(row);
+      });
     }
   });
 
-  // Desktop: hover expands accordion AND shows preview
-  if (isDesktop()) {
-    row.addEventListener('mouseenter', () => {
-      // Expand accordion on hover
-      if (!row.classList.contains('is-open')) {
-        rows.forEach(r => {
-          r.classList.remove('is-open');
-          r.querySelector('.services__row-header').setAttribute('aria-expanded', 'false');
-        });
-        row.classList.add('is-open');
-        row.querySelector('.services__row-header').setAttribute('aria-expanded', 'true');
+  // Close accordion on click outside (works for both desktop and mobile)
+  document.addEventListener('click', (e) => {
+    const isClickInside = list.contains(e.target);
+    if (!isClickInside) {
+      closeAllAccordions();
+      if (isDesktop()) {
+        hidePreview();
       }
-      // Show preview
-      showPreviewFor(row);
-    });
-  }
-});
+    }
+  });
 
-// Hide preview and close accordion on mouse leave (desktop only)
-list.addEventListener('mouseleave', () => {
-  if (isDesktop()) {
-    hidePreview();
-    // Close all accordions on mouse leave (optional - remove if you want them to stay open)
-    rows.forEach(row => {
-      row.classList.remove('is-open');
-      row.querySelector('.services__row-header').setAttribute('aria-expanded', 'false');
-    });
-  }
-});
-
-  // Close accordion and hide preview on mouse leave
+  // Hide preview and close accordion on mouse leave (desktop only)
   list.addEventListener('mouseleave', () => {
     if (isDesktop()) {
       hidePreview();
+      // Close all accordions on mouse leave (optional - remove if you want them to stay open)
+      closeAllAccordions();
     }
   });
 
@@ -394,16 +410,14 @@ list.addEventListener('mouseleave', () => {
   list.addEventListener('focusout', (e) => {
     if (!list.contains(e.relatedTarget)) {
       hidePreview();
+      closeAllAccordions();
     }
   });
 
   // Close all accordions on ESC key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      rows.forEach(row => {
-        row.classList.remove('is-open');
-        row.querySelector('.services__row-header').setAttribute('aria-expanded', 'false');
-      });
+      closeAllAccordions();
       hidePreview();
     }
   });

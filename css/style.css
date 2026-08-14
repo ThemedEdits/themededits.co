@@ -230,16 +230,6 @@ p {
   outline-offset: 3px;
 }
 
-/* subtle film-grain overlay for texture on the black bg */
-.grain {
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  opacity: .035;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
 
 /* =========================================================
    Universal scroll-reveal — add data-reveal to ANY element.
@@ -859,7 +849,10 @@ p {
 }
 
 /* =========================================================
-   Hero — auto/manual image slider with sliding-down text
+   Hero — center word cycles with a left-to-right reveal +
+   rise; a single reusable image frame pops in at a random
+   spot/size in sync with each word, image zooms out inside
+   a fixed frame.
    ========================================================= */
 .hero {
   position: relative;
@@ -867,6 +860,7 @@ p {
   overflow: hidden;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: calc(var(--header-h) + 40px) clamp(20px, 6vw, 90px) 60px;
 }
 
@@ -874,9 +868,178 @@ p {
   position: absolute;
   inset: 0;
   z-index: 0;
+  background: #000000;
 }
 
-.hero__slide {
+.hero__dot-grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  display: block;
+  opacity: 1;
+}
+
+
+/* ---- center stage ---- */
+.hero__stage {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 720px;
+}
+
+.hero__brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(13px, 1.3vw, 15px);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: clamp(14px, 2vw, 22px);
+}
+
+.hero__word-wrap {
+  overflow: hidden;
+  display: inline-block;
+  padding: 0 4px;
+  /* avoid clipping letter descenders/ascenders during reveal */
+}
+
+.hero__word {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(20px, 6vw, 30px);
+  line-height: 1.65;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+
+.hero__word-inner {
+  display: inline-block;
+  transform: translate(-12%, 65%);
+  clip-path: inset(0 100% 0 0);
+  transition: none;
+}
+
+/* reveal: text moves slightly right + rises while mask sweeps left-to-right */
+.hero__word-inner.is-revealing {
+  transform: translate(0%, 0%);
+  clip-path: inset(0 0% 0 0);
+  transition:
+    transform 700ms cubic-bezier(1, .2, .1, 1),
+    clip-path 700ms cubic-bezier(1, .2, .1, 1);
+}
+
+
+
+.hero__tagline {
+  margin-top: clamp(18px, 2.5vw, 26px);
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.3vw, 18px);
+  color: var(--ink-dim);
+}
+
+.hero__cta {
+  margin-top: clamp(28px, 3.5vw, 40px);
+  width: fit-content;
+}
+
+/* ---- single reusable image frame ---- */
+.hero__frame {
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity .6s var(--ease);
+  pointer-events: none;
+}
+
+.hero__frame.is-active {
+  opacity: 1;
+}
+
+.hero__frame-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transform: scale(1.4);
+  transition: opacity 700ms var(--ease),
+    transform 700ms cubic-bezier(1, .2, .1, 1);
+}
+
+.hero__frame.is-active .hero__frame-img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* =========================================================
+   Mobile — hide the floating frames to avoid clutter on
+   small screens, keep just the center word cycling
+   ========================================================= */
+/* =========================================================
+   Mobile - frames visible with responsive sizing
+   ========================================================= */
+@media (max-width: 780px) {
+  .hero__frame {
+    display: block !important;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Text with mix-blend-mode for better visibility over images */
+  .hero__word-inner {
+    mix-blend-mode: difference;
+    color: white;
+    text-shadow: 0 0 20px rgba(0,0,0,0.3);
+  }
+  
+  .hero__frame img {
+    mix-blend-mode: multiply;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__frame {
+    opacity: 0.4;
+  }
+  
+  .hero__word-inner {
+    text-shadow: 0 0 30px rgba(0,0,0,0.5);
+  }
+}
+/* =========================================================
+   Featured Projects — same slider mechanics as the old hero
+   slider, now living as its own section below the hero. No
+   header-offset top padding (that belonged to being the
+   first/hero section), standard section vertical rhythm
+   instead. Min-height trimmed slightly since this no longer
+   needs to fill the full viewport on load.
+   ========================================================= */
+.featured-projects {
+  position: relative;
+  min-height: 90svh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: clamp(60px, 10vw, 100px) clamp(20px, 6vw, 90px);
+  border-top: 1px solid rgba(245, 243, 238, .08);
+}
+
+.featured-projects__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.featured-projects__slide {
   position: absolute;
   inset: 0;
   background-size: cover;
@@ -885,18 +1048,12 @@ p {
   transition: opacity 1.4s var(--ease-out);
 }
 
-.hero__slide.is-active {
+.featured-projects__slide.is-active {
   opacity: 1;
 }
 
-.hero__overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: transparent;
-}
 
-.hero__content {
+.featured-projects__content {
   position: relative;
   z-index: 2;
   max-width: 640px;
@@ -906,11 +1063,12 @@ p {
   gap: clamp(20px, 3vw, 36px);
 }
 
-.hero__text-track {
+.featured-projects__text-track {
   position: relative;
+  flex: 1;
 }
 
-.hero__slide-text {
+.featured-projects__slide-text {
   position: absolute;
   inset: 0;
   opacity: 0;
@@ -919,7 +1077,7 @@ p {
   pointer-events: none;
 }
 
-.hero__slide-text.is-active {
+.featured-projects__slide-text.is-active {
   position: relative;
   opacity: 1;
   transform: translateY(0);
@@ -927,7 +1085,7 @@ p {
   transition: opacity .8s var(--ease-out), transform 2s var(--ease-out);
 }
 
-.hero__eyebrow {
+.featured-projects__eyebrow {
   font-family: var(--font-display);
   font-size: clamp(30px, 4vw, 52px);
   font-weight: 700;
@@ -936,7 +1094,7 @@ p {
   margin-bottom: 10px;
 }
 
-.hero__sub-label {
+.featured-projects__sub-label {
   font-family: var(--body);
   font-size: clamp(16px, 1.9vw, 26px);
   font-weight: 400;
@@ -944,23 +1102,18 @@ p {
   margin-bottom: clamp(28px, 4vw, 40px);
 }
 
-.hero__cta {
+.featured-projects__cta {
   width: fit-content;
 }
 
-.hero__dots {
+.featured-projects__dots {
   display: flex;
   flex-direction: column;
   gap: 14px;
   flex-shrink: 0;
 }
 
-.hero__text-track {
-  position: relative;
-  flex: 1;
-}
-
-.hero__dot {
+.featured-projects__dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -971,46 +1124,46 @@ p {
   transition: all .3s var(--ease);
 }
 
-.hero__dot.is-active {
+.featured-projects__dot.is-active {
   background: var(--amber);
   border-color: var(--amber);
   transform: scale(1.3);
 }
 
 /* =========================================================
-   Mobile hero layout — text block bottom-anchored, dots
-   horizontal, per the mobile reference design
+   Mobile
    ========================================================= */
 @media (max-width: 780px) {
-  .hero {
+  .featured-projects {
     align-items: flex-end;
     padding-bottom: 30px;
   }
 
-  .hero__slide {
+  .featured-projects__slide {
     background-position: 92% 0%;
   }
 
-  .hero__overlay {
+  .featured-projects__overlay {
     background: linear-gradient(180deg, rgba(11, 11, 12, .15) 0%, rgba(11, 11, 12, .55) 55%, rgba(11, 11, 12, .96) 100%);
   }
 
-  .hero__content {
+  .featured-projects__content {
     max-width: 100%;
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
 
-  .hero__dots {
+  .featured-projects__dots {
     flex-direction: row;
     justify-content: center;
   }
 
-  .hero__slide-text {
+  .featured-projects__slide-text {
     transform: translateY(-40px);
   }
 }
+
 
 /* =========================================================
    Services

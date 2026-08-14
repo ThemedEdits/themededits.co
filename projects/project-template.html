@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title id="pageTitle">{{PROJECT_TITLE}} | {{PROJECT_SUBTITLE}} | Themed Edits</title>
+
   <meta name="description" id="pageDesc" content="{{PROJECT_DESCRIPTION}}">
   <meta name="keywords" content="{{PROJECT_KEYWORDS}}">
   <meta name="author" content="Hammad Ahmed">
@@ -13,7 +14,7 @@
   <link rel="canonical" href="{{PROJECT_URL}}">
 
   <!-- Open Graph -->
-  <meta property="og:type" content="article">
+  <meta property="og:type" content="website">
   <meta property="og:site_name" content="Themed Edits">
   <meta property="og:title" content="{{PROJECT_TITLE}} | {{PROJECT_SUBTITLE}} | Themed Edits">
   <meta property="og:description" content="{{PROJECT_DESCRIPTION}}">
@@ -29,23 +30,27 @@
 
   <meta name="theme-color" content="#0d0d0d">
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
     rel="stylesheet">
 
-  <link rel="icon" type="image/png" href="../assets/favicon/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="../assets/favicon/favicon.svg" />
-  <link rel="shortcut icon" href="../assets/favicon/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png" />
-  <meta name="apple-mobile-web-app-title" content="Themed Edits" />
-  <link rel="manifest" href="../assets/favicon/site.webmanifest" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../assets/favicon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon/favicon.svg">
+  <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Themed Edits">
+  <link rel="manifest" href="../assets/favicon/site.webmanifest">
 
+  <!-- Styles -->
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/project-detail.css">
   <link rel="stylesheet" href="../css/page-transition.css">
 
+  <!-- Project structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -56,36 +61,39 @@
     "url": "{{PROJECT_URL}}",
     "creator": {
       "@type": "Person",
-      "name": "Hammad Ahmed"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Themed Edits",
+      "name": "Hammad Ahmed",
       "url": "https://themededits.vercel.app/"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{PROJECT_URL}}"
     }
   }
   </script>
 </head>
 
 <body>
-<div class="page-transition is-covering" id="pageTransitionOverlay">
-  <div class="page-transition__panel"></div>
-  <div class="page-transition__mark">
-    <svg class="page-transition__logo" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-      <defs id="logoDrawClips"></defs>
-      <rect class="logo-draw__shape" data-fill="#ffffff" x="163.96" y="288.52" width="75.69" height="212.01" transform="translate(-219.86 258.25) rotate(-45)"/>
-      <rect class="logo-draw__shape" data-fill="#ffffff" x="356.74" y="95.87" width="75.69" height="212.01" transform="translate(-27.17 338.14) rotate(-45)"/>
-      <polygon class="logo-draw__shape" data-fill="#f0a320" points="399.91 346.33 346.39 399.85 153.61 207.2 57.22 303.58 3.7 250.06 250 3.76 303.52 57.28 207.13 153.67 399.91 346.33"/>
-      <g id="bricksLayer"></g>
-    </svg>
+  <div class="page-transition is-covering" id="pageTransitionOverlay">
+    <div class="page-transition__panel"></div>
+    <div class="page-transition__mark">
+      <svg class="page-transition__logo" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+        <defs id="logoDrawClips"></defs>
+        <rect class="logo-draw__shape" data-fill="#ffffff" x="163.96" y="288.52" width="75.69" height="212.01"
+          transform="translate(-219.86 258.25) rotate(-45)" />
+        <rect class="logo-draw__shape" data-fill="#ffffff" x="356.74" y="95.87" width="75.69" height="212.01"
+          transform="translate(-27.17 338.14) rotate(-45)" />
+        <polygon class="logo-draw__shape logo-draw__shape-1" data-fill="#f0a320"
+          points="399.91 346.33 346.39 399.85 153.61 207.2 57.22 303.58 3.7 250.06 250 3.76 303.52 57.28 207.13 153.67 399.91 346.33" />
+        <g id="bricksLayer"></g>
+      </svg>
+    </div>
+    <div class="page-transition__meter" aria-hidden="true">
+      <span class="page-transition__digit">0</span>
+      <span class="page-transition__digit">0</span>
+      <span class="page-transition__digit">0</span>
+      <span class="page-transition__percent-sign">%</span>
+    </div>
   </div>
-  <div class="page-transition__meter" aria-hidden="true">
-    <span class="page-transition__digit">0</span>
-    <span class="page-transition__digit">0</span>
-    <span class="page-transition__digit">0</span>
-    <span class="page-transition__percent-sign">%</span>
-  </div>
-</div>
   <div class="grain"></div>
 
   <header class="site-header">
@@ -117,7 +125,7 @@
         <li class="site-nav__item"><a href="/projects/" class="site-nav__link" data-split-hover>Graphics portfolio</a>
         </li>
         <li class="site-nav__item"><a href="/about/" class="site-nav__link" data-split-hover>About</a></li>
-        <li class="site-nav__item"><a href="/hire/" class="site-nav__link" data-split-hover>Hire me!</a></li>
+        <li class="site-nav__item"><a href="/hire/" class="site-nav__link" data-split-hover>Hire Me!</a></li>
       </ol>
       <div class="site-nav__foot">
         <p class="site-nav__eyebrow">Get in touch</p>
@@ -179,7 +187,7 @@
             <a href="/projects/" data-split-hover>Web portfolio</a>
             <a href="/projects/" data-split-hover>Graphics portfolio</a>
             <a href="/about/" data-split-hover>About</a>
-            <a href="/hire/" data-split-hover>Hire me</a>
+            <a href="/hire/" data-split-hover>Hire Me</a>
           </div>
         </div>
       </nav>
@@ -214,7 +222,7 @@
   </a>
 
   <script>document.body.dataset.assetsRoot = '../';</script>
-    <script src="../js/logo-draw-anim.js"></script>
+  <script src="../js/logo-draw-anim.js"></script>
   <script src="../js/page-transition.js"></script>
   <script src="../js/reveal.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>

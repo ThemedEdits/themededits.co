@@ -152,7 +152,7 @@ requestAnimationFrame(raf);
   'use strict';
 
   const STEPS = [
-    { label: 'Step 01', cat: 'Discovery Call', title: 'Understanding Your Brand', mid: "We start with a conversation about your goals, audience, and what success looks like for your brand." },
+    { label: 'Step 01', cat: 'Discovery', title: 'Understanding Your Goals', mid: "We start with a conversation about your goals, audience, ideas, and what you want the final result to achieve." },
     { label: 'Step 02', cat: 'Design Direction', title: 'Moodboards & Wireframes', mid: "Visual direction and structure get mapped out before a single pixel is finalized." },
     { label: 'Step 03', cat: 'Build & Refine', title: 'Development & Revisions', mid: "The site or identity gets built, tested, and refined with you until it's exactly right." }
   ];

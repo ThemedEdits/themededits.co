@@ -340,7 +340,6 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
   rows.forEach(row => {
     const header = row.querySelector('.services__row-header');
     const toggleBtn = row.querySelector('.services__row-toggle');
-    const titleLink = row.querySelector('.services__row-title');
 
     // Click on header toggles accordion
     const handleToggle = (e) => {
@@ -352,9 +351,10 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
 
     header.addEventListener('click', handleToggle);
     
-    // Toggle button click
+    // Toggle button click - now properly toggles
     toggleBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      e.preventDefault();
       toggleRow(row);
     });
 
@@ -401,7 +401,6 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
   list.addEventListener('mouseleave', () => {
     if (isDesktop()) {
       hidePreview();
-      // Close all accordions on mouse leave (optional - remove if you want them to stay open)
       closeAllAccordions();
     }
   });

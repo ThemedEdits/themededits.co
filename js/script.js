@@ -264,3 +264,160 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
     grid.appendChild(cell);
   }
 })();
+
+
+
+
+
+
+
+
+(() => {
+  'use strict';
+
+  const list = document.getElementById('servicesList');
+  const preview = document.getElementById('servicesPreview');
+  if (!list || !preview) return;
+
+  // Move the preview to <body> directly so it's never trapped inside a
+  // transformed ancestor (data-reveal elements use transform, which
+  // breaks position:fixed's viewport-relative behavior for descendants)
+  document.body.appendChild(preview);
+
+  const rows = list.querySelectorAll('.services__row');
+  const images = preview.querySelectorAll('.services__preview-img');
+  const isDesktop = () => window.innerWidth > 900;
+
+  // ---- Accordion logic ----
+ function toggleRow(row) {
+  const isOpen = row.classList.contains('is-open');
+  
+  // Close all other rows
+  rows.forEach(r => {
+    if (r !== row) {
+      r.classList.remove('is-open');
+      r.querySelector('.services__row-header').setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  if (isOpen) {
+    row.classList.remove('is-open');
+    row.querySelector('.services__row-header').setAttribute('aria-expanded', 'false');
+  } else {
+    row.classList.add('is-open');
+    row.querySelector('.services__row-header').setAttribute('aria-expanded', 'true');
+  }
+}
+
+  // ---- Preview image logic ----
+  function showPreviewFor(row) {
+    if (!isDesktop()) return;
+
+    const idx = row.dataset.service;
+    const img = preview.querySelector(`[data-idx="${idx}"]`);
+    if (!img) return;
+
+    images.forEach(i => i.classList.remove('is-visible'));
+    img.classList.add('is-visible');
+    preview.classList.add('is-active');
+  }
+
+  function hidePreview() {
+    preview.classList.remove('is-active');
+  }
+
+  // ---- Event listeners ----
+rows.forEach(row => {
+  const header = row.querySelector('.services__row-header');
+  const toggleBtn = row.querySelector('.services__row-toggle');
+  const titleLink = row.querySelector('.services__row-title');
+
+  // Click on header or toggle toggles accordion
+  const handleToggle = (e) => {
+    if (e.target.closest('.services__row-title')) return;
+    e.preventDefault();
+    toggleRow(row);
+  };
+
+  header.addEventListener('click', handleToggle);
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleRow(row);
+  });
+
+  // Keyboard support
+  header.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleRow(row);
+    }
+  });
+
+  // Desktop: hover expands accordion AND shows preview
+  if (isDesktop()) {
+    row.addEventListener('mouseenter', () => {
+      // Expand accordion on hover
+      if (!row.classList.contains('is-open')) {
+        rows.forEach(r => {
+          r.classList.remove('is-open');
+          r.querySelector('.services__row-header').setAttribute('aria-expanded', 'false');
+        });
+        row.classList.add('is-open');
+        row.querySelector('.services__row-header').setAttribute('aria-expanded', 'true');
+      }
+      // Show preview
+      showPreviewFor(row);
+    });
+  }
+});
+
+// Hide preview and close accordion on mouse leave (desktop only)
+list.addEventListener('mouseleave', () => {
+  if (isDesktop()) {
+    hidePreview();
+    // Close all accordions on mouse leave (optional - remove if you want them to stay open)
+    rows.forEach(row => {
+      row.classList.remove('is-open');
+      row.querySelector('.services__row-header').setAttribute('aria-expanded', 'false');
+    });
+  }
+});
+
+  // Close accordion and hide preview on mouse leave
+  list.addEventListener('mouseleave', () => {
+    if (isDesktop()) {
+      hidePreview();
+    }
+  });
+
+  // Handle focus out for accessibility
+  list.addEventListener('focusout', (e) => {
+    if (!list.contains(e.relatedTarget)) {
+      hidePreview();
+    }
+  });
+
+  // Close all accordions on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      rows.forEach(row => {
+        row.classList.remove('is-open');
+        row.querySelector('.services__row-header').setAttribute('aria-expanded', 'false');
+      });
+      hidePreview();
+    }
+  });
+
+  // Re-check desktop on resize
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      const desktop = isDesktop();
+      if (!desktop) {
+        hidePreview();
+      }
+    }, 200);
+  });
+
+})();

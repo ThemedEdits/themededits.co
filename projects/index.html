@@ -115,6 +115,18 @@
 </head>
 
 <body>
+  <div class="portfolio-filter" id="portfolioFilter" role="tablist" aria-label="Filter projects">
+    <button class="portfolio-filter__btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+    <button class="portfolio-filter__btn" data-filter="web" role="tab" aria-selected="false">Web</button>
+    <button class="portfolio-filter__btn" data-filter="graphics" role="tab" aria-selected="false">Graphics</button>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+  </button>
   <div class="page-transition is-covering" id="pageTransitionOverlay">
     <div class="page-transition__panel"></div>
     <div class="page-transition__mark">
@@ -163,9 +175,11 @@
     <div class="site-nav__inner">
       <ol class="site-nav__list">
         <li class="site-nav__item"><a href="../" class="site-nav__link" data-split-hover>Home</a></li>
-        <li class="site-nav__item"><a href="./" class="site-nav__link" data-split-hover>Web portfolio</a></li>
-        <li class="site-nav__item"><a href="./" class="site-nav__link" data-split-hover>Graphics portfolio</a>
+        <li class="site-nav__item"><a href="./?type=web" class="site-nav__link" data-split-hover>Web portfolio</a></li>
+        <li class="site-nav__item"><a href="./?type=graphics" class="site-nav__link" data-split-hover>Graphics
+            portfolio</a>
         </li>
+        <li class="site-nav__item"><a href="/services/" class="site-nav__link" data-split-hover>Services</a></li>
         <li class="site-nav__item"><a href="/about/" class="site-nav__link" data-split-hover>About</a></li>
         <li class="site-nav__item"><a href="/hire/" class="site-nav__link " data-split-hover>Hire Me!</a>
         </li>
@@ -235,8 +249,9 @@
           <p class="footer__col-title">Explore</p>
           <div class="footer__col-links">
             <a href="../#top" data-split-hover>Home</a>
-            <a href="./" data-split-hover>Web portfolio</a>
-            <a href="./" data-split-hover>Graphics portfolio</a>
+            <a href="./?type=web" data-split-hover>Web portfolio</a>
+            <a href="./?type=graphics" data-split-hover>Graphics portfolio</a>
+            <a href="/services/" data-split-hover>Services</a>
             <a href="/about/" data-split-hover>About</a>
             <a href="/hire/" data-split-hover>Hire Me</a>
           </div>
@@ -280,6 +295,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="../js/script.js"></script>
   <script src="../js/lightbox.js"></script>
+  <script src="../js/projects-filter.js"></script>
   <script src="../js/portfolio-items.js"></script>
   <script src="../js/portfolio-card.js"></script>
   <script src="../js/projects-page.js"></script>

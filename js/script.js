@@ -4,6 +4,7 @@ const lenis = new Lenis({
   smoothWheel: true,
   smoothTouch: true,
 });
+window.lenis = lenis; // exposed so other scripts (back-to-top) can call lenis.scrollTo()
 
 
 function raf(time) {

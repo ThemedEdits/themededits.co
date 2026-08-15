@@ -23,12 +23,21 @@
   let trailDocTop = 0;
   let cardTs = [];
   let navIsOpen = false;
+  let currentFilter = (() => {
+    const t = new URLSearchParams(window.location.search).get('type');
+    return (t === 'web' || t === 'graphics') ? t : 'all';
+  })();
+
+  function getFilteredItems() {
+    if (currentFilter === 'all') return ALL_PORTFOLIO_ITEMS;
+    return ALL_PORTFOLIO_ITEMS.filter(item => item.category === currentFilter);
+  }
 
   function layoutCards() {
     itemsWrap.innerHTML = '';
     const mobile = isMobile();
 
-    ALL_PORTFOLIO_ITEMS.forEach((item, i) => {
+    getFilteredItems().forEach((item, i) => {
       const node = createPortfolioCard(item);
       node.classList.add('p-card--trail');
       node.dataset.revealed = 'false';
@@ -332,16 +341,16 @@
   }
 
   if (window.lenis) {
-  window.lenis.on('scroll', () => {
-    if (navIsOpen) return;
-    onScroll();
-  });
-} else {
-  window.addEventListener('scroll', () => {
-    if (navIsOpen) return;
-    onScroll();
-  }, { passive: true });
-}
+    window.lenis.on('scroll', () => {
+      if (navIsOpen) return;
+      onScroll();
+    });
+  } else {
+    window.addEventListener('scroll', () => {
+      if (navIsOpen) return;
+      onScroll();
+    }, { passive: true });
+  }
 
   window.addEventListener('resize', () => {
     if (navIsOpen) return;
@@ -354,4 +363,18 @@
   window.addEventListener('nav:willClose', () => { navIsOpen = false; });
 
   init();
+  window.__setProjectsFilter = function(filter){
+  currentFilter = filter;
+  sparks = [];
+  layoutCards();
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      measure();
+      recomputeCardTs();
+      progress = 0;
+      targetProgress = 0;
+      onScroll();
+    });
+  });
+};
 })();

@@ -194,9 +194,12 @@
     <div class="site-nav__inner">
       <ol class="site-nav__list">
         <li class="site-nav__item"><a href="/" class="site-nav__link" data-split-hover>Home</a></li>
-        <li class="site-nav__item"><a href="/projects/" class="site-nav__link" data-split-hover>Web portfolio</a></li>
-        <li class="site-nav__item"><a href="/projects/" class="site-nav__link" data-split-hover>Graphics portfolio</a>
+        <li class="site-nav__item"><a href="/projects/?type=web" class="site-nav__link" data-split-hover>Web
+            Portfolio</a></li>
+        <li class="site-nav__item"><a href="/projects/?type=graphics" class="site-nav__link" data-split-hover>Graphics
+            Portfolio</a>
         </li>
+        <li class="site-nav__item"><a href="/services/" class="site-nav__link" data-split-hover>Services</a></li>
         <li class="site-nav__item"><a href="/about/" class="site-nav__link" data-split-hover>About</a></li>
         <li class="site-nav__item"><a href="/hire/" class="site-nav__link " data-split-hover>Hire
             me!</a></li>
@@ -251,99 +254,234 @@
       </div>
     </section>
 
-<!-- ====================== Services =================== -->
-<section class="services" id="services">
-  <div data-reveal="scale" class="services__head">
-    <span class="badge">Services</span>
-    <h2 class="services__title">What I Can <span class="services__title-accent">Design</span><br>&amp; Build For You</h2>
-    <p class="services__intro">I help brands look sharp and work well online, from a logo that actually fits your business to a website that loads fast and gets found. Here's what I offer.</p>
-  </div>
+    <!-- ====================== Services =================== -->
+    <section class="services" id="services">
+      <div data-reveal="scale" class="services__head">
+        <span class="badge">Services</span>
+        <h2 class="services__title">What I Can <span class="services__title-accent">Design</span><br>&amp; Build For You
+        </h2>
+        <p class="services__intro">
+          I design the visual identities and digital experiences behind growing brands. From logos
+          and content to custom websites and interfaces.
+        </p>
+      </div>
 
-  <div class="services__list" id="servicesList">
-    <div class="services__row" data-service="0">
-      <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
-        <a href="/services/brand-identity" class="services__row-title" data-split-hover>Brand Identity</a>
-        <button class="services__row-toggle" aria-label="Toggle description">
-          <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="services__row-body">
-        <span class="services__row-desc">Logos, color systems, and visual guidelines built around what your business actually stands for.</span>
-        <a href="/services/brand-identity" class="services__row-cta" data-split-hover>Learn More <span aria-hidden="true">↗</span></a>
-      </div>
-    </div>
+      <div class="services__list" id="servicesList">
 
-    <div class="services__row" data-service="1">
-      <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
-        <a href="/services/web-design-development" class="services__row-title" data-split-hover>Web Design &amp; Development</a>
-        <button class="services__row-toggle" aria-label="Toggle description">
-          <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="services__row-body">
-        <span class="services__row-desc">Custom-coded websites that are fast, responsive, and built to convert, not just templates with your logo swapped in.</span>
-        <a href="/services/web-design-development" class="services__row-cta" data-split-hover>Learn More <span aria-hidden="true">↗</span></a>
-      </div>
-    </div>
+        <!-- =========================================================
+   01 — BRAND IDENTITY
+   ========================================================= -->
+        <div class="services__row" data-service="0" data-reveal="left">
+          <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
 
-    <div class="services__row" data-service="2">
-      <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
-        <a href="/services/ui-ux-design" class="services__row-title" data-split-hover>UI/UX Design</a>
-        <button class="services__row-toggle" aria-label="Toggle description">
-          <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="services__row-body">
-        <span class="services__row-desc">Interfaces and user flows designed around how people actually use your product, not just how it looks in a mockup.</span>
-        <a href="/services/ui-ux-design" class="services__row-cta" data-split-hover>Learn More <span aria-hidden="true">↗</span></a>
-      </div>
-    </div>
+            <a href="/services/#brand-identity" class="services__row-title" data-split-hover>
+              Brand Identity
+            </a>
 
-    <div class="services__row" data-service="3">
-      <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
-        <a href="/services/graphic-design" class="services__row-title" data-split-hover>Graphic Design</a>
-        <button class="services__row-toggle" aria-label="Toggle description">
-          <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="services__row-body">
-        <span class="services__row-desc">Social posts, banners, and print-ready assets that stay on-brand across every platform you post on.</span>
-        <a href="/services/graphic-design" class="services__row-cta" data-split-hover>Learn More <span aria-hidden="true">↗</span></a>
-      </div>
-    </div>
+            <button class="services__row-toggle" aria-label="Toggle description">
+              <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
 
-    <div class="services__row" data-service="4">
-      <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
-        <a href="/services/seo" class="services__row-title" data-split-hover>SEO</a>
-        <button class="services__row-toggle" aria-label="Toggle description">
-          <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="services__row-body">
-        <span class="services__row-desc">On-page SEO and technical fixes that help your site actually show up when people search for what you do.</span>
-        <a href="/services/seo" class="services__row-cta" data-split-hover>Learn More <span aria-hidden="true">↗</span></a>
-      </div>
-    </div>
+          </div>
 
-    <div class="services__preview" id="servicesPreview" aria-hidden="true">
-      <img src="/assets/driftwork-hero.png" alt="" class="services__preview-img" data-idx="0">
-      <img src="/assets/graphic-design-services.webp" alt="" class="services__preview-img" data-idx="1">
-      <img src="/assets/about-intro-img-03.webp" alt="" class="services__preview-img" data-idx="2">
-      <img src="/assets/aurelia-hero.png" alt="" class="services__preview-img" data-idx="3">
-      <img src="/assets/numeriq-global-hero.webp" alt="" class="services__preview-img" data-idx="4">
-    </div>
-  </div>
-</section>
+          <div class="services__row-body">
+            <span class="services__row-desc">
+              A complete visual system built around your brand, from logos and typography to colors, layouts, and visual
+              guidelines.
+            </span>
+
+            <a href="/services/#brand-identity" class="services__row-cta" data-split-hover>
+              Learn More <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- =========================================================
+   02 — WEB DESIGN & DEVELOPMENT
+   ========================================================= -->
+        <div class="services__row" data-service="1" data-reveal="left">
+          <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
+
+            <a href="/services/#web-design-development" class="services__row-title" data-split-hover>
+              Web Design &amp; Development
+            </a>
+
+            <button class="services__row-toggle" aria-label="Toggle description">
+              <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+
+          </div>
+
+          <div class="services__row-body">
+            <span class="services__row-desc">
+              Custom websites designed and built around your goals, with responsive layouts, purposeful motion, and a
+              smooth experience across devices.
+            </span>
+
+            <a href="/services/#web-design-development" class="services__row-cta" data-split-hover>
+              Learn More <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- =========================================================
+   03 — DIGITAL EXPERIENCES
+   ========================================================= -->
+        <div class="services__row" data-service="2" data-reveal="left">
+          <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
+
+            <a href="/services/#digital-experiences" class="services__row-title" data-split-hover>
+              Digital Experiences
+            </a>
+
+            <button class="services__row-toggle" aria-label="Toggle description">
+              <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+
+          </div>
+
+          <div class="services__row-body">
+            <span class="services__row-desc">
+              Interactive digital experiences where layout, typography, visuals, and motion work together to create
+              something more intentional.
+            </span>
+
+            <a href="/services/#digital-experiences" class="services__row-cta" data-split-hover>
+              Learn More <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- =========================================================
+   04 — WEB EXPERIENCES
+   ========================================================= -->
+        <div class="services__row" data-service="3" data-reveal="left">
+          <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
+
+            <a href="/services/#web-experiences" class="services__row-title" data-split-hover>
+              Web Experiences
+            </a>
+
+            <button class="services__row-toggle" aria-label="Toggle description">
+              <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+
+          </div>
+
+          <div class="services__row-body">
+            <span class="services__row-desc">
+              Polished websites focused on hierarchy, transitions, responsive behavior, interactions, and the details
+              users remember.
+            </span>
+
+            <a href="/services/#web-experiences" class="services__row-cta" data-split-hover>
+              Learn More <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- =========================================================
+   05 — LOGOS
+   ========================================================= -->
+        <div class="services__row" data-service="4" data-reveal="left">
+          <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
+
+            <a href="/services/#logos" class="services__row-title" data-split-hover>
+              Logos
+            </a>
+
+            <button class="services__row-toggle" aria-label="Toggle description">
+              <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+
+          </div>
+
+          <div class="services__row-body">
+            <span class="services__row-desc">
+              Clean, purposeful logo marks created to stay recognizable and adaptable across websites, social media,
+              packaging, and print.
+            </span>
+
+            <a href="/services/#logos" class="services__row-cta" data-split-hover>
+              Learn More <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- =========================================================
+   06 — SOCIAL CONTENT
+   ========================================================= -->
+        <div class="services__row" data-service="5" data-reveal="left">
+          <div class="services__row-header" role="button" tabindex="0" aria-expanded="false">
+
+            <a href="/services/#social-content" class="services__row-title" data-split-hover>
+              Social Content
+            </a>
+
+            <button class="services__row-toggle" aria-label="Toggle description">
+              <svg viewBox="0 0 24 24" fill="none" class="services__toggle-icon">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+
+          </div>
+
+          <div class="services__row-body">
+            <span class="services__row-desc">
+              Social graphics and campaign visuals that stay consistent with your brand while giving every piece its own
+              character.
+            </span>
+
+            <a href="/services/#social-content" class="services__row-cta" data-split-hover>
+              Learn More <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- =========================================================
+   SERVICE PREVIEW IMAGES
+   ========================================================= -->
+        <div class="services__preview" id="servicesPreview" aria-hidden="true">
+
+          <img src="/assets/services-imgs/brand-identity.webp" alt="" class="services__preview-img" data-idx="0">
+
+          <img src="/assets/services-imgs/web-design.webp" alt="" class="services__preview-img" data-idx="1">
+
+          <img src="/assets/services-imgs/digital-experience.webp" alt="" class="services__preview-img" data-idx="2">
+
+          <img src="/assets/services-imgs/web-experience.webp" alt="" class="services__preview-img" data-idx="3">
+
+          <img src="/assets/services-imgs/logo-design.webp" alt="" class="services__preview-img" data-idx="4">
+
+          <img src="/assets/services-imgs/social-content.webp" alt="" class="services__preview-img" data-idx="5">
+
+        </div>
+
+      </div>
+    </section>
+
     <!-- ========= ABOUT =======================-->
     <section class="about-new" id="about">
       <div class="about-new__grid">
@@ -354,8 +492,7 @@
           </div>
 
           <div data-reveal="left" class="about-new__cta-row">
-            <a href="/hire/" class="services__cta btn--solid" data-split-hover>Get Started <span
-                aria-hidden="true">↗</span></a>
+            <a href="/hire/" class="btn btn--solid" data-split-hover>Get Started <span aria-hidden="true">↗</span></a>
             <a href="/about/" class="about-new__link" data-split-hover>Learn more</a>
           </div>
         </div>
@@ -459,8 +596,7 @@
         <div data-reveal="scale" style="--reveal-delay: 0.5s" class="hiw__mid">
           <p class="hiw__mid-text" id="hiwMidText">We start with a conversation about your goals, audience, ideas, and
             what you want the final result to achieve.</p>
-          <a href="/hire/" class="services__cta btn--solid" data-split-hover>Get Started <span
-              aria-hidden="true">↗</span></a>
+          <a href="/hire/" class="btn btn--solid" data-split-hover>Get Started <span aria-hidden="true">↗</span></a>
         </div>
 
         <div data-reveal="scale" style="--reveal-delay: 0.7s" class="hiw__next">
@@ -520,8 +656,9 @@
           <p class="footer__col-title">Explore</p>
           <div class="footer__col-links">
             <a href="/" data-split-hover>Home</a>
-            <a href="/projects/" data-split-hover>Web portfolio</a>
-            <a href="/projects/" data-split-hover>Graphics portfolio</a>
+            <a href="/projects/?type=web" data-split-hover>Web portfolio</a>
+            <a href="/projects/?type=graphics" data-split-hover>Graphics portfolio</a>
+            <a href="/services/" data-split-hover>Services</a>
             <a href="/about/" data-split-hover>About</a>
             <a href="/hire/" data-split-hover>Hire Me</a>
           </div>

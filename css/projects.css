@@ -4,7 +4,7 @@
    ========================================================= */
 .projects-trail {
   position: relative;
-  padding: calc(var(--header-h) + 60px) clamp(20px, 6vw, 90px) clamp(100px, 14vw, 180px);
+ padding: calc(var(--header-h) + 60px) clamp(20px, 6vw, 90px) clamp(20px, 2.8vw, 36px);
   overflow: visible;
 }
 
@@ -130,6 +130,97 @@
   display: flex;
   flex-direction: column;
   gap: clamp(60px, 10vw, 140px);
+}
+
+
+/* =========================================================
+   Floating filter pill
+   ========================================================= */
+.portfolio-filter{
+  position: fixed;
+  left: 50%;
+  bottom: clamp(16px, 4vw, 36px);
+  transform: translateX(-50%);
+  z-index: 45;
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  background: rgba(20,20,20,.4);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(245,243,238,.14);
+  border-radius: 100px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+}
+
+.portfolio-filter__btn{
+  padding: 9px 18px;
+  border-radius: 100px;
+  border: 0;
+  background: transparent;
+  color: var(--ink-dim);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .3s var(--ease), color .3s var(--ease);
+}
+
+.portfolio-filter__btn.is-active{
+  background: var(--amber);
+  color: var(--bg);
+}
+
+@media (max-width: 480px){
+  .portfolio-filter{
+    bottom: 12px;
+  }
+  .portfolio-filter__btn{
+    padding: 8px 14px;
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+   Back to top
+   ========================================================= */
+.back-to-top{
+  position: fixed;
+  right: clamp(15px, 4vw, 28px);
+  bottom: clamp(76px, 8vw, 100px);
+  width: clamp(40px, 8vw, 50px);
+  height: clamp(40px, 8vw, 50px);
+  z-index: 90;
+  border-radius: 50%;
+  border: 1px solid rgba(245,243,238,.16);
+  background: rgba(20,20,20,.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s linear .3s, background .3s var(--ease);
+}
+
+.back-to-top.is-visible{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s linear 0s, background .3s var(--ease);
+}
+
+.back-to-top:hover{
+  background: var(--amber);
+  color: var(--bg);
+}
+
+.back-to-top svg{
+  width: 18px;
+  height: 18px;
 }
 
 /* =========================================================

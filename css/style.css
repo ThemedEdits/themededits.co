@@ -584,7 +584,7 @@ p {
   display: inline-block;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(18px, 4vw, 92px);
+  font-size: clamp(18px, 3vw, 82px);
   line-height: 1.05;
   letter-spacing: -.01em;
   text-transform: uppercase;
@@ -621,6 +621,18 @@ p {
 
 .site-nav.is-open .site-nav__item:nth-child(5) .site-nav__link {
   transition-delay: .95s;
+}
+
+.site-nav.is-open .site-nav__item:nth-child(6) .site-nav__link {
+  transition-delay: 1.05s;
+}
+
+.site-nav.is-open .site-nav__mail {
+  transition-delay: 1.15s;
+}
+
+.site-nav.is-open .site-nav__socials {
+  transition-delay: 1.25s;
 }
 
 .site-nav.is-open .site-nav__link {
@@ -669,40 +681,55 @@ p {
 }
 
 /* =========================================================
-   Modern Interactive Buttons
+   THEMED EDITS — Interactive Buttons
+   Clean split-letter interaction + directional fill
+   Uses design tokens only
    ========================================================= */
 
 .btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  --btn-border: rgba(245, 243, 238, .18);
+  --btn-hover-bg: var(--amber);
+  --btn-hover-fg: var(--bg);
+  --btn-shadow: 0 0 0 transparent;
+
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 11px;
 
-  padding: 12px 22px;
+  min-height: 48px;
+  padding: 12px 20px;
 
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(13px, 1.1vw, 15px);
-  letter-spacing: .02em;
-  text-transform: uppercase;
-
+  border: 1px solid var(--btn-border);
   border-radius: 100px;
+
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(12px, 2vw, 17px);
+  line-height: 1;
+  white-space: nowrap;
+
   overflow: hidden;
   isolation: isolate;
-
   cursor: pointer;
 
   transition:
-    transform .35s var(--ease),
+    transform .45s var(--ease-out),
     color .35s var(--ease),
     border-color .35s var(--ease),
-    box-shadow .35s var(--ease);
+    box-shadow .45s var(--ease),
+    background-color .35s var(--ease);
 }
 
 
 /* =========================================================
-   Animated background layer
+   Animated fill
    ========================================================= */
 
 .btn::before {
@@ -710,11 +737,41 @@ p {
   position: absolute;
   inset: 0;
 
-  background: var(--ink);
-  border-radius: 50%;
+  background: var(--btn-hover-bg);
+  border-radius: inherit;
 
-  transform: translateY(105%);
-  transition: transform .45s var(--ease-out);
+  transform: translateY(102%);
+  transform-origin: bottom;
+
+  transition:
+    transform .55s var(--ease-out);
+
+  z-index: -1;
+}
+
+
+/* =========================================================
+   Subtle inner highlight
+   ========================================================= */
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(255, 255, 255, .10),
+      transparent 35%
+    );
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity .4s var(--ease);
 
   z-index: -1;
 }
@@ -725,97 +782,170 @@ p {
    ========================================================= */
 
 .btn__mark {
-  width: 17px;
-  height: 17px;
+  position: relative;
+  z-index: 2;
+
+  width: 18px;
+  height: 18px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
+  flex-shrink: 0;
+
   transition:
-    transform .4s var(--ease-out),
-    background .35s var(--ease);
+    transform .5s var(--ease-out);
 }
 
 
 /* =========================================================
-   Solid button
+   SOLID
    ========================================================= */
 
 .btn--solid {
+  --btn-bg: var(--amber);
+  --btn-fg: var(--bg);
+  --btn-border: var(--amber);
+  --btn-hover-bg: var(--bg);
+  --btn-hover-fg: var(--ink);
+
   background: var(--amber);
   color: var(--bg);
 
+  /* border-color: var(--amber); */
+
   box-shadow:
-    0 6px 20px rgba(251, 174, 23, .12);
+    0 8px 24px rgba(251, 174, 23, .12);
 }
 
-.btn--solid::before {
-  background: var(--bg);
+
+/*
+   IMPORTANT:
+   Both split-letter layers receive the correct colors.
+   This prevents the old "black text on black background"
+   glitch during the hover transition.
+*/
+
+.btn--solid .ch__top {
+  color: var(--bg);
 }
 
 .btn--solid .ch__bottom {
-  color: var(--bg);
+  color: var(--ink);
 }
 
 
 /* =========================================================
-   Ghost button
+   GHOST
    ========================================================= */
 
 .btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  --btn-border: rgba(245, 243, 238, .22);
+  --btn-hover-bg: var(--amber);
+  --btn-hover-fg: var(--bg);
+
   background: transparent;
   color: var(--ink);
-  border: 1px solid rgba(245, 243, 238, .22);
-}
 
-.btn--ghost::before {
-  background: var(--amber);
+  border-color: rgba(245, 243, 238, .22);
 }
-
-.btn--ghost:hover {
-  color: var(--bg);
-  border-color: var(--amber);
-}
-
-.btn--ghost .ch__bottom {
-  color: var(--ink);
-}
-
-.btn--ghost:hover .ch__bottom {
-  color: var(--bg);
-}
-
 
 /* =========================================================
-   Hover
+   HOVER
    ========================================================= */
 
-.btn:hover {
+.btn:hover,
+.btn:focus-visible {
   transform: translateY(-3px);
+
+  color: var(--btn-hover-fg);
 }
 
-.btn:hover::before {
+
+.btn:hover::before,
+.btn:focus-visible::before {
   transform: translateY(0);
-  border-radius: inherit;
 }
 
-.btn:hover .btn__mark {
+
+.btn:hover::after,
+.btn:focus-visible::after {
+  opacity: 1;
+}
+
+
+.btn:hover .btn__mark,
+.btn:focus-visible .btn__mark {
   transform: translate(3px, -3px) rotate(4deg);
 }
 
 
 /* =========================================================
-   Active / click
+   Hover text colors
    ========================================================= */
 
-.btn:active {
-  transform: translateY(0) scale(.97);
+.btn--solid:hover .ch__top,
+.btn--solid:focus-visible .ch__top {
+  color: var(--ink);
+}
+
+.btn--solid:hover .ch__bottom,
+.btn--solid:focus-visible .ch__bottom {
+  color: var(--ink);
+}
+
+
+.btn--ghost:hover .ch__top,
+.btn--ghost:focus-visible .ch__top {
+  color: var(--bg);
+}
+
+.btn--ghost:hover .ch__bottom,
+.btn--ghost:focus-visible .ch__bottom {
+  color: var(--bg);
 }
 
 
 /* =========================================================
-   Focus
+   SOLID hover refinement
+   ========================================================= */
+
+.btn--solid:hover,
+.btn--solid:focus-visible {
+  background: var(--amber);
+  color: var(--ink);
+}
+
+
+/* =========================================================
+   GHOST hover refinement
+   ========================================================= */
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  background: transparent;
+  color: var(--bg);
+  border-color: var(--ink);
+  box-shadow: 0 8px 24px rgba(251, 174, 23, .12);
+}
+
+
+/* =========================================================
+   ACTIVE / PRESS
+   ========================================================= */
+
+.btn:active {
+  transform: translateY(-1px) scale(.97);
+
+  transition-duration: .12s;
+}
+
+
+/* =========================================================
+   FOCUS
    ========================================================= */
 
 .btn:focus-visible {
@@ -825,13 +955,16 @@ p {
 
 
 /* =========================================================
-   Solid hover refinement
+   Disabled
    ========================================================= */
 
-.btn--solid:hover {
-  color: var(--ink);
-  box-shadow:
-    0 10px 30px rgba(251, 174, 23, .2);
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: .45;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
 }
 
 
@@ -843,8 +976,17 @@ p {
 
   .btn,
   .btn::before,
-  .btn__mark {
-    transition: none;
+  .btn::after,
+  .btn__mark,
+  .btn .ch__top,
+  .btn .ch__bottom {
+    transition: none !important;
+  }
+
+  .btn:hover,
+  .btn:focus-visible,
+  .btn:active {
+    transform: none;
   }
 }
 
@@ -1309,8 +1451,8 @@ p {
 
 .services__row-desc {
   display: block;
-  font-size: clamp(13px, 1vw, 15px);
-  line-height: 1.55;
+  font-size: clamp(13px, 2vw, 17px);
+  line-height: 1.55;  
   color: var(--ink-dim);
   max-width: 52ch;
   margin-bottom: clamp(12px, 1vw, 16px);
@@ -1336,11 +1478,11 @@ p {
 .services__preview {
   position: fixed;
   top: 50%;
-  right: clamp(20px, 12vw, 150px);
+  right: clamp(20px, 12vw, 125px);
   left: auto;
-  width: clamp(200px, 20vw, 275px);
-  height: clamp(150px, 15vw, 200px);
-  transform: translateY(-50%) scale(.9);
+  width: clamp(375px, 18vw, 425px);
+  height: clamp(300px, 20vw, 460px);
+  transform: translateY(-50%) scale(.96);
   border-radius: 16px;
   overflow: hidden;
   pointer-events: none;

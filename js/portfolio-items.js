@@ -8,7 +8,7 @@ const PORTFOLIO_ITEMS = [
     category: "web",
     type: "project",
     liveUrl: "https://numeriqglobal.org",
-    thumbnail: "/assets/numeriq-global-hero.png",
+    thumbnail: "/assets/numeriq/numeriq-thumb.webp",
     heroImage: "/assets/numeriq/numeriq-global-hero-img.webp",
     gallery: [
       "/assets/numeriq-global-hero.png",
@@ -29,7 +29,7 @@ const PORTFOLIO_ITEMS = [
     description: "A full visual identity system, from logo mark to packaging, for a boutique skincare label.",
     category: "graphics",
     type: "project",
-    thumbnail: "/assets/aurelia-hero.png",
+    thumbnail: "/assets/frost/frost-thumb.webp",
     heroImage: "/assets/frost/frost-and-gold-hero-img.webp",
     gallery: [
       "assets/portfolio/aurelia-1.jpg",

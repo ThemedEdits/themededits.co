@@ -13,7 +13,7 @@
     input.addEventListener('blur', sync);
     sync();
 
-    if (input.tagName === 'TEXTAREA'){
+    if (input.tagName === 'TEXTAREA') {
       const grow = () => {
         input.style.height = 'auto';
         input.style.height = input.scrollHeight + 'px';
@@ -30,12 +30,12 @@
   const optionsList = document.getElementById('cf-typeOptions');
   const options = [...optionsList.querySelectorAll('li')];
 
-  function closeSelect(){
+  function closeSelect() {
     selectWrap.classList.remove('is-open');
     selectBtn.setAttribute('aria-expanded', 'false');
   }
 
-  function openSelect(){
+  function openSelect() {
     selectWrap.classList.add('is-open');
     selectBtn.setAttribute('aria-expanded', 'true');
   }
@@ -64,8 +64,99 @@
     if (e.key === 'Escape') closeSelect();
   });
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    // wire up to your actual submission endpoint here
-  });
+  form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // Validate normal required fields
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
+  // Custom project type is a hidden input,
+  // so validate it manually.
+  if (!selectInput.value.trim()) {
+    selectWrap.classList.add('is-error');
+    selectBtn.focus();
+
+    setTimeout(() => {
+      selectWrap.classList.remove('is-error');
+    }, 2000);
+
+    return;
+  }
+
+  const submitButton = form.querySelector('.cform__submit');
+  const submitText = submitButton.querySelector('span');
+
+  const originalText = submitText.textContent;
+
+  submitButton.disabled = true;
+  submitText.textContent = 'Sending...';
+
+  // Collect form data
+  const formData = {
+    firstName: form.querySelector('[name="firstName"]').value.trim(),
+    lastName: form.querySelector('[name="lastName"]').value.trim(),
+    email: form.querySelector('[name="email"]').value.trim(),
+    company: form.querySelector('[name="company"]').value.trim(),
+    projectType: form.querySelector('[name="projectType"]').value.trim(),
+    detail: form.querySelector('[name="detail"]').value.trim(),
+
+    // Honeypot field
+    website: form.querySelector('[name="website"]')?.value || ''
+  };
+
+  try {
+
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || 'Failed to send message.');
+    }
+
+    submitText.textContent = 'Message sent ✓';
+
+    form.reset();
+
+    // Reset custom select
+    selectValue.innerHTML = '&nbsp;';
+    selectInput.value = '';
+    selectWrap.classList.remove('has-value');
+
+    options.forEach(option => {
+      option.classList.remove('is-active');
+    });
+
+    // Reset floating labels
+    form.querySelectorAll('.cform__field').forEach(field => {
+      field.classList.remove('has-value');
+    });
+
+    setTimeout(() => {
+      submitText.textContent = originalText;
+      submitButton.disabled = false;
+    }, 2500);
+
+  } catch (error) {
+
+    console.error(error);
+
+    submitText.textContent = 'Failed — Try again';
+
+    submitButton.disabled = false;
+
+    setTimeout(() => {
+      submitText.textContent = originalText;
+    }, 2500);
+  }
+});
 })();

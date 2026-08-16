@@ -2,6 +2,7 @@
   'use strict';
 
   const filterWrap = document.getElementById('portfolioFilter');
+  const pill = document.getElementById('portfolioPill');
   const backToTop = document.getElementById('backToTop');
 
   // ---- filter pill ----
@@ -9,6 +10,16 @@
     const buttons = [...filterWrap.querySelectorAll('.portfolio-filter__btn')];
     const initial = new URLSearchParams(window.location.search).get('type');
     const activeValue = (initial === 'web' || initial === 'graphics') ? initial : 'all';
+
+    function movePillTo(btn) {
+      if (!pill || !btn) return;
+      const wrapRect = filterWrap.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
+
+      pill.style.width = `${btnRect.width}px`;
+      pill.style.height = `${btnRect.height}px`;
+      pill.style.transform = `translate(${btnRect.left - wrapRect.left}px, ${btnRect.top - wrapRect.top}px)`;
+    }
 
     buttons.forEach(btn => {
       const isActive = btn.dataset.filter === activeValue;
@@ -26,6 +37,8 @@
           b.setAttribute('aria-selected', isActive ? 'true' : 'false');
         });
 
+        movePillTo(btn);
+
         const url = new URL(window.location.href);
         if (value === 'all') {
           url.searchParams.delete('type');
@@ -38,6 +51,17 @@
           window.__setProjectsFilter(value);
         }
       });
+    });
+
+    window.addEventListener('resize', () => {
+      const active = filterWrap.querySelector('.portfolio-filter__btn.is-active');
+      movePillTo(active);
+    });
+
+    // position the pill correctly on load, once layout has settled
+    requestAnimationFrame(() => {
+      const active = filterWrap.querySelector('.portfolio-filter__btn.is-active');
+      movePillTo(active);
     });
   }
 

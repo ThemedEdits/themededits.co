@@ -4,7 +4,7 @@
    ========================================================= */
 .projects-trail {
   position: relative;
- padding: calc(var(--header-h) + 60px) clamp(20px, 6vw, 90px) clamp(20px, 2.8vw, 36px);
+  padding: calc(var(--header-h) + 60px) clamp(20px, 6vw, 90px) clamp(20px, 2.8vw, 36px);
   overflow: visible;
 }
 
@@ -136,7 +136,7 @@
 /* =========================================================
    Floating filter pill
    ========================================================= */
-.portfolio-filter{
+.portfolio-filter {
   position: fixed;
   left: 50%;
   bottom: clamp(16px, 4vw, 36px);
@@ -145,15 +145,28 @@
   display: flex;
   gap: 4px;
   padding: 5px;
-  background: rgba(20,20,20,.4);
+  background: rgba(20, 20, 20, .4);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(245,243,238,.14);
+  border: 1px solid rgba(245, 243, 238, .14);
   border-radius: 100px;
-  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
 }
 
-.portfolio-filter__btn{
+.portfolio-filter__pill {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  border-radius: 100px;
+  background: var(--amber);
+  pointer-events: none;
+  z-index: 0;
+  transition: transform .35s var(--ease), width .35s var(--ease), height .35s var(--ease);
+}
+
+.portfolio-filter__btn {
+  position: relative;
+  z-index: 1;
   padding: 9px 18px;
   border-radius: 100px;
   border: 0;
@@ -163,19 +176,29 @@
   font-weight: 600;
   font-size: 13px;
   cursor: pointer;
-  transition: background .3s var(--ease), color .3s var(--ease);
+  transition: color .3s var(--ease);
+  transition: all 0.15s ease-in;
 }
 
-.portfolio-filter__btn.is-active{
-  background: var(--amber);
+.portfolio-filter__btn:hover {
+  color: var(--amber);
+}
+
+.portfolio-filter__btn.is-active {
+  color: var(--bg-soft);
+}
+
+.portfolio-filter__btn.is-active:hover {
+  background: transparent;
   color: var(--bg);
 }
 
-@media (max-width: 480px){
-  .portfolio-filter{
+@media (max-width: 480px) {
+  .portfolio-filter {
     bottom: 12px;
   }
-  .portfolio-filter__btn{
+
+  .portfolio-filter__btn {
     padding: 8px 14px;
     font-size: 10px;
   }
@@ -184,7 +207,7 @@
 /* =========================================================
    Back to top
    ========================================================= */
-.back-to-top{
+.back-to-top {
   position: fixed;
   right: clamp(15px, 4vw, 28px);
   bottom: clamp(76px, 8vw, 100px);
@@ -192,8 +215,8 @@
   height: clamp(40px, 8vw, 50px);
   z-index: 90;
   border-radius: 50%;
-  border: 1px solid rgba(245,243,238,.16);
-  background: rgba(20,20,20,.7);
+  border: 1px solid rgba(245, 243, 238, .16);
+  background: rgba(20, 20, 20, .7);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   color: var(--ink);
@@ -206,19 +229,19 @@
   transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s linear .3s, background .3s var(--ease);
 }
 
-.back-to-top.is-visible{
+.back-to-top.is-visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s linear 0s, background .3s var(--ease);
 }
 
-.back-to-top:hover{
+.back-to-top:hover {
   background: var(--amber);
   color: var(--bg);
 }
 
-.back-to-top svg{
+.back-to-top svg {
   width: 18px;
   height: 18px;
 }

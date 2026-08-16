@@ -167,34 +167,26 @@
 
     <section class="sp">
 
-      <div class="sp__tabs" id="spTabs" role="tablist" aria-label="Services">
-
+      <div  data-reveal="up" class="sp__tabs" id="spTabs" role="tablist" aria-label="Services">
         <span class="sp__tab-pill" id="spPill" aria-hidden="true"></span>
-
         <button class="sp__tab" data-target="brand-identity" role="tab">
           Brand Identity
         </button>
-
         <button class="sp__tab" data-target="web-design-development" role="tab">
           Web Design &amp; Development
         </button>
-
         <button class="sp__tab" data-target="digital-experiences" role="tab">
           Digital Experiences
         </button>
-
         <button class="sp__tab" data-target="web-experiences" role="tab">
           Web Experiences
         </button>
-
         <button class="sp__tab" data-target="logos" role="tab">
           Logos
         </button>
-
         <button class="sp__tab" data-target="social-content" role="tab">
           Social Content
         </button>
-
       </div>
 
 
@@ -207,7 +199,7 @@
 
         <article class="sp__panel" id="brand-identity" role="tabpanel">
 
-          <div class="sp__panel-body">
+          <div class="sp__panel-body"  data-reveal="left">
 
             <span class="sp__panel-icon">
               <svg viewBox="0 0 24 24" fill="none">
@@ -239,12 +231,12 @@
 
           </div>
 
-          <div class="sp__panel-media">
+          <div class="sp__panel-media"  data-reveal="right">
             <img src="../assets/services-imgs/brand-identity.webp" alt="Brand identity design example"
               class="sp__panel-img">
           </div>
 
-          <ul class="sp__panel-list">
+          <ul class="sp__panel-list"  data-reveal="scale">
             <li>Logo and visual identity systems</li>
             <li>Color palette and typography direction</li>
             <li>Brand assets and visual guidelines</li>
@@ -549,8 +541,9 @@
           <p class="footer__col-title">Explore</p>
           <div class="footer__col-links">
             <a href="../" data-split-hover>Home</a>
-            <a href="../projects/" data-split-hover>Web portfolio</a>
-            <a href="../projects/" data-split-hover>Graphics portfolio</a>
+            <a href="../projects/?type=web" data-split-hover>Web portfolio</a>
+            <a href="../projects/?type=graphics" data-split-hover>Graphics portfolio</a>
+            <a href="../services/" data-split-hover>Services</a>
             <a href="../about/" data-split-hover>About</a>
             <a href="../hire/" data-split-hover>Hire Me</a>
           </div>

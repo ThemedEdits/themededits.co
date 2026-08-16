@@ -65,98 +65,158 @@
   });
 
   form.addEventListener('submit', async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  // Validate normal required fields
-  if (!form.checkValidity()) {
-    form.reportValidity();
-    return;
-  }
+    // -----------------------------
+    // NORMAL FORM VALIDATION
+    // -----------------------------
 
-  // Custom project type is a hidden input,
-  // so validate it manually.
-  if (!selectInput.value.trim()) {
-    selectWrap.classList.add('is-error');
-    selectBtn.focus();
-
-    setTimeout(() => {
-      selectWrap.classList.remove('is-error');
-    }, 2000);
-
-    return;
-  }
-
-  const submitButton = form.querySelector('.cform__submit');
-  const submitText = submitButton.querySelector('span');
-
-  const originalText = submitText.textContent;
-
-  submitButton.disabled = true;
-  submitText.textContent = 'Sending...';
-
-  // Collect form data
-  const formData = {
-    firstName: form.querySelector('[name="firstName"]').value.trim(),
-    lastName: form.querySelector('[name="lastName"]').value.trim(),
-    email: form.querySelector('[name="email"]').value.trim(),
-    company: form.querySelector('[name="company"]').value.trim(),
-    projectType: form.querySelector('[name="projectType"]').value.trim(),
-    detail: form.querySelector('[name="detail"]').value.trim(),
-
-    // Honeypot field
-    website: form.querySelector('[name="website"]')?.value || ''
-  };
-
-  try {
-
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    });
-
-    const result = await response.json();
-
-    if (!response.ok || !result.success) {
-      throw new Error(result.message || 'Failed to send message.');
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
     }
 
-    submitText.textContent = 'Message sent ✓';
+    // -----------------------------
+    // PROJECT TYPE VALIDATION
+    // -----------------------------
 
-    form.reset();
+    if (!selectInput.value.trim()) {
 
-    // Reset custom select
-    selectValue.innerHTML = '&nbsp;';
-    selectInput.value = '';
-    selectWrap.classList.remove('has-value');
+      selectWrap.classList.add('is-error');
 
-    options.forEach(option => {
-      option.classList.remove('is-active');
-    });
+      selectBtn.focus();
 
-    // Reset floating labels
-    form.querySelectorAll('.cform__field').forEach(field => {
-      field.classList.remove('has-value');
-    });
+      setTimeout(() => {
+        selectWrap.classList.remove('is-error');
+      }, 2000);
 
-    setTimeout(() => {
-      submitText.textContent = originalText;
+      return;
+    }
+
+    const submitButton = form.querySelector('.cform__submit');
+    const submitText = submitButton.querySelector('span');
+
+    const originalText = submitText.textContent;
+
+    submitButton.disabled = true;
+    submitText.textContent = 'Sending...';
+
+    // -----------------------------
+    // FORM DATA
+    // -----------------------------
+
+    const formData = {
+      firstName: form.querySelector('[name="firstName"]').value.trim(),
+
+      lastName: form.querySelector('[name="lastName"]').value.trim(),
+
+      email: form.querySelector('[name="email"]').value.trim(),
+
+      company: form.querySelector('[name="company"]').value.trim(),
+
+      projectType: form.querySelector('[name="projectType"]').value.trim(),
+
+      detail: form.querySelector('[name="detail"]').value.trim(),
+
+      website: form.querySelector('[name="website"]')?.value || ''
+    };
+
+    try {
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+
+        headers: {
+          'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify(formData)
+      });
+
+      // --------------------------------
+      // SAFELY READ SERVER RESPONSE
+      // --------------------------------
+
+      const responseText = await response.text();
+
+      let result = null;
+
+      try {
+        result = responseText ? JSON.parse(responseText) : null;
+      } catch {
+        result = null;
+      }
+
+      // --------------------------------
+      // HANDLE SERVER ERROR
+      // --------------------------------
+
+      if (!response.ok) {
+
+        console.error(
+          'Server error:',
+          response.status,
+          responseText
+        );
+
+        throw new Error(
+          result?.message ||
+          `Server error (${response.status})`
+        );
+      }
+
+      if (!result?.success) {
+
+        throw new Error(
+          result?.message ||
+          'Unable to send message.'
+        );
+      }
+
+      // --------------------------------
+      // SUCCESS
+      // --------------------------------
+
+      submitText.textContent = 'Message sent ✓';
+
+      form.reset();
+
+      // Reset custom select
+      selectValue.innerHTML = '&nbsp;';
+      selectInput.value = '';
+
+      selectWrap.classList.remove('has-value');
+
+      options.forEach(option => {
+        option.classList.remove('is-active');
+      });
+
+      // Reset floating labels
+      form.querySelectorAll('.cform__field').forEach(field => {
+        field.classList.remove('has-value');
+      });
+
+      setTimeout(() => {
+
+        submitText.textContent = originalText;
+
+        submitButton.disabled = false;
+
+      }, 2500);
+
+    } catch (error) {
+
+      console.error('Form submission error:', error);
+
+      submitText.textContent = 'Failed — Try again';
+
       submitButton.disabled = false;
-    }, 2500);
 
-  } catch (error) {
+      setTimeout(() => {
 
-    console.error(error);
+        submitText.textContent = originalText;
 
-    submitText.textContent = 'Failed — Try again';
-
-    submitButton.disabled = false;
-
-    setTimeout(() => {
-      submitText.textContent = originalText;
-    }, 2500);
-  }
-});
+      }, 2500);
+    }
+  });
 })();

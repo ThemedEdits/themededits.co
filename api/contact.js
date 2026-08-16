@@ -1,10 +1,13 @@
 const nodemailer = require("nodemailer");
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
+  // Only allow POST
   if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
+
     return res.status(405).json({
       success: false,
-      message: "Method not allowed"
+      message: "Method not allowed. Use POST."
     });
   }
 
@@ -19,7 +22,10 @@ export default async function handler(req, res) {
       website
     } = req.body || {};
 
-    // Honeypot spam protection
+    // -----------------------------
+    // HONEYPOT SPAM PROTECTION
+    // -----------------------------
+
     if (website) {
       return res.status(200).json({
         success: true,
@@ -27,7 +33,10 @@ export default async function handler(req, res) {
       });
     }
 
-    // Basic validation
+    // -----------------------------
+    // REQUIRED FIELD VALIDATION
+    // -----------------------------
+
     if (!firstName || !lastName || !email || !projectType) {
       return res.status(400).json({
         success: false,
@@ -35,7 +44,10 @@ export default async function handler(req, res) {
       });
     }
 
-    // Basic email validation
+    // -----------------------------
+    // EMAIL VALIDATION
+    // -----------------------------
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
@@ -45,7 +57,10 @@ export default async function handler(req, res) {
       });
     }
 
-    // Gmail SMTP
+    // -----------------------------
+    // SMTP TRANSPORTER
+    // -----------------------------
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -54,12 +69,29 @@ export default async function handler(req, res) {
       }
     });
 
-    const fullName = `${firstName.trim()} ${lastName.trim()}`;
+    // -----------------------------
+    // CLEAN DATA
+    // -----------------------------
+
+    const cleanFirstName = String(firstName).trim();
+    const cleanLastName = String(lastName).trim();
+    const cleanEmail = String(email).trim();
+    const cleanCompany = String(company || "").trim();
+    const cleanProjectType = String(projectType).trim();
+    const cleanDetail = String(detail || "").trim();
+
+    const fullName = `${cleanFirstName} ${cleanLastName}`;
+
+    // -----------------------------
+    // SEND EMAIL
+    // -----------------------------
 
     await transporter.sendMail({
       from: `"Themed Edits Website" <${process.env.EMAIL_USER}>`,
+
       to: process.env.EMAIL_TO,
-      replyTo: email.trim(),
+
+      replyTo: cleanEmail,
 
       subject: `New Project Inquiry — ${fullName}`,
 
@@ -71,24 +103,31 @@ Name:
 ${fullName}
 
 Email:
-${email}
+${cleanEmail}
 
 Company / Brand:
-${company || "Not provided"}
+${cleanCompany || "Not provided"}
 
 Project Type:
-${projectType}
+${cleanProjectType}
 
 Project Detail:
-${detail || "Not provided"}
+${cleanDetail || "Not provided"}
 
 ===================
+
 Submitted from:
 https://themededits.vercel.app/hire/
       `.trim(),
 
       html: `
-        <div style="font-family:Arial,sans-serif;max-width:650px;margin:auto;color:#222;line-height:1.6">
+        <div style="
+          font-family:Arial,sans-serif;
+          max-width:650px;
+          margin:0 auto;
+          color:#222;
+          line-height:1.6;
+        ">
 
           <h2 style="margin-bottom:5px;">
             New Project Inquiry
@@ -98,43 +137,67 @@ https://themededits.vercel.app/hire/
             Submitted through Themed Edits
           </p>
 
-          <hr style="border:0;border-top:1px solid #ddd;margin:25px 0;">
+          <hr style="
+            border:0;
+            border-top:1px solid #ddd;
+            margin:25px 0;
+          ">
 
-          <table style="width:100%;border-collapse:collapse;">
+          <table style="
+            width:100%;
+            border-collapse:collapse;
+          ">
 
             <tr>
-              <td style="padding:10px 0;font-weight:bold;width:180px;">
+              <td style="
+                padding:10px 0;
+                font-weight:bold;
+                width:180px;
+              ">
                 Name
               </td>
+
               <td style="padding:10px 0;">
                 ${escapeHtml(fullName)}
               </td>
             </tr>
 
             <tr>
-              <td style="padding:10px 0;font-weight:bold;">
+              <td style="
+                padding:10px 0;
+                font-weight:bold;
+              ">
                 Email
               </td>
+
               <td style="padding:10px 0;">
-                ${escapeHtml(email)}
+                ${escapeHtml(cleanEmail)}
               </td>
             </tr>
 
             <tr>
-              <td style="padding:10px 0;font-weight:bold;">
+              <td style="
+                padding:10px 0;
+                font-weight:bold;
+              ">
                 Company / Brand
               </td>
+
               <td style="padding:10px 0;">
-                ${escapeHtml(company || "Not provided")}
+                ${escapeHtml(cleanCompany || "Not provided")}
               </td>
             </tr>
 
             <tr>
-              <td style="padding:10px 0;font-weight:bold;">
+              <td style="
+                padding:10px 0;
+                font-weight:bold;
+              ">
                 Project Type
               </td>
+
               <td style="padding:10px 0;">
-                ${escapeHtml(projectType)}
+                ${escapeHtml(cleanProjectType)}
               </td>
             </tr>
 
@@ -150,10 +213,14 @@ https://themededits.vercel.app/hire/
             border-radius:8px;
             white-space:pre-wrap;
           ">
-            ${escapeHtml(detail || "Not provided")}
+            ${escapeHtml(cleanDetail || "Not provided")}
           </div>
 
-          <p style="margin-top:30px;color:#888;font-size:13px;">
+          <p style="
+            margin-top:30px;
+            color:#888;
+            font-size:13px;
+          ">
             Submitted from
             <a href="https://themededits.vercel.app/hire/">
               Themed Edits Hire Page
@@ -163,6 +230,10 @@ https://themededits.vercel.app/hire/
         </div>
       `
     });
+
+    // -----------------------------
+    // SUCCESS
+    // -----------------------------
 
     return res.status(200).json({
       success: true,
@@ -175,13 +246,16 @@ https://themededits.vercel.app/hire/
 
     return res.status(500).json({
       success: false,
-      message: "Something went wrong while sending your message."
+      message: "Unable to send the message right now."
     });
   }
-}
+};
 
 
-// Prevent HTML injection inside the email
+// -----------------------------
+// HTML ESCAPE
+// -----------------------------
+
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")

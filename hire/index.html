@@ -232,6 +232,62 @@
 
 
         <form class="cform" id="hireForm" novalidate>
+          <div class="cform__success" aria-live="polite" aria-hidden="true">
+
+  <div class="cform__success-icon">
+
+    <svg
+      class="cform__success-check"
+      viewBox="0 0 52 52"
+      aria-hidden="true"
+    >
+      <circle
+        class="cform__success-circle"
+        cx="26"
+        cy="26"
+        r="24"
+      />
+
+      <path
+        class="cform__success-tick"
+        d="M15 27.5 L22.5 35 L38 18"
+      />
+
+    </svg>
+
+  </div>
+
+  <div class="cform__success-content">
+
+    <span class="cform__success-eyebrow">
+      Submission received
+    </span>
+
+    <h2>
+      Message sent successfully.
+    </h2>
+
+    <p>
+      Thanks for reaching out. Your message has been
+      submitted successfully and is now in our inbox.
+    </p>
+
+    <p>
+      We'll get back to you within a few hours,
+      or within 24 hours at the latest.
+    </p>
+
+  </div>
+
+  <button
+    type="button"
+    class="cform__success-again"
+    id="cf-sendAnother"
+  >
+    Send another message
+  </button>
+
+</div>
           <div class="cform__row" data-reveal="fade">
             <div class="cform__field">
               <input type="text" id="cf-first" name="firstName" class="cform__input" required autocomplete="given-name">
@@ -289,21 +345,12 @@
               <span class="cform__line"></span>
             </div>
           </div>
-          <div
-  style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"
-  aria-hidden="true"
->
-  <label for="cf-website">Website</label>
-  <input
-    type="text"
-    id="cf-website"
-    name="website"
-    tabindex="-1"
-    autocomplete="off"
-  >
-</div>
+          <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+            <label for="cf-website">Website</label>
+            <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <div data-reveal="fade">
-            <button type="submit" class="btn btn--solid cform__submit" data-split-hover>
+            <button type="submit" class="btn btn--solid cform__submit" >
               <span>Send message</span>
             </button>
           </div>

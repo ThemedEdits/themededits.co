@@ -106,7 +106,6 @@
 .pd__hire-cta {
   flex-shrink: 0;
   padding: 10px 20px;
-  font-size: 12px;
 }
 
 .pd__nav-link {
@@ -127,6 +126,7 @@
   gap: 0.5rem;
   flex-direction: column;
   padding-top: 8rem;
+  padding-bottom: 7rem;
   padding-right: clamp(24px, 4vw, 56px);
 }
 

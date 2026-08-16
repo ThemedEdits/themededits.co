@@ -515,46 +515,6 @@
 }
 
 
-/* -----------------------------------------
-   SEND ANOTHER BUTTON
-   ----------------------------------------- */
-
-.cform__success-again {
-  margin-top: 32px;
-
-  padding: 13px 22px;
-
-  border: 1px solid rgba(255, 255, 255, .16);
-  border-radius: 999px;
-
-  background: transparent;
-
-  color: rgba(255, 255, 255, .8);
-
-  font: inherit;
-  font-size: 13px;
-  font-weight: 500;
-
-  cursor: pointer;
-
-  transition:
-    background .25s ease,
-    border-color .25s ease,
-    color .25s ease,
-    transform .25s ease;
-
-  animation: cf-success-content 0.7s .55s both
-    cubic-bezier(.22, 1, .36, 1);
-}
-
-
-.cform__success-again:hover {
-  background: rgba(255, 178, 28, .08);
-  border-color: rgba(255, 178, 28, .5);
-  color: #ffb21c;
-  transform: translateY(-2px);
-}
-
 
 /* -----------------------------------------
    MOBILE

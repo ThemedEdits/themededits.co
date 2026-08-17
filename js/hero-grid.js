@@ -178,6 +178,59 @@
     return;
   }
 
+  // =========================================================
+  // PRELOAD ALL HERO IMAGES
+  // Fires immediately while the page-transition overlay is
+  // still covering the screen, so every image is already
+  // cached by the time the hero cycle actually starts. This
+  // is what fixes the text/image sync delay on real mobile
+  // devices (their first-load network fetch was happening
+  // mid-cycle instead of ahead of time — DevTools masked this
+  // because assets were already cached from prior testing).
+  // =========================================================
+
+  items.forEach(item => {
+    const img = new Image();
+    img.src = item.image;
+    if (img.decode) img.decode().catch(() => {});
+    if (item.image2) {
+      const img2 = new Image();
+      img2.src = item.image2;
+      if (img2.decode) img2.decode().catch(() => {});
+    }
+  });
+
+  // Reveals an <img> only once the browser has actually finished
+  // decoding it (img.decode()), not on a guessed one-frame delay.
+  // This is what eliminates the stale-bitmap flash: without this,
+  // reassigning .src can leave the PREVIOUS image's pixels painted
+  // for a frame or two while the new one is still decoding, even
+  // when cached. Since the image is already preloaded, decode()
+  // resolves almost instantly here — fast, and flash-free.
+  function revealFrameImage(imgEl, frameEl, src, altText) {
+    imgEl.style.transition = 'none';
+    imgEl.style.opacity = '0';
+    imgEl.style.transform = 'scale(1.4)';
+    imgEl.alt = altText;
+    imgEl.src = src;
+
+    const commit = () => {
+      void frameEl.offsetWidth;
+      requestAnimationFrame(() => {
+        imgEl.style.transition = '';
+        imgEl.style.opacity = '';
+        imgEl.style.transform = '';
+        frameEl.classList.add('is-active');
+      });
+    };
+
+    if (imgEl.decode) {
+      imgEl.decode().then(commit).catch(commit);
+    } else {
+      commit();
+    }
+  }
+
 
   // =========================================================
   // DOT SETTINGS
@@ -823,32 +876,27 @@
 
 
     // -------------------------------------------------------
-    // IMAGE - Use responsive sizes
+    // IMAGE - Use responsive sizes, size/position first, then
+    // reveal on the same frame as the text (image is already
+    // preloaded, so no network wait happens here anymore)
     // -------------------------------------------------------
 
-    // -------------------------------------------------------
-// IMAGE - Use responsive sizes
-// -------------------------------------------------------
+    frame.classList.remove('is-active');
 
-frame.classList.remove('is-active');
+    frame.style.width = `${size.w}px`;
+    frame.style.height = `${size.h}px`;
 
-frame.style.width = `${size.w}px`;
-frame.style.height = `${size.h}px`;
+    applySlot(
+      POSITION_SLOTS[
+        i % POSITION_SLOTS.length
+      ]
+    );
 
-applySlot(
-  POSITION_SLOTS[
-    i % POSITION_SLOTS.length
-  ]
-);
+    // Force the browser to commit the new frame
+    // position + dimensions before starting the animation.
+    void frame.offsetWidth;
 
-// Force the browser to commit the new frame
-// position + dimensions before starting the animation.
-void frame.offsetWidth;
-
-// Activate image in the same render cycle as the text.
-requestAnimationFrame(() => {
-  frame.classList.add('is-active');
-});
+    revealFrameImage(frameImg, frame, item.image, item.text);
 
     // -------------------------------------------------------
     // SECONDARY IMAGE — only for the last item (Social Content),
@@ -867,73 +915,13 @@ requestAnimationFrame(() => {
         frame2.style.height = `${secSize.h}px`;
         applySlot2(secPos);
 
-        frameImg2.style.transition = 'none';
-        frameImg2.style.opacity = '0';
-        frameImg2.style.transform = 'scale(1.4)';
+        void frame2.offsetWidth;
 
-        const secondImage = new Image();
-        secondImage.onload = () => {
-          frameImg2.src = item.image2;
-          frameImg2.alt = item.text + ' secondary';
-
-          void frame2.offsetWidth;
-
-          requestAnimationFrame(() => {
-            frameImg2.style.transition = '';
-            frameImg2.style.opacity = '';
-            frameImg2.style.transform = '';
-            frame2.classList.add('is-active');
-          });
-        };
-        secondImage.onerror = () => {
-          frame2.classList.remove('is-active');
-        };
-        secondImage.src = item.image2;
+        revealFrameImage(frameImg2, frame2, item.image2, item.text + ' secondary');
       } else {
         frame2.classList.remove('is-active');
       }
     }
-    // -------------------------------------------------------
-    // RESET IMAGE BEFORE SOURCE CHANGE
-    // -------------------------------------------------------
-
-    frameImg.style.transition = 'none';
-    frameImg.style.opacity = '0';
-    frameImg.style.transform = 'scale(1.4)';
-
-
-    const newImage = new Image();
-
-
-    newImage.onload = () => {
-
-      frameImg.src = item.image;
-      frameImg.alt = item.text;
-
-      void frame.offsetWidth;
-
-      requestAnimationFrame(() => {
-
-        frameImg.style.transition = '';
-
-        frameImg.style.opacity = '';
-        frameImg.style.transform = '';
-
-        frame.classList.add('is-active');
-
-      });
-
-    };
-
-
-    newImage.onerror = () => {
-
-      frame.classList.remove('is-active');
-
-    };
-
-
-    newImage.src = item.image;
   }
 
 

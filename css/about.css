@@ -8,7 +8,7 @@
 .about-intro {
   padding: clamp(20px, 4vw, 40px) clamp(20px, 6vw, 90px) clamp(70px, 10vw, 120px);
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 500px 1fr;
   gap: clamp(32px, 5vw, 64px);
   align-items: start;
 }
@@ -103,6 +103,10 @@
   align-items: flex-start;
   gap: clamp(18px, 2vw, 22px);
 }
+
+/* .skills__ring-card:nth-child(2), .skills__ring-card:nth-child(4){
+  background: var(--mesh-dark-1);
+} */
 
 .skills__ring {
   position: relative;

@@ -11,7 +11,7 @@
     { text: 'Digital Experiences', image: '/assets/hero/Digital-Experiences.webp' },
     { text: 'Web Experiences', image: '/assets/hero/Web-Experiences.webp' },
     { text: 'Logos', image: '/assets/hero/Logos.webp' },
-    { text: 'Social Content', image: '/assets/hero/Social-Designs.webp' }
+    { text: 'Social Content', image: '/assets/hero/Social-Designs.webp', image2: '/assets/hero/Social-Designs-2.webp' }
   ];
 
 
@@ -35,48 +35,68 @@
     if (width > 1024) {
       return [
         { w: 280, h: 470 },
-        { w: 290, h: 460 },
-        { w: 290, h: 190 },
-        { w: 350, h: 350 },
+        { w: 280, h: 470 },
+        { w: 480, h: 300 },
+        { w: 480, h: 300 },
         { w: 300, h: 500 },
         { w: 300, h: 300 }
       ];
     }
-    // Tablet
+
+    // Tablet — 75% of desktop
     else if (width > 768) {
       return [
-        { w: 200, h: 340 },
-        { w: 210, h: 330 },
-        { w: 210, h: 140 },
-        { w: 250, h: 250 },
-        { w: 220, h: 360 },
-        { w: 220, h: 220 }
+        { w: 210, h: 353 },
+        { w: 210, h: 353 },
+        { w: 360, h: 225 },
+        { w: 360, h: 225 },
+        { w: 225, h: 375 },
+        { w: 225, h: 225 }
       ];
     }
-    // Mobile landscape
+
+    // Mobile landscape — 50% of desktop
     else if (width > 480) {
       return [
-        { w: 140, h: 240 },
-        { w: 150, h: 230 },
-        { w: 150, h: 100 },
-        { w: 180, h: 180 },
-        { w: 160, h: 260 },
-        { w: 160, h: 160 }
+        { w: 140, h: 235 },
+        { w: 140, h: 235 },
+        { w: 240, h: 150 },
+        { w: 240, h: 150 },
+        { w: 150, h: 250 },
+        { w: 150, h: 150 }
       ];
     }
-    // Mobile portrait
+
+    // Mobile portrait — 40% of desktop
     else {
       return [
-        { w: 120, h: 204 },
-        { w: 132, h: 192 },
-        { w: 132, h: 90 },
-        { w: 156, h: 156 },
-        { w: 138, h: 222 },
-        { w: 138, h: 138 }
+        { w: 112, h: 188 },
+        { w: 112, h: 188 },
+        { w: 192, h: 120 },
+        { w: 192, h: 120 },
+        { w: 180, h: 310 },
+        { w: 120, h: 120 }
       ];
     }
   }
+  function getSecondaryFrameSize() {
+    const width = window.innerWidth;
 
+    if (width > 1024) return { w: 300, h: 300 };
+    else if (width > 768) return { w: 225, h: 225 };
+    else if (width > 480) return { w: 150, h: 150 };
+    else return { w: 120, h: 120 };
+  }
+
+  function getSecondaryPosition() {
+    // always top-left, per breakpoint edge padding
+    const width = window.innerWidth;
+
+    if (width > 1024) return { top: '18%', left: '6%' };
+    else if (width > 768) return { top: '18%', left: '6%' };
+    else if (width > 480) return { top: '18%', left: '6%' };
+    else return { top: '18%', left: '6%' };
+  }
 
   // =========================================================
   // FIXED IMAGE POSITIONS - Desktop & Mobile Responsive
@@ -88,44 +108,44 @@
     // Desktop positions
     if (width > 1024) {
       return [
-        { top: '14%', left: '6%' },
-        { top: '18%', right: '22%' },
-        { top: '55%', left: '19%', transformX: true, transformY: true },
-        { top: '14%', right: '6%' },
-        { top: '55%', left: '50%', transformX: true, transformY: true },
+        { top: '18%', left: '6%' },
+        { top: '18%', right: '6%' },
+        { bottom: '5%', left: '6%' },
+        { top: '18%', right: '6%' },
+        { top: '50%', left: '50%', transformX: true, transformY: true },
         { bottom: '5%', right: '6%' }
       ];
     }
-    // Tablet
+    // Tablet — now follows the same relative pattern as mobile portrait
     else if (width > 768) {
       return [
-        { top: '12%', left: '4%' },
-        { top: '16%', right: '18%' },
-        { top: '52%', left: '16%', transformX: true, transformY: true },
-        { top: '12%', right: '4%' },
-        { top: '52%', left: '45%', transformX: true, transformY: true },
-        { bottom: '4%', right: '4%' }
+        { top: '12%', right: '6%' },
+        { bottom: '3%', left: '6%' },
+        { top: '18%', left: '6%' },
+        { top: '18%', right: '6%' },
+        { top: '50%', left: '50%', transformX: true, transformY: true },
+        { bottom: '12%', right: '12%' }
       ];
     }
-    // Mobile landscape
+    // Mobile landscape — now follows the same relative pattern as mobile portrait
     else if (width > 480) {
       return [
-        { top: '10%', left: '3%' },
-        { top: '14%', right: '15%' },
-        { top: '50%', left: '14%', transformX: true, transformY: true },
-        { top: '10%', right: '3%' },
-        { top: '50%', left: '40%', transformX: true, transformY: true },
-        { bottom: '3%', right: '3%' }
+        { top: '12%', right: '6%' },
+        { bottom: '3%', left: '6%' },
+        { top: '18%', left: '6%' },
+        { top: '18%', right: '6%' },
+        { top: '50%', left: '50%', transformX: true, transformY: true },
+        { bottom: '12%', right: '12%' }
       ];
     }
     // Mobile portrait
     else {
       return [
-        { top: '12%', left: '6%' },
-        { top: '22%', right: '12%' },
-        { bottom: '18%', left: '10%', transformY: true },
-        { top: '18%', right: '8%' },
-        { bottom: '2%', left: '50%', transformX: true },
+        { top: '12%', right: '6%' },
+        { bottom: '3%', left: '6%' },
+        { top: '18%', left: '6%' },
+        { top: '18%', right: '6%' },
+        { top: '50%', left: '50%', transformX: true, transformY: true },
         { bottom: '12%', right: '12%' }
       ];
     }
@@ -144,6 +164,8 @@
   const wordInner = document.getElementById('heroWordInner');
   const frame = document.getElementById('heroFrame');
   const frameImg = document.getElementById('heroFrameImg');
+  const frame2 = document.getElementById('heroFrame2');
+  const frameImg2 = document.getElementById('heroFrameImg2');
   const dotGrid = document.getElementById('heroDotGrid');
 
   if (
@@ -748,7 +770,15 @@
     frame.style.transform =
       `${slot.transformX ? 'translateX(-50%)' : ''} ${slot.transformY ? 'translateY(-50%)' : ''}`.trim();
   }
+  function applySlot2(slot) {
+    frame2.style.top = slot.top || '';
+    frame2.style.bottom = slot.bottom || '';
+    frame2.style.left = slot.left || '';
+    frame2.style.right = slot.right || '';
 
+    frame2.style.transform =
+      `${slot.transformX ? 'translateX(-50%)' : ''} ${slot.transformY ? 'translateY(-50%)' : ''}`.trim();
+  }
 
   // =========================================================
   // HERO CYCLE
@@ -807,7 +837,49 @@
       ]
     );
 
+    // -------------------------------------------------------
+    // SECONDARY IMAGE — only for the last item (Social Content),
+    // shown at the same time as the primary frame
+    // -------------------------------------------------------
 
+    if (frame2 && frameImg2) {
+      const isLastItem = i === items.length - 1 && item.image2;
+
+      if (isLastItem) {
+        const secSize = getSecondaryFrameSize();
+        const secPos = getSecondaryPosition();
+
+        frame2.classList.remove('is-active');
+        frame2.style.width = `${secSize.w}px`;
+        frame2.style.height = `${secSize.h}px`;
+        applySlot2(secPos);
+
+        frameImg2.style.transition = 'none';
+        frameImg2.style.opacity = '0';
+        frameImg2.style.transform = 'scale(1.4)';
+
+        const secondImage = new Image();
+        secondImage.onload = () => {
+          frameImg2.src = item.image2;
+          frameImg2.alt = item.text + ' secondary';
+
+          void frame2.offsetWidth;
+
+          requestAnimationFrame(() => {
+            frameImg2.style.transition = '';
+            frameImg2.style.opacity = '';
+            frameImg2.style.transform = '';
+            frame2.classList.add('is-active');
+          });
+        };
+        secondImage.onerror = () => {
+          frame2.classList.remove('is-active');
+        };
+        secondImage.src = item.image2;
+      } else {
+        frame2.classList.remove('is-active');
+      }
+    }
     // -------------------------------------------------------
     // RESET IMAGE BEFORE SOURCE CHANGE
     // -------------------------------------------------------

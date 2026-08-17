@@ -291,7 +291,7 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
   // ---- Accordion logic ----
   function toggleRow(row) {
     const isOpen = row.classList.contains('is-open');
-    
+
     // Close all other rows
     rows.forEach(r => {
       if (r !== row) {
@@ -351,7 +351,7 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
     };
 
     header.addEventListener('click', handleToggle);
-    
+
     // Toggle button click - now properly toggles
     toggleBtn.addEventListener('click', (e) => {
       e.stopPropagation();

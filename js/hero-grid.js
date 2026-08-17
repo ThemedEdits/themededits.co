@@ -826,16 +826,29 @@
     // IMAGE - Use responsive sizes
     // -------------------------------------------------------
 
-    frame.classList.remove('is-active');
+    // -------------------------------------------------------
+// IMAGE - Use responsive sizes
+// -------------------------------------------------------
 
-    frame.style.width = `${size.w}px`;
-    frame.style.height = `${size.h}px`;
+frame.classList.remove('is-active');
 
-    applySlot(
-      POSITION_SLOTS[
-      i % POSITION_SLOTS.length
-      ]
-    );
+frame.style.width = `${size.w}px`;
+frame.style.height = `${size.h}px`;
+
+applySlot(
+  POSITION_SLOTS[
+    i % POSITION_SLOTS.length
+  ]
+);
+
+// Force the browser to commit the new frame
+// position + dimensions before starting the animation.
+void frame.offsetWidth;
+
+// Activate image in the same render cycle as the text.
+requestAnimationFrame(() => {
+  frame.classList.add('is-active');
+});
 
     // -------------------------------------------------------
     // SECONDARY IMAGE — only for the last item (Social Content),

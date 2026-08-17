@@ -1194,6 +1194,12 @@ p {
     transition: opacity 700ms var(--ease);
   }
 
+  .hero__frame-img {
+    transition:
+      opacity 700ms var(--ease),
+      transform 700ms cubic-bezier(1, .2, .1, 1);
+  }
+
   /* Text with mix-blend-mode for better visibility over images */
   .hero__word-inner {
     mix-blend-mode: difference;
@@ -1220,12 +1226,19 @@ p {
   z-index: 2;
 }
 
-.hero__frame--secondary {
+.hero__frame--secondary,
+.hero__frame--secondary .hero__frame-img {
   transition: none;
 }
 
 .hero__frame--secondary.is-active {
-  transition: opacity .6s var(--ease);
+  transition: opacity 700ms var(--ease);
+}
+
+.hero__frame--secondary.is-active .hero__frame-img {
+  transition:
+    opacity 700ms var(--ease),
+    transform 700ms cubic-bezier(1, .2, .1, 1);
 }
 
 /* =========================================================

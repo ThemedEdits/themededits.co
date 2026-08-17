@@ -1156,7 +1156,7 @@ p {
   z-index: 2;
   overflow: hidden;
   opacity: 0;
-  transition: opacity .6s var(--ease);
+  transition: opacity 700ms var(--ease);
   pointer-events: none;
 }
 
@@ -1191,7 +1191,7 @@ p {
   .hero__frame {
     display: block !important;
     opacity: 0.6;
-    transition: opacity 0.3s ease;
+    transition: opacity 700ms var(--ease);
   }
 
   /* Text with mix-blend-mode for better visibility over images */

@@ -834,6 +834,29 @@
   }
 
   // =========================================================
+  // PRELOAD ALL HERO IMAGES BEFORE STARTING THE CYCLE
+  // =========================================================
+
+  function preloadImages(itemList) {
+    const urls = [];
+    itemList.forEach(item => {
+      if (item.image) urls.push(item.image);
+      if (item.image2) urls.push(item.image2);
+    });
+
+    const uniqueUrls = [...new Set(urls)];
+
+    return Promise.all(
+      uniqueUrls.map(url => new Promise(resolve => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = resolve;
+        img.src = url;
+      }))
+    );
+  }
+
+  // =========================================================
   // HERO CYCLE
   // =========================================================
 
@@ -970,22 +993,18 @@
   }
 
 
-  // =========================================================
+    // =========================================================
   // PAGE TRANSITION COMPATIBILITY
   // =========================================================
 
-  if (window.__pageTransitionReady) {
-
-    start();
-
-  } else {
-
-    window.addEventListener(
-      'page-transition:done',
-      start,
-      { once: true }
-    );
-
+  function beginCycle() {
+    if (window.__pageTransitionReady) {
+      start();
+    } else {
+      window.addEventListener('page-transition:done', start, { once: true });
+    }
   }
+
+  preloadImages(items).then(beginCycle);
 
 })();

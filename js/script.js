@@ -455,7 +455,7 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
   if (!targets.length) return;
 
   const HOLD_MS = 4000;
-  const STAGGER_MS = 60;
+  const STAGGER_MS = 80;
 
   function splitToChars(el, word) {
     el.innerHTML = '';

@@ -192,11 +192,11 @@
   items.forEach(item => {
     const img = new Image();
     img.src = item.image;
-    if (img.decode) img.decode().catch(() => {});
+    if (img.decode) img.decode().catch(() => { });
     if (item.image2) {
       const img2 = new Image();
       img2.src = item.image2;
-      if (img2.decode) img2.decode().catch(() => {});
+      if (img2.decode) img2.decode().catch(() => { });
     }
   });
 
@@ -215,12 +215,13 @@
     imgEl.src = src;
 
     const commit = () => {
-      void frameEl.offsetWidth;
       requestAnimationFrame(() => {
-        imgEl.style.transition = '';
-        imgEl.style.opacity = '';
-        imgEl.style.transform = '';
-        frameEl.classList.add('is-active');
+        requestAnimationFrame(() => {
+          imgEl.style.transition = '';
+          imgEl.style.opacity = '';
+          imgEl.style.transform = '';
+          frameEl.classList.add('is-active');
+        });
       });
     };
 
@@ -886,9 +887,11 @@
 
     wordInner.textContent = item.text;
 
-    void wordInner.offsetWidth;
-
-    wordInner.classList.add('is-revealing');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        wordInner.classList.add('is-revealing');
+      });
+    });
 
 
     // -------------------------------------------------------
@@ -911,13 +914,9 @@
 
     applySlot(
       POSITION_SLOTS[
-        i % POSITION_SLOTS.length
+      i % POSITION_SLOTS.length
       ]
     );
-
-    // Force the browser to commit the new frame
-    // position + dimensions before starting the animation.
-    void frame.offsetWidth;
 
     revealFrameImage(frameImg, frame, item.image, item.text);
 
@@ -937,8 +936,6 @@
         frame2.style.width = `${secSize.w}px`;
         frame2.style.height = `${secSize.h}px`;
         applySlot2(secPos);
-
-        void frame2.offsetWidth;
 
         revealFrameImage(frameImg2, frame2, item.image2, item.text + ' secondary');
       } else {
@@ -980,7 +977,7 @@
   }
 
 
-    // =========================================================
+  // =========================================================
   // PAGE TRANSITION COMPATIBILITY
   // =========================================================
 

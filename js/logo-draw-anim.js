@@ -40,8 +40,10 @@ function buildLogoDrawAnimation(svgEl) {
   clipsDefs.innerHTML = '';
   bricksLayer.innerHTML = '';
 
+   const shapeLengths = new Map();
   shapes.forEach(shape => {
     const length = shape.getTotalLength ? shape.getTotalLength() : 0;
+    shapeLengths.set(shape, length);
     shape.style.strokeDasharray = length;
     shape.style.strokeDashoffset = length;
     shape.style.transition = 'none';
@@ -226,7 +228,7 @@ for (let i = 0; i < rawNums.length - 1; i += 2) {
   function reset() {
     shapes.forEach(shape => {
       shape.style.transition = 'none';
-      const length = shape.getTotalLength ? shape.getTotalLength() : 0;
+      const length = shapeLengths.get(shape) || 0;
       shape.style.strokeDashoffset = length;
     });
     brickGroups.forEach(bricks => {
@@ -240,8 +242,11 @@ for (let i = 0; i < rawNums.length - 1; i += 2) {
 
   async function run() {
     reset();
-    // force reflow so the reset is applied before the draw starts
-    void svgEl.getBoundingClientRect();
+    // let the browser commit the reset styles via two animation frames
+    // instead of forcing a synchronous layout read
+    await new Promise(resolve => {
+      requestAnimationFrame(() => requestAnimationFrame(resolve));
+    });
 
     await Promise.all([...shapes].map((s, i) => drawOutline(s, i)));
     await Promise.all(brickGroups.map((bricks, i) =>

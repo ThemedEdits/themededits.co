@@ -896,20 +896,7 @@
     // -------------------------------------------------------
 
     morphDots();
-    // -------------------------------------------------------
-    // BACKGROUND BLOBS — randomly reposition in sync with
-    // the dot morph / word swap, same trigger, same timing
-    // -------------------------------------------------------
-    const blobs = document.querySelectorAll('.hero__blob');
-    blobs.forEach(blob => {
-      const top = 5 + Math.random() * 70;   // keep roughly within the viewport
-      const left = 5 + Math.random() * 70;
-      const scale = 0.85 + Math.random() * 0.4;
 
-      blob.style.top = `${top}%`;
-      blob.style.left = `${left}%`;
-      blob.style.transform = `scale(${scale})`;
-    });
 
     // -------------------------------------------------------
     // IMAGE - Use responsive sizes, size/position first, then

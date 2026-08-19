@@ -65,8 +65,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
-    rel="stylesheet">
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+  </noscript>
 
   <!-- ================= FAVICONS ================= -->
 
@@ -222,11 +227,6 @@
 
     <section class="hero" id="heroSlider">
       <div class="hero__bg"></div>
-      <div class="hero__blobs" id="heroBlobs" aria-hidden="true">
-        <span class="hero__blob hero__blob--1"></span>
-        <span class="hero__blob hero__blob--2"></span>
-        <span class="hero__blob hero__blob--3"></span>
-      </div>
       <div class="hero__dot-grid" id="heroDotGrid" aria-hidden="true"></div>
       <!-- single reusable image frame — JS repositions/resizes/re-images it each cycle -->
       <div class="hero__frame" id="heroFrame" aria-hidden="true">
@@ -688,7 +688,7 @@
     </div>
 
     <div class="footer__brand">
-      <img src="assets/footer-logo-text.svg" alt="Themed" class="footer__brand-svg">
+      <img src="assets/footer-logo-text.svg" fetchpriority="high" alt="Themed" class="footer__brand-svg">
       <div class="footer__brand-word">
         <span>E</span><span>D</span><span>I</span><span>T</span><span>S</span>
       </div>
@@ -707,7 +707,6 @@
   <script src="js/logo-draw-anim.js"></script>
   <script src="js/page-transition.js"></script>
   <script src="js/reveal.js"></script>
-  <script src="js/skill-rings.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="js/script.js"></script>
   <script src="js/portfolio-items.js"></script>

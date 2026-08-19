@@ -466,6 +466,33 @@ p {
   display: block;
 }
 
+.logo-pulse__char {
+  display: inline-block;
+  opacity: 1;
+  filter: blur(0px);
+  transform: scale(1);
+  transition: opacity .4s ease, filter .4s ease, transform .4s var(--ease);
+}
+
+.logo-pulse__char.is-out {
+  opacity: 0;
+  filter: blur(30px);
+  transform: scale(1.3);
+}
+
+.logo-pulse__char.is-in-start {
+  opacity: 0;
+  filter: blur(30px);
+  transform: scale(.4);
+  transition: none;
+}
+
+.logo-pulse__char.is-in {
+  opacity: 1;
+  filter: blur(0px);
+  transform: scale(1);
+}
+
 .menu-btn {
   display: flex;
   align-items: center;
@@ -1093,27 +1120,27 @@ p {
   transition: top 1.2s var(--ease), left 1.2s var(--ease), transform 1.2s var(--ease);
 }
 
-.hero__blob--1{
+.hero__blob--1 {
   background: var(--bg);
   top: 10%;
   left: 8%;
 }
 
-.hero__blob--2{
+.hero__blob--2 {
   background: var(--bg-soft);
   top: 55%;
   left: 60%;
 }
 
-.hero__blob--3{
+.hero__blob--3 {
   background: var(--bg-elevated);
   top: 30%;
   left: 40%;
   opacity: .8;
 }
 
-@media (max-width: 780px){
-  .hero__blob{
+@media (max-width: 780px) {
+  .hero__blob {
     width: 65vw;
     height: 65vw;
   }
@@ -1835,8 +1862,8 @@ p {
   max-width: 14ch;
 }
 
-.hiw__intro{
-padding-top: 2rem;
+.hiw__intro {
+  padding-top: 2rem;
 }
 
 .hiw__badge {

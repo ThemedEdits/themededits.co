@@ -435,3 +435,104 @@ document.querySelectorAll('.finale__rating').forEach(ratingEl => {
   });
 
 })();
+
+
+
+
+
+
+
+
+
+(() => {
+  'use strict';
+
+  const targets = [
+    { el: document.getElementById('logoLine1'), word: 'Themed' },
+    { el: document.getElementById('logoLine2'), word: 'Edits' }
+  ].filter(t => t.el);
+
+  if (!targets.length) return;
+
+  const HOLD_MS = 4000;
+  const STAGGER_MS = 60;
+
+  function splitToChars(el, word) {
+    el.innerHTML = '';
+    return [...word].map(ch => {
+      const span = document.createElement('span');
+      span.className = 'logo-pulse__char';
+      span.textContent = ch === ' ' ? '\u00A0' : ch;
+      el.appendChild(span);
+      return span;
+    });
+  }
+
+  function getOrder(len, mode) {
+    const indices = Array.from({ length: len }, (_, idx) => idx);
+    if (mode === 'ltr') return indices;
+    if (mode === 'rtl') return indices.reverse();
+    for (let a = indices.length - 1; a > 0; a--) {
+      const b = Math.floor(Math.random() * (a + 1));
+      [indices[a], indices[b]] = [indices[b], indices[a]];
+    }
+    return indices;
+  }
+
+  function pickMode(prevMode) {
+    const modes = ['ltr', 'rtl', 'random'];
+    const options = modes.filter(m => m !== prevMode);
+    return options[Math.floor(Math.random() * options.length)];
+  }
+
+  const state = targets.map(t => ({
+    el: t.el,
+    word: t.word,
+    lastOutMode: null,
+    lastInMode: null
+  }));
+
+  function pulseOne(entry) {
+    const chars = [...entry.el.querySelectorAll('.logo-pulse__char')];
+    const outMode = pickMode(entry.lastOutMode);
+    entry.lastOutMode = outMode;
+    const outOrder = getOrder(chars.length, outMode);
+
+    outOrder.forEach((charIndex, orderPos) => {
+      setTimeout(() => {
+        chars[charIndex].classList.add('is-out');
+      }, orderPos * STAGGER_MS);
+    });
+
+    const outTotalMs = outOrder.length * STAGGER_MS + 500;
+
+    setTimeout(() => {
+      const newChars = splitToChars(entry.el, entry.word);
+      newChars.forEach(c => c.classList.add('is-in-start'));
+
+      const inMode = pickMode(entry.lastInMode);
+      entry.lastInMode = inMode;
+      const inOrder = getOrder(newChars.length, inMode);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          inOrder.forEach((charIndex, orderPos) => {
+            setTimeout(() => {
+              newChars[charIndex].classList.remove('is-in-start');
+              newChars[charIndex].classList.add('is-in');
+            }, orderPos * STAGGER_MS);
+          });
+        });
+      });
+    }, outTotalMs);
+  }
+
+  function pulseAll() {
+    state.forEach(entry => pulseOne(entry));
+  }
+
+  // initial render
+  state.forEach(entry => splitToChars(entry.el, entry.word));
+
+  setInterval(pulseAll, HOLD_MS);
+})();

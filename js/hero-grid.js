@@ -108,8 +108,8 @@
     // Desktop positions
     if (width > 1024) {
       return [
-        { top: '18%', left: '6%' },
-        { top: '18%', right: '6%' },
+        { top: '14%', left: '6%' },
+        { top: '14%', right: '6%' },
         { bottom: '5%', left: '6%' },
         { top: '18%', right: '6%' },
         { top: '50%', left: '50%', transformX: true, transformY: true },
@@ -873,7 +873,20 @@
     // -------------------------------------------------------
 
     morphDots();
+    // -------------------------------------------------------
+    // BACKGROUND BLOBS — randomly reposition in sync with
+    // the dot morph / word swap, same trigger, same timing
+    // -------------------------------------------------------
+    const blobs = document.querySelectorAll('.hero__blob');
+    blobs.forEach(blob => {
+      const top = 5 + Math.random() * 70;   // keep roughly within the viewport
+      const left = 5 + Math.random() * 70;
+      const scale = 0.85 + Math.random() * 0.4;
 
+      blob.style.top = `${top}%`;
+      blob.style.left = `${left}%`;
+      blob.style.transform = `scale(${scale})`;
+    });
 
     // -------------------------------------------------------
     // IMAGE - Use responsive sizes, size/position first, then

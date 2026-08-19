@@ -75,10 +75,37 @@
 
     backToTop.addEventListener('click', () => {
       if (window.lenis && typeof window.lenis.scrollTo === 'function') {
-        window.lenis.scrollTo(0, { duration: 1.2 });
+        window.lenis.scrollTo(0, {
+          duration: 2.8,
+          easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+        });
       } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        smoothScrollToTop(2800);
       }
     });
+  }
+
+  // fallback smooth-scroll with proper ease-in-out, for when Lenis isn't present
+  function smoothScrollToTop(durationMs) {
+    const startY = window.scrollY;
+    const startTime = performance.now();
+
+    function easeInOutQuint(t) {
+      return t < 0.5
+        ? 16 * t * t * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 5) / 2;
+    }
+
+    function step(now) {
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / durationMs, 1);
+      const eased = easeInOutCubic(t);
+
+      window.scrollTo(0, startY * (1 - eased));
+
+      if (t < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
   }
 })();

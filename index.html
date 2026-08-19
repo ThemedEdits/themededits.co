@@ -222,6 +222,11 @@
 
     <section class="hero" id="heroSlider">
       <div class="hero__bg"></div>
+      <div class="hero__blobs" id="heroBlobs" aria-hidden="true">
+  <span class="hero__blob hero__blob--1"></span>
+  <span class="hero__blob hero__blob--2"></span>
+  <span class="hero__blob hero__blob--3"></span>
+</div>
       <div class="hero__dot-grid" id="heroDotGrid" aria-hidden="true"></div>
       <!-- single reusable image frame — JS repositions/resizes/re-images it each cycle -->
       <div class="hero__frame" id="heroFrame" aria-hidden="true">
@@ -625,10 +630,10 @@
 
         <!-- avatars -->
         <div class="finale__avatars">
-          <span class="finale__avatar"><img src="https://i.pravatar.cc/64?img=12" alt=""></span>
-          <span class="finale__avatar"><img src="https://i.pravatar.cc/64?img=32" alt=""></span>
-          <span class="finale__avatar"><img src="https://i.pravatar.cc/64?img=47" alt=""></span>
-          <span class="finale__avatar"><img src="https://i.pravatar.cc/64?img=58" alt=""></span>
+          <span class="finale__avatar"><img src="/assets/hero/client-1.png" alt=""></span>
+          <span class="finale__avatar"><img src="/assets/hero/client-2.png" alt=""></span>
+          <span class="finale__avatar"><img src="/assets/hero/client-3.png" alt=""></span>
+          <span class="finale__avatar"><img src="/assets/hero/client-4.webp" alt=""></span>
         </div>
 
         <p class="finale__trust-text">
@@ -707,6 +712,7 @@
   <script src="js/script.js"></script>
   <script src="js/portfolio-items.js"></script>
   <script src="js/hero-grid.js"></script>
+  <script>window.FEATURED_PROJECTS_INDEXES = [0, 1, 2, 5, 6];</script>
   <script src="js/featured-projects.js"></script>
 </body>
 

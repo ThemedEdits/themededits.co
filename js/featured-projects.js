@@ -2,7 +2,11 @@
   'use strict';
 
   const SLIDE_DURATION = 5000;
-  const slides = PORTFOLIO_ITEMS.slice(0, 3);
+   const slides = (window.FEATURED_PROJECTS_INDEXES && window.FEATURED_PROJECTS_INDEXES.length)
+    ? window.FEATURED_PROJECTS_INDEXES
+        .map(i => PORTFOLIO_ITEMS[i])
+        .filter(Boolean)
+    : PORTFOLIO_ITEMS.slice(0, 3);
 
   const bgTrack = document.querySelector('.featured-projects__bg');
   const textTrack = document.getElementById('fpTextTrack');
@@ -82,9 +86,31 @@
     timer = setInterval(next, SLIDE_DURATION);
   }
 
-  if (window.__pageTransitionReady) {
-    restart();
+    // ---- only start the auto-cycle once this section is actually
+  // scrolled into view, instead of immediately on page load ----
+  const section = document.getElementById('featuredProjects');
+
+  function beginWhenReady() {
+    if (window.__pageTransitionReady) {
+      restart();
+    } else {
+      window.addEventListener('page-transition:done', restart, { once: true });
+    }
+  }
+
+  if (section && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          beginWhenReady();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(section);
   } else {
-    window.addEventListener('page-transition:done', restart, { once: true });
+    // fallback: if IntersectionObserver isn't supported, behave as before
+    beginWhenReady();
   }
 })();

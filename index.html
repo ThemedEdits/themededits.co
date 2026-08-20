@@ -86,6 +86,12 @@
   <meta name="apple-mobile-web-app-title" content="Themed Edits">
 
   <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <!-- ================= HERO LCP IMAGE ================= -->
+<link
+  rel="preload"
+  as="image"
+  href="/assets/hero/Websites.webp"
+  fetchpriority="high">
 
   <!-- ================= STYLESHEETS ================= -->
 
@@ -473,17 +479,23 @@
    ========================================================= -->
         <div class="services__preview" id="servicesPreview" aria-hidden="true">
 
-          <img src="/assets/services-imgs/brand-identity.webp" alt="" class="services__preview-img" data-idx="0">
+          <img src="/assets/services-imgs/brand-identity.webp" alt="" class="services__preview-img" data-idx="0" loading="lazy"
+  decoding="async">
 
-          <img src="/assets/services-imgs/web-design.webp" alt="" class="services__preview-img" data-idx="1">
+          <img src="/assets/services-imgs/web-design.webp" alt="" class="services__preview-img" data-idx="1" loading="lazy"
+  decoding="async">
 
-          <img src="/assets/services-imgs/digital-experience.webp" alt="" class="services__preview-img" data-idx="2">
+          <img src="/assets/services-imgs/digital-experience.webp" alt="" class="services__preview-img" data-idx="2" loading="lazy"
+  decoding="async">
 
-          <img src="/assets/services-imgs/web-experience.webp" alt="" class="services__preview-img" data-idx="3">
+          <img src="/assets/services-imgs/web-experience.webp" alt="" class="services__preview-img" data-idx="3" loading="lazy"
+  decoding="async">
 
-          <img src="/assets/services-imgs/logo-design.webp" alt="" class="services__preview-img" data-idx="4">
+          <img src="/assets/services-imgs/logo-design.webp" alt="" class="services__preview-img" data-idx="4" loading="lazy"
+  decoding="async">
 
-          <img src="/assets/services-imgs/social-content.webp" alt="" class="services__preview-img" data-idx="5">
+          <img src="/assets/services-imgs/social-content.webp" alt="" class="services__preview-img" data-idx="5" loading="lazy"
+  decoding="async">
 
         </div>
 
@@ -539,7 +551,7 @@
 
         <div data-reveal="right" class="about-new__image">
           <img src="/assets/about-home.webp" alt="A workspace with a laptop, notebook, and coffee cup."
-            class="about-new__img">
+            class="about-new__img" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
@@ -575,7 +587,8 @@
           <div class="hiw__panel is-active" data-step="0">
             <div class="hiw__visual">
               <div class="hiw__visual-media">
-                <img src="/assets/step-1.webp" alt="" class="hiw__visual-img">
+                <img src="/assets/step-1.webp" alt="" class="hiw__visual-img" loading="lazy"
+  decoding="async">
               </div>
               <p class="hiw__visual-cat">Discovery</p>
               <p class="hiw__visual-title"> Understanding Your Goals</p>
@@ -584,7 +597,8 @@
           <div class="hiw__panel" data-step="1">
             <div class="hiw__visual">
               <div class="hiw__visual-media">
-                <img src="/assets/step-2.webp" alt="" class="hiw__visual-img">
+                <img src="/assets/step-2.webp" alt="" class="hiw__visual-img" loading="lazy"
+  decoding="async">
               </div>
               <p class="hiw__visual-cat">Design Direction</p>
               <p class="hiw__visual-title">Moodboards &amp; Wireframes</p>
@@ -593,7 +607,8 @@
           <div class="hiw__panel" data-step="2">
             <div class="hiw__visual">
               <div class="hiw__visual-media">
-                <img src="/assets/step-3.webp" alt="" class="hiw__visual-img">
+                <img src="/assets/step-3.webp" alt="" class="hiw__visual-img" loading="lazy"
+  decoding="async">
               </div>
               <p class="hiw__visual-cat">Build &amp; Refine</p>
               <p class="hiw__visual-title">Development &amp; Revisions</p>
@@ -630,10 +645,10 @@
 
         <!-- avatars -->
         <div class="finale__avatars">
-          <span class="finale__avatar"><img src="/assets/hero/client-1.png" alt=""></span>
-          <span class="finale__avatar"><img src="/assets/hero/client-2.png" alt=""></span>
-          <span class="finale__avatar"><img src="/assets/hero/client-3.png" alt=""></span>
-          <span class="finale__avatar"><img src="/assets/hero/client-4.webp" alt=""></span>
+          <span class="finale__avatar"><img src="/assets/hero/client-1.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="finale__avatar"><img src="/assets/hero/client-2.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="finale__avatar"><img src="/assets/hero/client-3.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="finale__avatar"><img src="/assets/hero/client-4.webp" alt="" loading="lazy" decoding="async"></span>
         </div>
 
         <p class="finale__trust-text">
@@ -651,7 +666,7 @@
           Hire Me <span aria-hidden="true">↗</span>
         </a>
       </div>
-      <img data-reveal="scale" src="/assets/finale-cta-img.webp" alt="" class="finale__bottom-img">
+      <img data-reveal="scale" src="/assets/finale-cta-img.webp" alt="" class="finale__bottom-img" loading="lazy" decoding="async">
     </section>
 
   </main>

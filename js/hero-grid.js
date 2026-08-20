@@ -179,58 +179,113 @@
   }
 
   // =========================================================
-  // PRELOAD ALL HERO IMAGES
-  // Fires immediately while the page-transition overlay is
-  // still covering the screen, so every image is already
-  // cached by the time the hero cycle actually starts. This
-  // is what fixes the text/image sync delay on real mobile
-  // devices (their first-load network fetch was happening
-  // mid-cycle instead of ahead of time — DevTools masked this
-  // because assets were already cached from prior testing).
+  // SMART HERO IMAGE LOADING
+  // =========================================================
+  //
+  // Only the image currently needed is loaded with priority.
+  // The next image is preloaded in the background so the
+  // animation stays perfectly synchronized without forcing
+  // every hero asset to download on initial page load.
   // =========================================================
 
-  items.forEach(item => {
-    const img = new Image();
-    img.src = item.image;
-    if (img.decode) img.decode().catch(() => { });
-    if (item.image2) {
-      const img2 = new Image();
-      img2.src = item.image2;
-      if (img2.decode) img2.decode().catch(() => { });
-    }
-  });
+  const imageCache = new Map();
 
-  // Reveals an <img> only once the browser has actually finished
-  // decoding it (img.decode()), not on a guessed one-frame delay.
-  // This is what eliminates the stale-bitmap flash: without this,
-  // reassigning .src can leave the PREVIOUS image's pixels painted
-  // for a frame or two while the new one is still decoding, even
-  // when cached. Since the image is already preloaded, decode()
-  // resolves almost instantly here — fast, and flash-free.
-  function revealFrameImage(imgEl, frameEl, src, altText) {
-    imgEl.style.transition = 'none';
-    imgEl.style.opacity = '0';
-    imgEl.style.transform = 'scale(1.4)';
-    imgEl.alt = altText;
+  function preloadImage(src, priority = false) {
+    if (!src) return Promise.resolve(null);
+
+    // Already requested / decoded.
+    if (imageCache.has(src)) {
+      return imageCache.get(src);
+    }
+
+    const promise = new Promise(resolve => {
+      const img = new Image();
+
+      img.decoding = 'async';
+
+      if (priority) {
+        img.fetchPriority = 'high';
+      }
+
+      img.onload = async () => {
+        try {
+          if (img.decode) {
+            await img.decode();
+          }
+        } catch (_) {
+          // Image is still usable even if decode() rejects.
+        }
+
+        resolve(img);
+      };
+
+      img.onerror = () => {
+        resolve(null);
+      };
+
+      img.src = src;
+    });
+
+    imageCache.set(src, promise);
+
+    return promise;
+  }
+
+
+  // =========================================================
+  // REVEAL IMAGE
+  // =========================================================
+  //
+  // The image is already requested before this function is called.
+  // We still wait for decode() so the visual never reveals a stale
+  // bitmap or flashes the previous image.
+  // =========================================================
+
+function revealFrameImage(imgEl, frameEl, src, altText) {
+  // Always establish the starting state FIRST
+  imgEl.style.transition = 'none';
+  imgEl.style.opacity = '0';
+  imgEl.style.transform = 'scale(1.4)';
+  imgEl.alt = altText;
+
+  const reveal = () => {
     imgEl.src = src;
 
-    const commit = () => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          imgEl.style.transition = '';
-          imgEl.style.opacity = '';
-          imgEl.style.transform = '';
-          frameEl.classList.add('is-active');
-        });
-      });
-    };
+    // Force the browser to commit the starting state
+    void imgEl.offsetWidth;
+    void frameEl.offsetWidth;
 
-    if (imgEl.decode) {
-      imgEl.decode().then(commit).catch(commit);
-    } else {
-      commit();
-    }
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        // Restore CSS transition
+        imgEl.style.transition = '';
+
+        // Trigger zoom-out
+        imgEl.style.opacity = '';
+        imgEl.style.transform = '';
+
+        // Trigger frame visibility
+        frameEl.classList.add('is-active');
+      });
+    });
+  };
+
+  if (imgEl.src === new URL(src, window.location.href).href) {
+    // Already displaying this source — still force a fresh animation
+    reveal();
+    return;
   }
+
+  if (imgEl.decode) {
+    imgEl.src = src;
+
+    imgEl.decode()
+      .then(() => reveal())
+      .catch(() => reveal());
+  } else {
+    reveal();
+  }
+}
 
 
   // =========================================================
@@ -835,27 +890,29 @@
   }
 
   // =========================================================
-  // PRELOAD ALL HERO IMAGES BEFORE STARTING THE CYCLE
+  // PROGRESSIVE PRELOADING
   // =========================================================
 
-  function preloadImages(itemList) {
-    const urls = [];
-    itemList.forEach(item => {
-      if (item.image) urls.push(item.image);
-      if (item.image2) urls.push(item.image2);
-    });
+  function preloadNextImage(currentIndex) {
 
-    const uniqueUrls = [...new Set(urls)];
+    const nextIndex = (currentIndex + 1) % items.length;
+    const nextItem = items[nextIndex];
 
-    return Promise.all(
-      uniqueUrls.map(url => new Promise(resolve => {
-        const img = new Image();
-        img.onload = resolve;
-        img.onerror = resolve;
-        img.src = url;
-      }))
-    );
+    if (!nextItem) return;
+
+    // Primary image for the next slide.
+    preloadImage(nextItem.image);
+
+    // Secondary image is only needed for the final
+    // Social Content slide.
+    if (
+      nextIndex === items.length - 1 &&
+      nextItem.image2
+    ) {
+      preloadImage(nextItem.image2);
+    }
   }
+
 
   // =========================================================
   // HERO CYCLE
@@ -869,7 +926,20 @@
 
     const item = items[i];
 
-    // Get responsive frame sizes
+    // -------------------------------------------------------
+    // PRELOAD NEXT SLIDE IMMEDIATELY
+    // -------------------------------------------------------
+    //
+    // This gives the browser the entire CYCLE_MS window
+    // to download/decode the next image.
+    //
+    preloadNextImage(i);
+
+
+    // -------------------------------------------------------
+    // RESPONSIVE FRAME CONFIG
+    // -------------------------------------------------------
+
     const FRAME_SIZES = getFrameSizes();
     const POSITION_SLOTS = getPositionSlots();
 
@@ -895,51 +965,81 @@
 
 
     // -------------------------------------------------------
-    // DOT GRID - Morph to next phase
+    // DOT GRID
     // -------------------------------------------------------
 
     morphDots();
 
 
     // -------------------------------------------------------
-    // IMAGE - Use responsive sizes, size/position first, then
-    // reveal on the same frame as the text (image is already
-    // preloaded, so no network wait happens here anymore)
+    // PRIMARY IMAGE
     // -------------------------------------------------------
 
-    frame.classList.remove('is-active');
+   // -------------------------------------------------------
+// IMAGE
+// -------------------------------------------------------
 
-    frame.style.width = `${size.w}px`;
-    frame.style.height = `${size.h}px`;
+frame.classList.remove('is-active');
 
-    applySlot(
-      POSITION_SLOTS[
-      i % POSITION_SLOTS.length
-      ]
-    );
+// Force removal of the previous active state
+void frame.offsetWidth;
 
-    revealFrameImage(frameImg, frame, item.image, item.text);
+frame.style.width = `${size.w}px`;
+frame.style.height = `${size.h}px`;
+
+applySlot(
+  POSITION_SLOTS[
+    i % POSITION_SLOTS.length
+  ]
+);
+
+// Force the new position/size to commit BEFORE
+// the zoom-out animation starts.
+void frame.offsetWidth;
+
+revealFrameImage(
+  frameImg,
+  frame,
+  item.image,
+  item.text
+);
+
 
     // -------------------------------------------------------
-    // SECONDARY IMAGE — only for the last item (Social Content),
-    // shown at the same time as the primary frame
+    // SECONDARY IMAGE
     // -------------------------------------------------------
 
     if (frame2 && frameImg2) {
-      const isLastItem = i === items.length - 1 && item.image2;
+
+      const isLastItem =
+        i === items.length - 1 &&
+        item.image2;
 
       if (isLastItem) {
+
         const secSize = getSecondaryFrameSize();
         const secPos = getSecondaryPosition();
 
         frame2.classList.remove('is-active');
+
         frame2.style.width = `${secSize.w}px`;
         frame2.style.height = `${secSize.h}px`;
+
         applySlot2(secPos);
 
-        revealFrameImage(frameImg2, frame2, item.image2, item.text + ' secondary');
+        // Secondary image has already been progressively
+        // preloaded when this slide was approaching.
+        revealFrameImage(
+          frameImg2,
+          frame2,
+          item.image2,
+          item.text + ' secondary'
+        );
+
       } else {
+
         frame2.classList.remove('is-active');
+
       }
     }
   }
@@ -964,7 +1064,7 @@
 
   function start() {
 
-    // Reset to phase 0 before starting
+    // Reset to phase 0 before starting.
     dotPhase = 0;
     applyPhase(0, true);
 
@@ -980,15 +1080,48 @@
   // =========================================================
   // PAGE TRANSITION COMPATIBILITY
   // =========================================================
+  //
+  // Only the FIRST hero image is allowed to block the
+  // initial hero start.
+  //
+  // The remaining images are loaded progressively.
+  // =========================================================
+
+  const firstImageReady =
+    preloadImage(
+      items[0]?.image,
+      true
+    );
+
 
   function beginCycle() {
-    if (window.__pageTransitionReady) {
-      start();
-    } else {
-      window.addEventListener('page-transition:done', start, { once: true });
-    }
+
+    const startWhenReady = () => {
+
+      firstImageReady.then(() => {
+
+        if (window.__pageTransitionReady) {
+
+          start();
+
+        } else {
+
+          window.addEventListener(
+            'page-transition:done',
+            start,
+            { once: true }
+          );
+
+        }
+
+      });
+
+    };
+
+    startWhenReady();
   }
 
-  preloadImages(items).then(beginCycle);
+
+  beginCycle();
 
 })();

@@ -1087,27 +1087,41 @@
   // The remaining images are loaded progressively.
   // =========================================================
 
- // =========================================================
-// INITIAL HERO START
-// =========================================================
-//
-// The transition overlay already covers the viewport.
-// We do NOT wait for the transition to finish before
-// initializing the hero.
-//
-// This allows the browser to load + decode the LCP image
-// and prepare the hero animation underneath the overlay.
-//
-// The user still sees nothing until the page transition
-// reveals the page.
-// =========================================================
+  const firstImageReady =
+    preloadImage(
+      items[0]?.image,
+      true
+    );
 
-const firstImageReady = preloadImage(
-  items[0]?.image,
-  true
-);
 
-firstImageReady.then(() => {
-  start();
-});
+  function beginCycle() {
+
+    const startWhenReady = () => {
+
+      firstImageReady.then(() => {
+
+        if (window.__pageTransitionReady) {
+
+          start();
+
+        } else {
+
+          window.addEventListener(
+            'page-transition:done',
+            start,
+            { once: true }
+          );
+
+        }
+
+      });
+
+    };
+
+    startWhenReady();
+  }
+
+
+  beginCycle();
+
 })();

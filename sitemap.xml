@@ -1,38 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main Pages -->
   <url>
     <loc>https://themededits.vercel.app/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+
   <url>
     <loc>https://themededits.vercel.app/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://themededits.vercel.app/hire/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <url>
+    <loc>https://themededits.vercel.app/services/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <url>
     <loc>https://themededits.vercel.app/projects/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+
+
+  <!-- Project Pages -->
+
   <url>
-    <loc>https://themededits.vercel.app/projects/aurelia-branding/</loc>
+    <loc>https://themededits.vercel.app/projects/anmol-store/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
   <url>
-    <loc>https://themededits.vercel.app/projects/driftwork-app/</loc>
+    <loc>https://themededits.vercel.app/projects/btc/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <url>
+    <loc>https://themededits.vercel.app/projects/frost-and-gold/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://themededits.vercel.app/projects/numeriq-branding/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <url>
     <loc>https://themededits.vercel.app/projects/numeriq-global/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <url>
+    <loc>https://themededits.vercel.app/projects/sive-wears/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://themededits.vercel.app/projects/the-remarkable/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

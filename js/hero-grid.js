@@ -241,51 +241,51 @@
   // bitmap or flashes the previous image.
   // =========================================================
 
-function revealFrameImage(imgEl, frameEl, src, altText) {
-  // Always establish the starting state FIRST
-  imgEl.style.transition = 'none';
-  imgEl.style.opacity = '0';
-  imgEl.style.transform = 'scale(1.4)';
-  imgEl.alt = altText;
+  function revealFrameImage(imgEl, frameEl, src, altText) {
+    // Always establish the starting state FIRST
+    imgEl.style.transition = 'none';
+    imgEl.style.opacity = '0';
+    imgEl.style.transform = 'scale(1.4)';
+    imgEl.alt = altText;
 
-  const reveal = () => {
-    imgEl.src = src;
+    const reveal = () => {
+      imgEl.src = src;
 
-    // Force the browser to commit the starting state
-    void imgEl.offsetWidth;
-    void frameEl.offsetWidth;
+      // Force the browser to commit the starting state
+      void imgEl.offsetWidth;
+      void frameEl.offsetWidth;
 
-    requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        // Restore CSS transition
-        imgEl.style.transition = '';
+        requestAnimationFrame(() => {
+          // Restore CSS transition
+          imgEl.style.transition = '';
 
-        // Trigger zoom-out
-        imgEl.style.opacity = '';
-        imgEl.style.transform = '';
+          // Trigger zoom-out
+          imgEl.style.opacity = '';
+          imgEl.style.transform = '';
 
-        // Trigger frame visibility
-        frameEl.classList.add('is-active');
+          // Trigger frame visibility
+          frameEl.classList.add('is-active');
+        });
       });
-    });
-  };
+    };
 
-  if (imgEl.src === new URL(src, window.location.href).href) {
-    // Already displaying this source — still force a fresh animation
-    reveal();
-    return;
+    if (imgEl.src === new URL(src, window.location.href).href) {
+      // Already displaying this source — still force a fresh animation
+      reveal();
+      return;
+    }
+
+    if (imgEl.decode) {
+      imgEl.src = src;
+
+      imgEl.decode()
+        .then(() => reveal())
+        .catch(() => reveal());
+    } else {
+      reveal();
+    }
   }
-
-  if (imgEl.decode) {
-    imgEl.src = src;
-
-    imgEl.decode()
-      .then(() => reveal())
-      .catch(() => reveal());
-  } else {
-    reveal();
-  }
-}
 
 
   // =========================================================
@@ -975,34 +975,34 @@ function revealFrameImage(imgEl, frameEl, src, altText) {
     // PRIMARY IMAGE
     // -------------------------------------------------------
 
-   // -------------------------------------------------------
-// IMAGE
-// -------------------------------------------------------
+    // -------------------------------------------------------
+    // IMAGE
+    // -------------------------------------------------------
 
-frame.classList.remove('is-active');
+    frame.classList.remove('is-active');
 
-// Force removal of the previous active state
-void frame.offsetWidth;
+    // Force removal of the previous active state
+    void frame.offsetWidth;
 
-frame.style.width = `${size.w}px`;
-frame.style.height = `${size.h}px`;
+    frame.style.width = `${size.w}px`;
+    frame.style.height = `${size.h}px`;
 
-applySlot(
-  POSITION_SLOTS[
-    i % POSITION_SLOTS.length
-  ]
-);
+    applySlot(
+      POSITION_SLOTS[
+      i % POSITION_SLOTS.length
+      ]
+    );
 
-// Force the new position/size to commit BEFORE
-// the zoom-out animation starts.
-void frame.offsetWidth;
+    // Force the new position/size to commit BEFORE
+    // the zoom-out animation starts.
+    void frame.offsetWidth;
 
-revealFrameImage(
-  frameImg,
-  frame,
-  item.image,
-  item.text
-);
+    revealFrameImage(
+      frameImg,
+      frame,
+      item.image,
+      item.text
+    );
 
 
     // -------------------------------------------------------
@@ -1087,41 +1087,27 @@ revealFrameImage(
   // The remaining images are loaded progressively.
   // =========================================================
 
-  const firstImageReady =
-    preloadImage(
-      items[0]?.image,
-      true
-    );
+ // =========================================================
+// INITIAL HERO START
+// =========================================================
+//
+// The transition overlay already covers the viewport.
+// We do NOT wait for the transition to finish before
+// initializing the hero.
+//
+// This allows the browser to load + decode the LCP image
+// and prepare the hero animation underneath the overlay.
+//
+// The user still sees nothing until the page transition
+// reveals the page.
+// =========================================================
 
+const firstImageReady = preloadImage(
+  items[0]?.image,
+  true
+);
 
-  function beginCycle() {
-
-    const startWhenReady = () => {
-
-      firstImageReady.then(() => {
-
-        if (window.__pageTransitionReady) {
-
-          start();
-
-        } else {
-
-          window.addEventListener(
-            'page-transition:done',
-            start,
-            { once: true }
-          );
-
-        }
-
-      });
-
-    };
-
-    startWhenReady();
-  }
-
-
-  beginCycle();
-
+firstImageReady.then(() => {
+  start();
+});
 })();

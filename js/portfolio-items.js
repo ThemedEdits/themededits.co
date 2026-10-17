@@ -1,4 +1,22 @@
 const PORTFOLIO_ITEMS = [
+    {
+    id: "attensheet",
+    title: "AttenSheet",
+    subtitle: "Attendance Management System",
+    services: ["UI/UX Design", "Application Development", "Web Design", "Web Development", "SEO"],
+    description: "AttenSheet solves the everyday chaos of university attendance.",
+    category: "web",
+    type: "project",
+    liveUrl: "https://attensheet.vercel.app/",
+    thumbnail: "/assets/attensheet/attensheet-thumb.webp",
+    heroImage: "/assets/attensheet/attensheet-hero-img.webp",
+    gallery: [
+      "/assets/attensheet/as-1.webp",
+      "/assets/attensheet/as-2.webp",
+      "/assets/attensheet/as-3.webp",
+      "/assets/attensheet/as-4.webp"
+    ]
+  },
   {
     id: "numeriq-global",
     title: "Numeriq Global",
